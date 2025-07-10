@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 interface QuizOption {
   letter: string
@@ -61,38 +61,54 @@ const quizzes: Quiz[] = [
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0)
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const [showResult, setShowResult] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     setIsLoaded(true)
   }, [])
 
   useEffect(() => {
-    if (showResult) {
-      const timer = setTimeout(() => {
-        setIsTransitioning(true)
-        setTimeout(() => {
-          setCurrentQuizIndex((prev) => (prev + 1) % quizzes.length)
-          setSelectedAnswer(null)
-          setShowResult(false)
-          setIsTransitioning(false)
-        }, 500)
-      }, 4000) // Show result for 4 seconds
-
-      return () => clearTimeout(timer)
-    }
-  }, [showResult])
-
-  const handleAnswerClick = (option: QuizOption) => {
-    if (showResult) return
+    let timeElapsed = 0
     
-    setSelectedAnswer(option.letter)
-    setTimeout(() => {
-      setShowResult(true)
-    }, 500)
-  }
+    const startTimer = () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current)
+      }
+      
+      timerRef.current = setInterval(() => {
+        timeElapsed += 100
+        
+        // Show question for 5 seconds, then show answer for 4 seconds
+        if (timeElapsed === 5000) {
+          setShowResult(true)
+        } else if (timeElapsed >= 9000) {
+          // Transition to next question
+          setIsTransitioning(true)
+          setTimeout(() => {
+            setCurrentQuizIndex((prev) => (prev + 1) % quizzes.length)
+            setShowResult(false)
+            setIsTransitioning(false)
+            timeElapsed = 0
+            startTimer() // Restart timer for next question
+          }, 500)
+          
+          if (timerRef.current) {
+            clearInterval(timerRef.current)
+          }
+        }
+      }, 100)
+    }
+
+    startTimer()
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current)
+      }
+    }
+  }, []) // Only run once on mount
 
   const currentQuiz = quizzes[currentQuizIndex]
 
@@ -200,17 +216,17 @@ export default function Home() {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8 text-gray-300">
-          <a href="#" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-purple-300">Головна</a>
-          <a href="#" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-blue-300">Часи</a>
-          <a href="#" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-pink-300">Словник</a>
-          <a href="#" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-cyan-300">Практика</a>
+          <a href="/" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-purple-300">Головна</a>
+          <a href="/tenses" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-blue-300">Часи</a>
+          <a href="/vocabulary" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-pink-300">Словник</a>
+          <a href="/practice" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-cyan-300">Практика</a>
         </div>
       </nav>
 
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-between max-w-7xl mx-auto px-6 py-12 lg:py-20">
+      <div className="relative z-10 flex items-center justify-center max-w-7xl mx-auto px-6 py-8 lg:py-16 min-h-[calc(100vh-120px)]">
         {/* Left Side - Title and Content */}
-        <div className="flex-1 max-w-2xl">
+        <div className="flex-1 max-w-2xl pr-8">
           <div className={`transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <h1 className="text-5xl lg:text-7xl font-bold text-white leading-tight mb-8">
               Вивчайте <br />
@@ -231,19 +247,19 @@ export default function Home() {
           </div>
 
           <div className={`flex gap-4 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <button className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50">
-              <span className="group-hover:animate-pulse">Почати з часів</span>
-            </button>
-            <button className="border-2 border-gray-500 text-gray-200 px-8 py-4 rounded-xl font-semibold hover:border-purple-400 hover:text-white transition-all duration-300 hover:scale-105 hover:bg-purple-500/20 backdrop-blur-sm hover:shadow-lg">
-              Словник
-            </button>
+            <a href="/vocabulary" className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50 inline-block">
+              <span className="group-hover:animate-pulse">Почати зі слів</span>
+            </a>
+            <a href="/tenses" className="border-2 border-gray-500 text-gray-200 px-8 py-4 rounded-xl font-semibold hover:border-purple-400 hover:text-white transition-all duration-300 hover:scale-105 hover:bg-purple-500/20 backdrop-blur-sm hover:shadow-lg inline-block">
+              Часи
+            </a>
           </div>
         </div>
 
-        {/* Right Side - Interactive Quiz */}
-        <div className={`hidden lg:block flex-1 max-w-md transition-all duration-1000 delay-800 ${isLoaded ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-95'}`}>
+        {/* Right Side - Auto Demo Quiz */}
+        <div className={`hidden lg:block flex-1 max-w-lg transition-all duration-1000 delay-800 ${isLoaded ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-95'}`}>
           <div className={`bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-lg border-2 border-gray-600/70 rounded-2xl p-8 shadow-2xl hover:shadow-purple-500/30 transition-all duration-500 hover:scale-105 hover:border-purple-500/50 ${isTransitioning ? 'opacity-50 scale-95' : ''}`}>
-            {/* Progress indicator */}
+            {/* Progress indicators */}
             <div className="flex gap-2 mb-6">
               {quizzes.map((_, index) => (
                 <div
@@ -269,31 +285,20 @@ export default function Home() {
               {currentQuiz.options.map((option) => (
                 <div 
                   key={option.letter}
-                  onClick={() => handleAnswerClick(option)}
-                  className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
+                  className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-500 ${
                     showResult
                       ? option.correct
-                        ? 'bg-green-500/30 border-green-400/70 shadow-xl shadow-green-500/40'
-                        : selectedAnswer === option.letter
-                          ? 'bg-red-500/30 border-red-400/70 shadow-xl shadow-red-500/40'
-                          : 'bg-gray-700/30 border-gray-500/50'
-                      : selectedAnswer === option.letter
-                        ? 'bg-purple-500/40 border-purple-400/70 scale-105'
-                        : 'bg-gray-700/50 border-gray-500/70 hover:bg-gray-600/60 hover:border-gray-400 hover:scale-105'
+                        ? 'bg-green-500/30 border-green-400/70 shadow-xl shadow-green-500/40 scale-105'
+                        : 'bg-gray-700/30 border-gray-500/50'
+                      : 'bg-gray-700/50 border-gray-500/70'
                   }`}
                 >
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
-                    showResult
-                      ? option.correct
-                        ? 'bg-green-500 text-white shadow-xl shadow-green-500/50'
-                        : selectedAnswer === option.letter
-                          ? 'bg-red-500 text-white shadow-xl shadow-red-500/50'
-                          : 'bg-gray-600 text-gray-200'
-                      : selectedAnswer === option.letter
-                        ? 'bg-purple-500 text-white shadow-xl shadow-purple-500/50'
-                        : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-500 ${
+                    showResult && option.correct
+                      ? 'bg-green-500 text-white shadow-xl shadow-green-500/50'
+                      : 'bg-gray-600 text-gray-200'
                   }`}>
-                    {showResult && option.correct ? '✓' : showResult && selectedAnswer === option.letter && !option.correct ? '✗' : option.letter}
+                    {showResult && option.correct ? '✓' : option.letter}
                   </div>
                   <span className="text-gray-100 font-medium">{option.text}</span>
                 </div>
@@ -303,98 +308,7 @@ export default function Home() {
             {/* Explanation */}
             {showResult && (
               <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/50 rounded-xl p-4 animate-pulse">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold mt-0.5">
-                    !
-                  </div>
-                  <div>
-                    <h4 className="text-purple-300 font-semibold mb-2">Пояснення:</h4>
-                    <p className="text-gray-200 text-sm leading-relaxed mb-2">
-                      {currentQuiz.explanation}
-                    </p>
-                    <p className="text-green-300 font-medium text-sm">
-                      Правильна відповідь: "{currentQuiz.correctAnswer}"
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Quiz counter */}
-            <div className="text-center mt-4 text-gray-400 text-sm">
-              Тест {currentQuizIndex + 1} з {quizzes.length}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Features - Mobile Responsive Quiz */}
-      <div className={`lg:hidden relative z-10 max-w-4xl mx-auto px-6 pb-12 transition-all duration-1000 delay-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-        <div className={`bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-lg border-2 border-gray-600/70 rounded-2xl p-6 shadow-2xl ${isTransitioning ? 'opacity-50 scale-95' : ''}`}>
-          {/* Progress indicator */}
-          <div className="flex gap-2 mb-6">
-            {quizzes.map((_, index) => (
-              <div
-                key={index}
-                className={`h-1 flex-1 rounded-full transition-all duration-500 ${
-                  index === currentQuizIndex 
-                    ? 'bg-purple-500' 
-                    : index < currentQuizIndex 
-                      ? 'bg-green-500' 
-                      : 'bg-gray-600'
-                }`}
-              ></div>
-            ))}
-          </div>
-
-          <h3 className="text-purple-300 text-lg font-medium mb-4 animate-pulse">
-            {currentQuiz.question}
-          </h3>
-          
-          <div className="space-y-3 mb-6">
-            {currentQuiz.options.map((option) => (
-              <div 
-                key={option.letter}
-                onClick={() => handleAnswerClick(option)}
-                className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
-                  showResult
-                    ? option.correct
-                      ? 'bg-green-500/30 border-green-400/70'
-                      : selectedAnswer === option.letter
-                        ? 'bg-red-500/30 border-red-400/70'
-                        : 'bg-gray-700/30 border-gray-500/50'
-                    : selectedAnswer === option.letter
-                      ? 'bg-purple-500/40 border-purple-400/70 scale-105'
-                      : 'bg-gray-700/50 border-gray-500/70 hover:bg-gray-600/60 hover:scale-105'
-                }`}
-              >
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                  showResult
-                    ? option.correct
-                      ? 'bg-green-500 text-white'
-                      : selectedAnswer === option.letter
-                        ? 'bg-red-500 text-white'
-                        : 'bg-gray-600 text-gray-200'
-                    : selectedAnswer === option.letter
-                      ? 'bg-purple-500 text-white'
-                      : 'bg-gray-600 text-gray-200'
-                }`}>
-                  {showResult && option.correct ? '✓' : showResult && selectedAnswer === option.letter && !option.correct ? '✗' : option.letter}
-                </div>
-                <span className="text-gray-100 font-medium">{option.text}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Explanation for mobile */}
-          {showResult && (
-            <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/50 rounded-xl p-4 animate-pulse">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold mt-0.5">
-                  !
-                </div>
                 <div>
-                  <h4 className="text-purple-300 font-semibold mb-2">Пояснення:</h4>
                   <p className="text-gray-200 text-sm leading-relaxed mb-2">
                     {currentQuiz.explanation}
                   </p>
@@ -403,15 +317,12 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </div>
-          )}
-
-          {/* Quiz counter for mobile */}
-          <div className="text-center mt-4 text-gray-400 text-sm">
-            Тест {currentQuizIndex + 1} з {quizzes.length}
+            )}
           </div>
         </div>
       </div>
+
+
     </div>
   )
 } 
