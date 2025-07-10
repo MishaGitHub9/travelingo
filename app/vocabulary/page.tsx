@@ -691,7 +691,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.planning.title,
     emoji: vocabularyData.planning.icon,
     description: 'Основні фрази для планування поїздки',
-    position: { top: '4%', left: '30%' },
+    position: { top: '3%', left: '30%' },
     completed: false,
     words: vocabularyData.planning.words,
     phrases: vocabularyData.planning.phrases
@@ -701,7 +701,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.airport.title,
     emoji: vocabularyData.airport.icon,
     description: 'Фрази для аеропорту та реєстрації',
-    position: { top: '11%', left: '70%' },
+    position: { top: '8%', left: '70%' },
     completed: false,
     words: vocabularyData.airport.words,
     phrases: vocabularyData.airport.phrases
@@ -711,7 +711,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.hotel.title,
     emoji: vocabularyData.hotel.icon,
     description: 'Проживання та сервіс',
-    position: { top: '18%', left: '15%' },
+    position: { top: '13%', left: '15%' },
     completed: false,
     words: vocabularyData.hotel.words,
     phrases: vocabularyData.hotel.phrases
@@ -721,7 +721,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.transport.title,
     emoji: vocabularyData.transport.icon,
     description: 'Громадський транспорт',
-    position: { top: '25%', left: '85%' },
+    position: { top: '18%', left: '85%' },
     completed: false,
     words: vocabularyData.transport.words,
     phrases: vocabularyData.transport.phrases
@@ -731,7 +731,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.restaurant.title,
     emoji: vocabularyData.restaurant.icon,
     description: 'Їжа та напої',
-    position: { top: '32%', left: '45%' },
+    position: { top: '23%', left: '45%' },
     completed: false,
     words: vocabularyData.restaurant.words,
     phrases: vocabularyData.restaurant.phrases
@@ -741,7 +741,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.shopping.title,
     emoji: vocabularyData.shopping.icon,
     description: 'Покупки та магазини',
-    position: { top: '39%', left: '10%' },
+    position: { top: '28%', left: '10%' },
     completed: false,
     words: vocabularyData.shopping.words,
     phrases: vocabularyData.shopping.phrases
@@ -751,7 +751,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.directions.title,
     emoji: vocabularyData.directions.icon,
     description: 'Орієнтування в місті',
-    position: { top: '46%', left: '75%' },
+    position: { top: '33%', left: '75%' },
     completed: false,
     words: vocabularyData.directions.words,
     phrases: vocabularyData.directions.phrases
@@ -761,7 +761,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.entertainment.title,
     emoji: vocabularyData.entertainment.icon,
     description: 'Розваги та культура',
-    position: { top: '53%', left: '25%' },
+    position: { top: '38%', left: '25%' },
     completed: false,
     words: vocabularyData.entertainment.words,
     phrases: vocabularyData.entertainment.phrases
@@ -771,7 +771,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.medical.title,
     emoji: vocabularyData.medical.icon,
     description: 'Медична допомога',
-    position: { top: '60%', left: '60%' },
+    position: { top: '43%', left: '60%' },
     completed: false,
     words: vocabularyData.medical.words,
     phrases: vocabularyData.medical.phrases
@@ -781,7 +781,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.money.title,
     emoji: vocabularyData.money.icon,
     description: 'Банки та фінанси',
-    position: { top: '67%', left: '15%' },
+    position: { top: '48%', left: '15%' },
     completed: false,
     words: vocabularyData.money.words,
     phrases: vocabularyData.money.phrases
@@ -791,7 +791,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.communication.title,
     emoji: vocabularyData.communication.icon,
     description: 'Зв\'язок та інтернет',
-    position: { top: '74%', left: '85%' },
+    position: { top: '53%', left: '85%' },
     completed: false,
     words: vocabularyData.communication.words,
     phrases: vocabularyData.communication.phrases
@@ -801,7 +801,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.emergency.title,
     emoji: vocabularyData.emergency.icon,
     description: 'Надзвичайні ситуації',
-    position: { top: '81%', left: '40%' },
+    position: { top: '58%', left: '40%' },
     completed: false,
     words: vocabularyData.emergency.words,
     phrases: vocabularyData.emergency.phrases
@@ -811,7 +811,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.weather.title,
     emoji: vocabularyData.weather.icon,
     description: 'Погода та час',
-    position: { top: '88%', left: '10%' },
+    position: { top: '63%', left: '10%' },
     completed: false,
     words: vocabularyData.weather.words,
     phrases: vocabularyData.weather.phrases
@@ -821,7 +821,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.departure.title,
     emoji: vocabularyData.departure.icon,
     description: 'Від\'їзд та завершення',
-    position: { top: '95%', left: '70%' },
+    position: { top: '68%', left: '70%' },
     completed: false,
     words: vocabularyData.departure.words,
     phrases: vocabularyData.departure.phrases
@@ -1665,20 +1665,20 @@ export default function VocabularyPage() {
       {/* Main Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 md:px-6 py-2 sm:py-4 md:py-8">
         {/* Header - Mobile optimized */}
-        <div className={`text-center mb-6 sm:mb-8 md:mb-16 transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-3 sm:mb-4 md:mb-6">
+        <div className={`text-center mb-8 sm:mb-12 md:mb-20 transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 md:mb-8">
             Словник для
             <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent block animate-pulse">
               подорожей
             </span>
           </h1>
-          <p className="text-gray-200 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto px-2 sm:px-4">
+          <p className="text-gray-200 text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto px-4 sm:px-6">
             Пройдіть шлях подорожі від планування до повернення додому
           </p>
         </div>
 
         {/* Journey Path - Mobile optimized */}
-        <div className={`relative min-h-[1400px] sm:min-h-[1600px] md:min-h-[2400px] transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+        <div className={`relative min-h-[2000px] sm:min-h-[2400px] md:min-h-[2800px] lg:min-h-[3200px] transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           {/* Single connecting line through all categories */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }} viewBox="0 0 100 100" preserveAspectRatio="none">
             <defs>
@@ -1700,31 +1700,42 @@ export default function VocabularyPage() {
             
             {/* Main connecting path through all categories in order */}
             <path
-              d="M 30,4 
-                 L 70,11
-                 L 15,18
-                 L 85,25
-                 L 45,32
-                 L 10,39
-                 L 75,46
-                 L 25,53
-                 L 60,60
-                 L 15,67
-                 L 85,74
-                 L 40,81
-                 L 10,88
-                 L 70,95"
+              d="M 30,2 
+                 L 70,6
+                 L 15,10
+                 L 85,14
+                 L 45,18
+                 L 10,22
+                 L 75,26
+                 L 25,30
+                 L 60,34
+                 L 15,38
+                 L 85,42
+                 L 40,46
+                 L 10,50
+                 L 70,54
+                 L 30,58
+                 L 80,62
+                 L 20,66
+                 L 60,70
+                 L 40,74
+                 L 15,78
+                 L 85,82
+                 L 50,86
+                 L 25,90
+                 L 75,94
+                 L 50,98"
               stroke="url(#connectingLineGradient)"
-              strokeWidth="0.4"
+              strokeWidth="0.6"
               fill="none"
-              strokeDasharray="3 2"
+              strokeDasharray="4 3"
               filter="url(#lineGlow)"
               className="animate-pulse"
-              style={{ animationDuration: '3s' }}
+              style={{ animationDuration: '4s' }}
             />
           </svg>
 
-          {/* Category Nodes - Mobile optimized sizes */}
+          {/* Category Nodes - Enhanced for mobile */}
           {vocabularyCategories.map((category, index) => (
             <div
               key={category.id}
@@ -1738,68 +1749,68 @@ export default function VocabularyPage() {
               }}
               onClick={() => handleCategoryClick(category)}
             >
-              {/* Outer Glow Ring - Smaller on mobile */}
-              <div className={`absolute inset-0 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-32 lg:h-32 rounded-full transition-all duration-500 ${
+              {/* Outer Glow Ring - Larger for mobile */}
+              <div className={`absolute inset-0 w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-36 lg:h-36 rounded-full transition-all duration-500 ${
                 completedCategories.has(category.id)
                   ? 'bg-green-400/20 shadow-2xl shadow-green-400/40'
                   : 'bg-purple-500/20 shadow-2xl shadow-purple-500/40'
               } group-hover:scale-150 group-hover:shadow-3xl animate-pulse`}></div>
 
-              {/* Main Node Circle - Mobile optimized */}
-              <div className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-28 lg:h-28 rounded-full border-2 sm:border-3 md:border-4 lg:border-6 transition-all duration-500 backdrop-blur-sm ${
+              {/* Main Node Circle - Significantly larger for mobile */}
+              <div className={`relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-full border-3 sm:border-4 md:border-5 lg:border-6 transition-all duration-500 backdrop-blur-sm ${
                 completedCategories.has(category.id)
                   ? 'bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 border-green-300 shadow-2xl shadow-green-400/60'
                   : 'bg-gradient-to-r from-purple-500 via-blue-600 to-indigo-600 border-purple-300 shadow-2xl shadow-purple-500/60'
               } hover:shadow-3xl hover:border-white/90 group-hover:rotate-12`}>
                 
                 {/* Inner gradient glow effect */}
-                <div className={`absolute inset-1 sm:inset-2 rounded-full ${
+                <div className={`absolute inset-2 sm:inset-3 rounded-full ${
                   completedCategories.has(category.id)
                     ? 'bg-gradient-to-r from-green-300/50 to-emerald-400/50'
                     : 'bg-gradient-to-r from-purple-400/50 to-blue-500/50'
                 } blur-sm`}></div>
 
-                {/* Completion Checkmark - Mobile optimized */}
+                {/* Completion Checkmark - Proportionally larger */}
                 {completedCategories.has(category.id) && (
-                  <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 md:-top-4 md:-right-4 w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center border-2 sm:border-3 md:border-4 border-white shadow-xl animate-bounce z-20">
-                    <span className="text-white text-xs sm:text-sm md:text-lg font-bold">✓</span>
+                  <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 md:-top-5 md:-right-5 w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center border-3 sm:border-4 md:border-5 border-white shadow-xl animate-bounce z-20">
+                    <span className="text-white text-sm sm:text-base md:text-xl font-bold">✓</span>
                   </div>
                 )}
 
-                {/* Category Number Badge - Mobile optimized */}
-                <div className="absolute -top-1 -left-1 sm:-top-2 sm:-left-2 md:-top-3 md:-left-3 w-5 h-5 sm:w-6 sm:h-6 md:w-10 md:h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-1 sm:border-2 md:border-3 border-white shadow-lg text-white text-xs sm:text-xs md:text-sm font-bold z-20">
+                {/* Category Number Badge - Larger */}
+                <div className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3 md:-top-4 md:-left-4 w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-2 sm:border-3 md:border-4 border-white shadow-lg text-white text-sm sm:text-sm md:text-base font-bold z-20">
                   {index + 1}
                 </div>
 
-                {/* Category Emoji - Mobile optimized */}
-                <div className="relative w-full h-full flex items-center justify-center text-lg sm:text-xl md:text-2xl lg:text-4xl z-10 group-hover:scale-110 transition-transform duration-300">
+                {/* Category Emoji - Larger */}
+                <div className="relative w-full h-full flex items-center justify-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl z-10 group-hover:scale-110 transition-transform duration-300">
                   {category.emoji}
                 </div>
 
                 {/* Multiple Pulsing Rings Animation */}
-                <div className={`absolute inset-0 rounded-full border-2 ${
+                <div className={`absolute inset-0 rounded-full border-2 sm:border-3 ${
                   completedCategories.has(category.id) ? 'border-green-400' : 'border-purple-400'
                 } animate-ping opacity-30`}></div>
-                <div className={`absolute inset-1 sm:inset-2 rounded-full border ${
+                <div className={`absolute inset-2 sm:inset-3 rounded-full border ${
                   completedCategories.has(category.id) ? 'border-green-300' : 'border-purple-300'
                 } animate-ping opacity-20`} style={{ animationDelay: '0.5s' }}></div>
-                <div className={`absolute inset-2 sm:inset-4 rounded-full border ${
+                <div className={`absolute inset-3 sm:inset-5 rounded-full border ${
                   completedCategories.has(category.id) ? 'border-green-200' : 'border-purple-200'
                 } animate-ping opacity-10`} style={{ animationDelay: '1s' }}></div>
               </div>
 
-              {/* Enhanced Category Label - Mobile optimized */}
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 sm:mt-6 md:mt-8 lg:mt-12 text-center min-w-max max-w-[120px] sm:max-w-[140px] md:max-w-[150px] lg:max-w-[200px]">
-                {/* Always visible title */}
-                <div className="bg-black/85 backdrop-blur-md rounded-lg px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 border border-gray-600/50 shadow-xl group-hover:border-purple-400/70 transition-all duration-300">
-                  <h3 className="text-white font-bold text-xs sm:text-xs md:text-sm drop-shadow-lg">
+              {/* Enhanced Category Label - Better spacing for larger circles */}
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-6 sm:mt-8 md:mt-10 lg:mt-14 text-center min-w-max max-w-[140px] sm:max-w-[160px] md:max-w-[180px] lg:max-w-[220px]">
+                {/* Always visible title - Larger text */}
+                <div className="bg-black/85 backdrop-blur-md rounded-lg px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 border border-gray-600/50 shadow-xl group-hover:border-purple-400/70 transition-all duration-300">
+                  <h3 className="text-white font-bold text-sm sm:text-sm md:text-base drop-shadow-lg">
                     {category.title}
                   </h3>
                 </div>
                 
                 {/* Description visible only on hover - Hidden on mobile for space */}
-                <div className="hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
-                  <div className="bg-black/90 backdrop-blur-md rounded-lg px-3 py-2 md:px-4 md:py-3 border border-purple-400/50 shadow-xl">
+                <div className="hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-3">
+                  <div className="bg-black/90 backdrop-blur-md rounded-lg px-4 py-3 md:px-5 md:py-4 border border-purple-400/50 shadow-xl">
                     <p className="text-gray-300 text-xs md:text-sm leading-tight mb-2">
                       {category.description}
                     </p>
@@ -1845,15 +1856,15 @@ export default function VocabularyPage() {
           </div>
 
           {/* Journey Start/End Markers - Mobile optimized */}
-          <div className="absolute" style={{ top: '1%', left: '30%', transform: 'translate(-50%, -100%)' }}>
-            <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-2 py-1 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded-full text-xs sm:text-sm md:text-base font-bold shadow-xl border-1 sm:border-2 border-white animate-bounce">
+          <div className="absolute" style={{ top: '0.5%', left: '30%', transform: 'translate(-50%, -100%)' }}>
+            <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-3 py-2 sm:px-5 sm:py-3 md:px-7 md:py-4 rounded-full text-sm sm:text-base md:text-lg font-bold shadow-xl border-2 sm:border-3 border-white animate-bounce">
               <span className="sm:hidden">🚀 СТАРТ</span>
               <span className="hidden sm:inline">🚀 СТАРТ ПОДОРОЖІ</span>
             </div>
           </div>
           
-          <div className="absolute" style={{ top: '97%', left: '70%', transform: 'translate(-50%, 0%)' }}>
-            <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white px-2 py-1 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded-full text-xs sm:text-sm md:text-base font-bold shadow-xl border-1 sm:border-2 border-white animate-bounce">
+          <div className="absolute" style={{ top: '72%', left: '70%', transform: 'translate(-50%, 0%)' }}>
+            <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white px-3 py-2 sm:px-5 sm:py-3 md:px-7 md:py-4 rounded-full text-sm sm:text-base md:text-lg font-bold shadow-xl border-2 sm:border-3 border-white animate-bounce">
               <span className="sm:hidden">🏠 ФІНІШ</span>
               <span className="hidden sm:inline">🏠 ПОВЕРНЕННЯ ДОДОМУ</span>
             </div>
