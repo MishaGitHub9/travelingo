@@ -691,7 +691,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.planning.title,
     emoji: vocabularyData.planning.icon,
     description: 'Основні фрази для планування поїздки',
-    position: { top: '8%', left: '20%' },
+    position: { top: '4%', left: '30%' },
     completed: false,
     words: vocabularyData.planning.words,
     phrases: vocabularyData.planning.phrases
@@ -701,7 +701,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.airport.title,
     emoji: vocabularyData.airport.icon,
     description: 'Фрази для аеропорту та реєстрації',
-    position: { top: '18%', left: '70%' },
+    position: { top: '11%', left: '70%' },
     completed: false,
     words: vocabularyData.airport.words,
     phrases: vocabularyData.airport.phrases
@@ -711,7 +711,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.hotel.title,
     emoji: vocabularyData.hotel.icon,
     description: 'Проживання та сервіс',
-    position: { top: '28%', left: '40%' },
+    position: { top: '18%', left: '15%' },
     completed: false,
     words: vocabularyData.hotel.words,
     phrases: vocabularyData.hotel.phrases
@@ -721,7 +721,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.transport.title,
     emoji: vocabularyData.transport.icon,
     description: 'Громадський транспорт',
-    position: { top: '38%', left: '15%' },
+    position: { top: '25%', left: '85%' },
     completed: false,
     words: vocabularyData.transport.words,
     phrases: vocabularyData.transport.phrases
@@ -731,7 +731,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.restaurant.title,
     emoji: vocabularyData.restaurant.icon,
     description: 'Їжа та напої',
-    position: { top: '48%', left: '75%' },
+    position: { top: '32%', left: '45%' },
     completed: false,
     words: vocabularyData.restaurant.words,
     phrases: vocabularyData.restaurant.phrases
@@ -741,7 +741,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.shopping.title,
     emoji: vocabularyData.shopping.icon,
     description: 'Покупки та магазини',
-    position: { top: '58%', left: '30%' },
+    position: { top: '39%', left: '10%' },
     completed: false,
     words: vocabularyData.shopping.words,
     phrases: vocabularyData.shopping.phrases
@@ -751,7 +751,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.directions.title,
     emoji: vocabularyData.directions.icon,
     description: 'Орієнтування в місті',
-    position: { top: '68%', left: '60%' },
+    position: { top: '46%', left: '75%' },
     completed: false,
     words: vocabularyData.directions.words,
     phrases: vocabularyData.directions.phrases
@@ -761,7 +761,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.entertainment.title,
     emoji: vocabularyData.entertainment.icon,
     description: 'Розваги та культура',
-    position: { top: '78%', left: '20%' },
+    position: { top: '53%', left: '25%' },
     completed: false,
     words: vocabularyData.entertainment.words,
     phrases: vocabularyData.entertainment.phrases
@@ -771,7 +771,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.medical.title,
     emoji: vocabularyData.medical.icon,
     description: 'Медична допомога',
-    position: { top: '88%', left: '50%' },
+    position: { top: '60%', left: '60%' },
     completed: false,
     words: vocabularyData.medical.words,
     phrases: vocabularyData.medical.phrases
@@ -781,7 +781,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.money.title,
     emoji: vocabularyData.money.icon,
     description: 'Банки та фінанси',
-    position: { top: '15%', left: '85%' },
+    position: { top: '67%', left: '15%' },
     completed: false,
     words: vocabularyData.money.words,
     phrases: vocabularyData.money.phrases
@@ -791,7 +791,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.communication.title,
     emoji: vocabularyData.communication.icon,
     description: 'Зв\'язок та інтернет',
-    position: { top: '25%', left: '10%' },
+    position: { top: '74%', left: '85%' },
     completed: false,
     words: vocabularyData.communication.words,
     phrases: vocabularyData.communication.phrases
@@ -801,7 +801,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.emergency.title,
     emoji: vocabularyData.emergency.icon,
     description: 'Надзвичайні ситуації',
-    position: { top: '35%', left: '85%' },
+    position: { top: '81%', left: '40%' },
     completed: false,
     words: vocabularyData.emergency.words,
     phrases: vocabularyData.emergency.phrases
@@ -811,7 +811,7 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.weather.title,
     emoji: vocabularyData.weather.icon,
     description: 'Погода та час',
-    position: { top: '45%', left: '50%' },
+    position: { top: '88%', left: '10%' },
     completed: false,
     words: vocabularyData.weather.words,
     phrases: vocabularyData.weather.phrases
@@ -821,16 +821,554 @@ const vocabularyCategories: Category[] = [
     title: vocabularyData.departure.title,
     emoji: vocabularyData.departure.icon,
     description: 'Від\'їзд та завершення',
-    position: { top: '55%', left: '10%' },
+    position: { top: '95%', left: '70%' },
     completed: false,
     words: vocabularyData.departure.words,
     phrases: vocabularyData.departure.phrases
   }
 ]
 
+// Practice Mode Types
+type PracticeMode = 'flashcards' | 'quiz' | 'dragdrop'
+type PracticeState = 'selection' | 'active' | 'results'
+
+interface PracticeResults {
+  correct: number
+  total: number
+  timeSpent: number
+}
+
 // Vocabulary Modal Component
 function VocabularyModal({ category, onClose }: { category: Category; onClose: () => void }) {
-  const [activeTab, setActiveTab] = useState<'words' | 'phrases'>('words')
+  const [activeTab, setActiveTab] = useState<'words' | 'phrases' | 'practice'>('words')
+  const [practiceMode, setPracticeMode] = useState<PracticeMode | null>(null)
+  const [practiceState, setPracticeState] = useState<PracticeState>('selection')
+  const [practiceResults, setPracticeResults] = useState<PracticeResults | null>(null)
+
+  const startPractice = (mode: PracticeMode) => {
+    setPracticeMode(mode)
+    setPracticeState('active')
+  }
+
+  const finishPractice = (results: PracticeResults) => {
+    setPracticeResults(results)
+    setPracticeState('results')
+  }
+
+  const resetPractice = () => {
+    setPracticeMode(null)
+    setPracticeState('selection')
+    setPracticeResults(null)
+  }
+
+  // Flashcards Component
+  const FlashcardsComponent = () => {
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const [isFlipped, setIsFlipped] = useState(false)
+    const [showWords, setShowWords] = useState(true)
+    const [startTime] = useState(Date.now())
+    const [completedCards, setCompletedCards] = useState(0)
+
+    const items = showWords ? category.words : category.phrases
+    const currentItem = items[currentIndex]
+
+    const nextCard = () => {
+      if (currentIndex < items.length - 1) {
+        setCurrentIndex(currentIndex + 1)
+        setIsFlipped(false)
+        setCompletedCards(prev => prev + 1)
+      } else {
+        // Finished all cards
+        finishPractice({
+          correct: completedCards + 1,
+          total: items.length,
+          timeSpent: Math.round((Date.now() - startTime) / 1000)
+        })
+      }
+    }
+
+    const prevCard = () => {
+      if (currentIndex > 0) {
+        setCurrentIndex(currentIndex - 1)
+        setIsFlipped(false)
+      }
+    }
+
+    return (
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <button
+            onClick={resetPractice}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200"
+          >
+            ← Назад
+          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setShowWords(true)}
+              className={`px-3 py-1 rounded-lg text-sm transition-colors duration-200 ${
+                showWords ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              Слова
+            </button>
+            <button
+              onClick={() => setShowWords(false)}
+              className={`px-3 py-1 rounded-lg text-sm transition-colors duration-200 ${
+                !showWords ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              Фрази
+            </button>
+          </div>
+        </div>
+
+        {/* Progress */}
+        <div className="text-center">
+          <div className="text-gray-300 mb-2">
+            {currentIndex + 1} з {items.length}
+          </div>
+          <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-300"
+              style={{ width: `${((currentIndex + 1) / items.length) * 100}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Flashcard */}
+        <div className="flex justify-center">
+          <div 
+            className="relative w-full max-w-md h-64 cursor-pointer"
+            onClick={() => setIsFlipped(!isFlipped)}
+            style={{ perspective: '1000px' }}
+          >
+            {/* Front of card */}
+            <div className={`absolute inset-0 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl p-6 transition-transform duration-500 backface-hidden ${
+              isFlipped ? 'rotate-y-180' : 'rotate-y-0'
+            }`}>
+              <div className="h-full flex flex-col justify-center items-center text-center">
+                <div className="text-white text-2xl md:text-3xl font-bold mb-4">
+                  {showWords ? (currentItem as VocabularyWord).word : (currentItem as VocabularyPhrase).phrase}
+                </div>
+                {showWords && (
+                  <div className="text-cyan-200 text-lg">
+                    {(currentItem as VocabularyWord).transcription}
+                  </div>
+                )}
+                <div className="mt-4 text-cyan-200 text-sm">
+                  Натисніть, щоб побачити переклад
+                </div>
+              </div>
+            </div>
+
+            {/* Back of card */}
+            <div className={`absolute inset-0 bg-gradient-to-br from-green-600 to-emerald-600 rounded-xl p-6 transition-transform duration-500 backface-hidden ${
+              isFlipped ? 'rotate-y-0' : 'rotate-y-180'
+            }`}>
+              <div className="h-full flex flex-col justify-center items-center text-center">
+                <div className="text-white text-2xl md:text-3xl font-bold mb-4">
+                  {showWords ? (currentItem as VocabularyWord).translation : (currentItem as VocabularyPhrase).translation}
+                </div>
+                <div className="mt-4 text-emerald-200 text-sm">
+                  Натисніть, щоб повернути
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div className="flex justify-center gap-4">
+          <button
+            onClick={prevCard}
+            disabled={currentIndex === 0}
+            className="px-6 py-2 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white transition-colors duration-200"
+          >
+            Попередня
+          </button>
+          <button
+            onClick={nextCard}
+            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors duration-200"
+          >
+            {currentIndex === items.length - 1 ? 'Завершити' : 'Наступна'}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Quiz Component
+  const QuizComponent = () => {
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+    const [showResult, setShowResult] = useState(false)
+    const [correctAnswers, setCorrectAnswers] = useState(0)
+    const [showWords, setShowWords] = useState(true)
+    const [startTime] = useState(Date.now())
+    const [options, setOptions] = useState<string[]>([])
+    const [randomizedIndexes, setRandomizedIndexes] = useState(() => {
+      // Create randomized array of indexes for questions
+      const items = showWords ? category.words : category.phrases
+      return Array.from({ length: items.length }, (_, i) => i).sort(() => Math.random() - 0.5)
+    })
+
+    const items = showWords ? category.words : category.phrases
+    const currentIndex = randomizedIndexes[currentQuestionIndex]
+    const currentItem = items[currentIndex]
+
+    // Generate wrong answers
+    const generateOptions = () => {
+      const correctAnswer = showWords ? 
+        (currentItem as VocabularyWord).translation : 
+        (currentItem as VocabularyPhrase).translation
+
+      const otherItems = items.filter((_, index) => index !== currentIndex)
+      const wrongAnswers = otherItems
+        .map(item => showWords ? (item as VocabularyWord).translation : (item as VocabularyPhrase).translation)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3)
+
+      const allOptions = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5)
+      return allOptions
+    }
+
+    // Update options when currentQuestionIndex or showWords changes
+    useEffect(() => {
+      setOptions(generateOptions())
+      setSelectedAnswer(null)
+      setShowResult(false)
+    }, [currentQuestionIndex, showWords])
+
+    // Reset quiz when changing between words/phrases
+    useEffect(() => {
+      const items = showWords ? category.words : category.phrases
+      setRandomizedIndexes(Array.from({ length: items.length }, (_, i) => i).sort(() => Math.random() - 0.5))
+      setCurrentQuestionIndex(0)
+      setCorrectAnswers(0)
+      setSelectedAnswer(null)
+      setShowResult(false)
+    }, [showWords])
+
+    const handleAnswer = (answer: string) => {
+      const correctAnswer = showWords ? 
+        (currentItem as VocabularyWord).translation : 
+        (currentItem as VocabularyPhrase).translation
+
+      setSelectedAnswer(answer)
+      setShowResult(true)
+
+      if (answer === correctAnswer) {
+        setCorrectAnswers(prev => prev + 1)
+      }
+    }
+
+    const nextQuestion = () => {
+      if (currentQuestionIndex < items.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1)
+        setSelectedAnswer(null)
+        setShowResult(false)
+      } else {
+        // Finished quiz
+        finishPractice({
+          correct: correctAnswers + (selectedAnswer === (showWords ? (currentItem as VocabularyWord).translation : (currentItem as VocabularyPhrase).translation) ? 1 : 0),
+          total: items.length,
+          timeSpent: Math.round((Date.now() - startTime) / 1000)
+        })
+      }
+    }
+
+    const correctAnswer = showWords ? 
+      (currentItem as VocabularyWord).translation : 
+      (currentItem as VocabularyPhrase).translation
+
+    return (
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <button
+            onClick={resetPractice}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200"
+          >
+            ← Назад
+          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setShowWords(true)}
+              className={`px-3 py-1 rounded-lg text-sm transition-colors duration-200 ${
+                showWords ? 'bg-green-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              Слова
+            </button>
+            <button
+              onClick={() => setShowWords(false)}
+              className={`px-3 py-1 rounded-lg text-sm transition-colors duration-200 ${
+                !showWords ? 'bg-green-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              Фрази
+            </button>
+          </div>
+        </div>
+
+        {/* Progress */}
+        <div className="text-center">
+          <div className="text-gray-300 mb-2">
+            Питання {currentQuestionIndex + 1} з {items.length}
+          </div>
+          <div className="text-green-400 text-sm mb-2">
+            Правильних відповідей: {correctAnswers}
+          </div>
+          <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-300"
+              style={{ width: `${((currentQuestionIndex + 1) / items.length) * 100}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Question */}
+        <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 rounded-xl p-6 border border-green-500/30">
+          <div className="text-center mb-6">
+            <h3 className="text-white text-xl mb-2">Оберіть правильний переклад:</h3>
+            <div className="text-green-300 text-2xl md:text-3xl font-bold">
+              {showWords ? (currentItem as VocabularyWord).word : (currentItem as VocabularyPhrase).phrase}
+            </div>
+            {showWords && (
+              <div className="text-green-200 text-lg mt-2">
+                {(currentItem as VocabularyWord).transcription}
+              </div>
+            )}
+          </div>
+
+          {/* Options */}
+          <div className="grid gap-3">
+            {options.map((option, index) => {
+              const isSelected = selectedAnswer === option
+              const isCorrect = option === correctAnswer
+              const isWrong = showResult && isSelected && !isCorrect
+
+              return (
+                <button
+                  key={index}
+                  onClick={() => !showResult && handleAnswer(option)}
+                  disabled={showResult}
+                  className={`p-4 rounded-lg text-left transition-all duration-200 ${
+                    showResult
+                      ? isCorrect
+                        ? 'bg-green-600 text-white border-2 border-green-400'
+                        : isWrong
+                        ? 'bg-red-600 text-white border-2 border-red-400'
+                        : 'bg-gray-700 text-gray-300'
+                      : 'bg-gray-700 hover:bg-gray-600 text-white'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>{option}</span>
+                    {showResult && isCorrect && <span className="text-green-200">✓</span>}
+                    {showResult && isWrong && <span className="text-red-200">✗</span>}
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Next button */}
+          {showResult && (
+            <div className="text-center mt-6">
+              <button
+                onClick={nextQuestion}
+                className="px-6 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-white transition-colors duration-200"
+              >
+                {currentQuestionIndex === items.length - 1 ? 'Завершити тест' : 'Наступне питання'}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  // Drag and Drop Component
+  const DragDropComponent = () => {
+    return (
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <button
+            onClick={resetPractice}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200"
+          >
+            ← Назад
+          </button>
+        </div>
+
+        {/* Under Development Message */}
+        <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-xl p-12 border border-purple-500/30">
+          <div className="text-center">
+            <div className="text-6xl mb-6">🚧</div>
+            <h3 className="text-white text-2xl font-bold mb-4">Драг енд Дроп</h3>
+            <p className="text-purple-300 text-lg mb-4">У розробці</p>
+            <p className="text-gray-400 text-sm">Цей режим практики буде доступний незабаром!</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Results Component
+  const ResultsComponent = () => {
+    if (!practiceResults) return null
+
+    const percentage = Math.round((practiceResults.correct / practiceResults.total) * 100)
+    const minutes = Math.floor(practiceResults.timeSpent / 60)
+    const seconds = practiceResults.timeSpent % 60
+
+    const getScoreMessage = () => {
+      if (percentage >= 90) return "Відмінно! 🏆"
+      if (percentage >= 75) return "Дуже добре! 🌟"
+      if (percentage >= 60) return "Добре! 👍"
+      if (percentage >= 40) return "Непогано! 💪"
+      return "Потрібна практика! 📚"
+    }
+
+    const getScoreColor = () => {
+      if (percentage >= 90) return "text-yellow-400"
+      if (percentage >= 75) return "text-green-400"
+      if (percentage >= 60) return "text-blue-400"
+      if (percentage >= 40) return "text-purple-400"
+      return "text-red-400"
+    }
+
+    return (
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Результати практики</h2>
+          <p className="text-gray-300">Ось ваші результати!</p>
+        </div>
+
+        {/* Results Card */}
+        <div className="bg-gradient-to-br from-gray-800/95 to-gray-900/95 rounded-xl p-6 md:p-8 border border-gray-600/50">
+          {/* Score */}
+          <div className="text-center mb-8">
+            <div className={`text-4xl md:text-6xl font-bold mb-2 ${getScoreColor()}`}>
+              {percentage}%
+            </div>
+            <div className={`text-xl md:text-2xl font-semibold mb-4 ${getScoreColor()}`}>
+              {getScoreMessage()}
+            </div>
+            <div className="text-gray-300">
+              {practiceResults.correct} правильних з {practiceResults.total} питань
+            </div>
+          </div>
+
+          {/* Statistics */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* Correct Answers */}
+            <div className="bg-green-600/20 rounded-lg p-4 border border-green-500/30">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-400 mb-1">
+                  {practiceResults.correct}
+                </div>
+                <div className="text-green-300 text-sm">
+                  Правильних відповідей
+                </div>
+              </div>
+            </div>
+
+            {/* Wrong Answers */}
+            <div className="bg-red-600/20 rounded-lg p-4 border border-red-500/30">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-red-400 mb-1">
+                  {practiceResults.total - practiceResults.correct}
+                </div>
+                <div className="text-red-300 text-sm">
+                  Неправильних відповідей
+                </div>
+              </div>
+            </div>
+
+            {/* Time Spent */}
+            <div className="bg-blue-600/20 rounded-lg p-4 border border-blue-500/30">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-400 mb-1">
+                  {minutes > 0 ? `${minutes}:${seconds.toString().padStart(2, '0')}` : `${seconds}с`}
+                </div>
+                <div className="text-blue-300 text-sm">
+                  Витрачено часу
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="mb-8">
+            <div className="flex justify-between text-sm text-gray-300 mb-2">
+              <span>Прогрес</span>
+              <span>{percentage}%</span>
+            </div>
+            <div className="w-full h-4 bg-gray-700 rounded-full overflow-hidden">
+              <div 
+                className={`h-full transition-all duration-1000 rounded-full ${
+                  percentage >= 75 
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-500' 
+                    : percentage >= 50
+                    ? 'bg-gradient-to-r from-blue-500 to-cyan-500'
+                    : 'bg-gradient-to-r from-red-500 to-orange-500'
+                }`}
+                style={{ width: `${percentage}%` }}
+              />
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={resetPractice}
+              className="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition-colors duration-200"
+            >
+              Практикувати ще раз
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('practice')
+                resetPractice()
+              }}
+              className="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition-colors duration-200"
+            >
+              Вибрати інший режим
+            </button>
+            <button
+              onClick={onClose}
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium transition-colors duration-200"
+            >
+              Повернутися до словника
+            </button>
+          </div>
+        </div>
+
+        {/* Tips */}
+        <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-lg p-4 border border-purple-500/30">
+          <div className="text-center">
+            <h3 className="text-white font-semibold mb-2">💡 Поради для покращення</h3>
+            <div className="text-purple-300 text-sm">
+              {percentage >= 90 ? 
+                "Чудова робота! Спробуйте інші категорії або режими практики." :
+                percentage >= 75 ?
+                "Майже ідеально! Повторіть слова, які викликають труднощі." :
+                percentage >= 50 ?
+                "Добрий результат! Практикуйтеся частіше для кращих результатів." :
+                "Не здавайтеся! Регулярна практика допоможе покращити результати."
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
@@ -855,7 +1393,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-2 mb-6 flex-wrap">
           <button
             onClick={() => setActiveTab('words')}
             className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
@@ -876,11 +1414,29 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           >
             Фрази ({category.phrases.length})
           </button>
+          <button
+            onClick={() => setActiveTab('practice')}
+            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              activeTab === 'practice'
+                ? 'bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            🎯 Практикувати
+          </button>
         </div>
 
         {/* Content */}
         <div className="grid gap-3 md:gap-4">
-          {activeTab === 'words' ? (
+          {practiceState === 'active' && practiceMode === 'flashcards' ? (
+            <FlashcardsComponent />
+          ) : practiceState === 'active' && practiceMode === 'quiz' ? (
+            <QuizComponent />
+          ) : practiceState === 'active' && practiceMode === 'dragdrop' ? (
+            <DragDropComponent />
+          ) : practiceState === 'results' ? (
+            <ResultsComponent />
+          ) : activeTab === 'words' ? (
             // Words Grid
             category.words.map((word, index) => (
               <div
@@ -901,7 +1457,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
                 </div>
               </div>
             ))
-          ) : (
+          ) : activeTab === 'phrases' ? (
             // Phrases Grid
             category.phrases.map((phrase, index) => (
               <div
@@ -919,6 +1475,88 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
                 </div>
               </div>
             ))
+          ) : (
+            // Practice Modes
+            <div className="space-y-4">
+              <div className="text-center mb-6">
+                <h3 className="text-white text-xl md:text-2xl font-bold mb-2">Виберіть режим практики</h3>
+                <p className="text-gray-300 text-sm md:text-base">Оберіть зручний для вас спосіб вивчення матеріалу</p>
+              </div>
+
+              {/* Practice Mode Cards */}
+              <div className="grid gap-4 md:gap-6">
+                {/* Flashcards Mode */}
+                <div 
+                  onClick={() => startPractice('flashcards')}
+                  className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-xl p-4 md:p-6 border border-blue-500/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.02]"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300">
+                      🃏
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-white font-bold text-lg md:text-xl mb-1">Картки</h4>
+                      <p className="text-gray-300 text-sm md:text-base mb-2">Вивчайте слова та фрази за допомогою інтерактивних карток</p>
+                      <div className="flex gap-2">
+                        <span className="bg-blue-500/20 text-blue-300 px-2 py-1 rounded text-xs">Слова: {category.words.length}</span>
+                        <span className="bg-cyan-500/20 text-cyan-300 px-2 py-1 rounded text-xs">Фрази: {category.phrases.length}</span>
+                      </div>
+                    </div>
+                    <div className="text-blue-400 text-2xl group-hover:translate-x-1 transition-transform duration-300">
+                      →
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quiz Mode */}
+                <div 
+                  onClick={() => startPractice('quiz')}
+                  className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-xl p-4 md:p-6 border border-green-500/30 hover:border-green-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.02]"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300">
+                      📝
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-white font-bold text-lg md:text-xl mb-1">Тести</h4>
+                      <p className="text-gray-300 text-sm md:text-base mb-2">Перевірте свої знання за допомогою тестових завдань</p>
+                      <div className="flex gap-2">
+                        <span className="bg-green-500/20 text-green-300 px-2 py-1 rounded text-xs">Множинний вибір</span>
+                        <span className="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded text-xs">Переклад</span>
+                      </div>
+                    </div>
+                    <div className="text-green-400 text-2xl group-hover:translate-x-1 transition-transform duration-300">
+                      →
+                    </div>
+                  </div>
+                </div>
+
+                {/* Drag and Drop Mode */}
+                <div 
+                  onClick={() => startPractice('dragdrop')}
+                  className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-xl p-4 md:p-6 border border-purple-500/30 hover:border-purple-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.02]"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300">
+                      🎯
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-white font-bold text-lg md:text-xl mb-1">Драг енд Дроп</h4>
+                      <p className="text-gray-300 text-sm md:text-base mb-2">З'єднайте слова з їх перекладами перетягуванням</p>
+                      <div className="flex gap-2">
+                        <span className="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">Інтерактивно</span>
+                        <span className="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">Весело</span>
+                      </div>
+                    </div>
+                    <div className="text-purple-400 text-2xl group-hover:translate-x-1 transition-transform duration-300">
+                      →
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
           )}
         </div>
       </div>
@@ -1017,24 +1655,19 @@ export default function VocabularyPage() {
         </div>
 
         {/* Journey Path */}
-        <div className={`relative min-h-[1000px] md:min-h-[1400px] transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-          {/* Enhanced Path Lines with Multiple Routes */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }} viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid meet">
+        <div className={`relative min-h-[1800px] md:min-h-[2400px] transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+          {/* Single connecting line through all categories */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }} viewBox="0 0 100 100" preserveAspectRatio="none">
             <defs>
-              <linearGradient id="mainPathGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.9" />
-                <stop offset="25%" stopColor="#ec4899" stopOpacity="0.8" />
-                <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.8" />
-                <stop offset="75%" stopColor="#10b981" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.9" />
+              <linearGradient id="connectingLineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.8" />
+                <stop offset="25%" stopColor="#3b82f6" stopOpacity="0.7" />
+                <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.7" />
+                <stop offset="75%" stopColor="#10b981" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.8" />
               </linearGradient>
-              <linearGradient id="secondaryPathGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.6" />
-                <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="#ec4899" stopOpacity="0.6" />
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+              <filter id="lineGlow">
+                <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
                 <feMerge> 
                   <feMergeNode in="coloredBlur"/>
                   <feMergeNode in="SourceGraphic"/>
@@ -1042,60 +1675,30 @@ export default function VocabularyPage() {
               </filter>
             </defs>
             
-            {/* Main Journey Path - Following the new positions */}
+            {/* Main connecting path through all categories in order */}
             <path
-              d="M 200,60 
-                 Q 400,100 700,140
-                 Q 600,180 400,220
-                 Q 250,260 150,300
-                 Q 300,340 750,380
-                 Q 600,420 300,460
-                 Q 450,500 600,540
-                 Q 400,580 200,620
-                 Q 350,660 500,700"
-              stroke="url(#mainPathGradient)"
-              strokeWidth="8"
+              d="M 30,4 
+                 L 70,11
+                 L 15,18
+                 L 85,25
+                 L 45,32
+                 L 10,39
+                 L 75,46
+                 L 25,53
+                 L 60,60
+                 L 15,67
+                 L 85,74
+                 L 40,81
+                 L 10,88
+                 L 70,95"
+              stroke="url(#connectingLineGradient)"
+              strokeWidth="0.4"
               fill="none"
-              strokeDasharray="25 15"
-              filter="url(#glow)"
+              strokeDasharray="3 2"
+              filter="url(#lineGlow)"
               className="animate-pulse"
-              style={{ animationDuration: '5s' }}
+              style={{ animationDuration: '3s' }}
             />
-            
-            {/* Secondary decorative paths */}
-            <path
-              d="M 180,80 Q 600,160 400,240 Q 200,320 650,400 Q 400,480 500,560 Q 300,640 400,720"
-              stroke="url(#secondaryPathGradient)"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="20 10"
-              opacity="0.6"
-              className="animate-pulse"
-              style={{ animationDuration: '6s', animationDelay: '1s' }}
-            />
-            
-            <path
-              d="M 100,120 Q 300,200 550,180 Q 750,300 350,380 Q 150,460 450,540 Q 250,620 350,700"
-              stroke="url(#secondaryPathGradient)"
-              strokeWidth="3"
-              fill="none"
-              strokeDasharray="15 8"
-              opacity="0.4"
-              className="animate-pulse"
-              style={{ animationDuration: '7s', animationDelay: '2s' }}
-            />
-            
-            {/* Travel milestone icons along the path */}
-            <g className="animate-pulse" style={{ animationDuration: '4s' }}>
-              <text x="300" y="120" fontSize="35" fill="#8b5cf6" opacity="0.8">✈️</text>
-              <text x="500" y="200" fontSize="30" fill="#3b82f6" opacity="0.7">🏨</text>
-              <text x="200" y="280" fontSize="32" fill="#06b6d4" opacity="0.8">🚗</text>
-              <text x="650" y="360" fontSize="28" fill="#10b981" opacity="0.7">🍽️</text>
-              <text x="350" y="440" fontSize="35" fill="#f59e0b" opacity="0.8">🛍️</text>
-              <text x="550" y="520" fontSize="30" fill="#ec4899" opacity="0.7">🗺️</text>
-              <text x="250" y="600" fontSize="32" fill="#8b5cf6" opacity="0.8">🎭</text>
-              <text x="450" y="680" fontSize="28" fill="#06b6d4" opacity="0.7">🎒</text>
-            </g>
           </svg>
 
           {/* Category Nodes with Enhanced Design */}
@@ -1163,23 +1766,30 @@ export default function VocabularyPage() {
               </div>
 
               {/* Enhanced Category Label with Background */}
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-6 md:mt-8 text-center min-w-max max-w-[150px] md:max-w-[200px]">
-                <div className="bg-black/85 backdrop-blur-md rounded-lg px-2 py-2 md:px-4 md:py-3 border border-gray-600/50 shadow-xl group-hover:border-purple-400/70 transition-all duration-300">
-                  <h3 className="text-white font-bold text-xs md:text-sm mb-1 drop-shadow-lg">
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-8 md:mt-12 text-center min-w-max max-w-[150px] md:max-w-[200px]">
+                {/* Always visible title */}
+                <div className="bg-black/85 backdrop-blur-md rounded-lg px-3 py-2 md:px-4 md:py-3 border border-gray-600/50 shadow-xl group-hover:border-purple-400/70 transition-all duration-300">
+                  <h3 className="text-white font-bold text-xs md:text-sm drop-shadow-lg">
                     {category.title}
                   </h3>
-                  <p className="text-gray-300 text-xs opacity-90 leading-tight mb-2 hidden md:block">
-                    {category.description}
-                  </p>
-                  
-                  {/* Word/Phrase count indicators - smaller on mobile */}
-                  <div className="flex justify-center gap-1 text-xs">
-                    <span className="bg-purple-500/80 px-1 py-0.5 md:px-2 md:py-1 rounded text-white font-medium">
-                      {category.words.length}
-                    </span>
-                    <span className="bg-blue-500/80 px-1 py-0.5 md:px-2 md:py-1 rounded text-white font-medium">
-                      {category.phrases.length}
-                    </span>
+                </div>
+                
+                {/* Description visible only on hover */}
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
+                  <div className="bg-black/90 backdrop-blur-md rounded-lg px-3 py-2 md:px-4 md:py-3 border border-purple-400/50 shadow-xl">
+                    <p className="text-gray-300 text-xs md:text-sm leading-tight mb-2">
+                      {category.description}
+                    </p>
+                    
+                    {/* Word/Phrase count indicators */}
+                    <div className="flex justify-center gap-2 text-xs">
+                      <span className="bg-purple-500/80 px-2 py-1 rounded text-white font-medium">
+                        {category.words.length} слів
+                      </span>
+                      <span className="bg-blue-500/80 px-2 py-1 rounded text-white font-medium">
+                        {category.phrases.length} фраз
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1211,15 +1821,15 @@ export default function VocabularyPage() {
           </div>
 
           {/* Journey Start/End Markers - Enhanced */}
-          <div className="absolute" style={{ top: '3%', left: '15%', transform: 'translate(-50%, -100%)' }}>
-            <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-3 py-2 md:px-5 md:py-3 rounded-full text-xs md:text-sm font-bold shadow-xl border-2 border-white animate-bounce">
-              🚀 СТАРТ
+          <div className="absolute" style={{ top: '1%', left: '30%', transform: 'translate(-50%, -100%)' }}>
+            <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-bold shadow-xl border-2 border-white animate-bounce">
+              🚀 СТАРТ ПОДОРОЖІ
             </div>
           </div>
           
-          <div className="absolute" style={{ top: '93%', left: '50%', transform: 'translate(-50%, 100%)' }}>
-            <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white px-3 py-2 md:px-5 md:py-3 rounded-full text-xs md:text-sm font-bold shadow-xl border-2 border-white animate-pulse">
-              🏁 ФІНІШ
+          <div className="absolute" style={{ top: '98%', left: '70%', transform: 'translate(-50%, 100%)' }}>
+            <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-bold shadow-xl border-2 border-white animate-pulse">
+              🏁 КІНЕЦЬ ПОДОРОЖІ
             </div>
           </div>
 
