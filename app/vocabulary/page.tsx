@@ -895,19 +895,19 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
     }
 
     return (
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header - Mobile optimized */}
+        <div className="flex items-center justify-between gap-2">
           <button
             onClick={resetPractice}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200"
+            className="flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
           >
-            ← Назад
+            ← <span className="hidden sm:inline">Назад</span>
           </button>
-          <div className="flex gap-2">
+          <div className="flex gap-1 sm:gap-2">
             <button
               onClick={() => setShowWords(true)}
-              className={`px-3 py-1 rounded-lg text-sm transition-colors duration-200 ${
+              className={`px-2 py-1 sm:px-3 sm:py-1 rounded-lg text-xs sm:text-sm transition-colors duration-200 ${
                 showWords ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
@@ -915,7 +915,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
             </button>
             <button
               onClick={() => setShowWords(false)}
-              className={`px-3 py-1 rounded-lg text-sm transition-colors duration-200 ${
+              className={`px-2 py-1 sm:px-3 sm:py-1 rounded-lg text-xs sm:text-sm transition-colors duration-200 ${
                 !showWords ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
@@ -924,9 +924,9 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </div>
         </div>
 
-        {/* Progress */}
+        {/* Progress - Mobile optimized */}
         <div className="text-center">
-          <div className="text-gray-300 mb-2">
+          <div className="text-gray-300 mb-2 text-sm sm:text-base">
             {currentIndex + 1} з {items.length}
           </div>
           <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
@@ -937,41 +937,41 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </div>
         </div>
 
-        {/* Flashcard */}
-        <div className="flex justify-center">
+        {/* Flashcard - Mobile optimized */}
+        <div className="flex justify-center px-2 sm:px-0">
           <div 
-            className="relative w-full max-w-md h-64 cursor-pointer"
+            className="relative w-full max-w-sm sm:max-w-md h-56 sm:h-64 cursor-pointer"
             onClick={() => setIsFlipped(!isFlipped)}
             style={{ perspective: '1000px' }}
           >
             {/* Front of card */}
-            <div className={`absolute inset-0 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl p-6 transition-transform duration-500 backface-hidden ${
+            <div className={`absolute inset-0 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl p-4 sm:p-6 transition-transform duration-500 backface-hidden ${
               isFlipped ? 'rotate-y-180' : 'rotate-y-0'
             }`}>
               <div className="h-full flex flex-col justify-center items-center text-center">
-                <div className="text-white text-2xl md:text-3xl font-bold mb-4">
+                <div className="text-white text-lg sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-4 px-2">
                   {showWords ? (currentItem as VocabularyWord).word : (currentItem as VocabularyPhrase).phrase}
                 </div>
                 {showWords && (
-                  <div className="text-cyan-200 text-lg">
+                  <div className="text-cyan-200 text-base sm:text-lg">
                     {(currentItem as VocabularyWord).transcription}
                   </div>
                 )}
-                <div className="mt-4 text-cyan-200 text-sm">
+                <div className="mt-3 sm:mt-4 text-cyan-200 text-xs sm:text-sm px-2">
                   Натисніть, щоб побачити переклад
                 </div>
               </div>
             </div>
 
             {/* Back of card */}
-            <div className={`absolute inset-0 bg-gradient-to-br from-green-600 to-emerald-600 rounded-xl p-6 transition-transform duration-500 backface-hidden ${
+            <div className={`absolute inset-0 bg-gradient-to-br from-green-600 to-emerald-600 rounded-xl p-4 sm:p-6 transition-transform duration-500 backface-hidden ${
               isFlipped ? 'rotate-y-0' : 'rotate-y-180'
             }`}>
               <div className="h-full flex flex-col justify-center items-center text-center">
-                <div className="text-white text-2xl md:text-3xl font-bold mb-4">
+                <div className="text-white text-lg sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-4 px-2">
                   {showWords ? (currentItem as VocabularyWord).translation : (currentItem as VocabularyPhrase).translation}
                 </div>
-                <div className="mt-4 text-emerald-200 text-sm">
+                <div className="mt-3 sm:mt-4 text-emerald-200 text-xs sm:text-sm px-2">
                   Натисніть, щоб повернути
                 </div>
               </div>
@@ -979,20 +979,31 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </div>
         </div>
 
-        {/* Controls */}
-        <div className="flex justify-center gap-4">
+        {/* Controls - Mobile optimized */}
+        <div className="flex justify-center gap-2 sm:gap-4 px-2 sm:px-0">
           <button
             onClick={prevCard}
             disabled={currentIndex === 0}
-            className="px-6 py-2 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white transition-colors duration-200"
+            className="px-4 py-2 sm:px-6 sm:py-2 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
           >
-            Попередня
+            <span className="sm:hidden">←</span>
+            <span className="hidden sm:inline">Попередня</span>
           </button>
           <button
             onClick={nextCard}
-            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors duration-200"
+            className="px-4 py-2 sm:px-6 sm:py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
           >
-            {currentIndex === items.length - 1 ? 'Завершити' : 'Наступна'}
+            {currentIndex === items.length - 1 ? (
+              <>
+                <span className="sm:hidden">✓</span>
+                <span className="hidden sm:inline">Завершити</span>
+              </>
+            ) : (
+              <>
+                <span className="sm:hidden">→</span>
+                <span className="hidden sm:inline">Наступна</span>
+              </>
+            )}
           </button>
         </div>
       </div>
@@ -1084,19 +1095,19 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
       (currentItem as VocabularyPhrase).translation
 
     return (
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header - Mobile optimized */}
+        <div className="flex items-center justify-between gap-2">
           <button
             onClick={resetPractice}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200"
+            className="flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
           >
-            ← Назад
+            ← <span className="hidden sm:inline">Назад</span>
           </button>
-          <div className="flex gap-2">
+          <div className="flex gap-1 sm:gap-2">
             <button
               onClick={() => setShowWords(true)}
-              className={`px-3 py-1 rounded-lg text-sm transition-colors duration-200 ${
+              className={`px-2 py-1 sm:px-3 sm:py-1 rounded-lg text-xs sm:text-sm transition-colors duration-200 ${
                 showWords ? 'bg-green-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
@@ -1104,7 +1115,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
             </button>
             <button
               onClick={() => setShowWords(false)}
-              className={`px-3 py-1 rounded-lg text-sm transition-colors duration-200 ${
+              className={`px-2 py-1 sm:px-3 sm:py-1 rounded-lg text-xs sm:text-sm transition-colors duration-200 ${
                 !showWords ? 'bg-green-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
@@ -1113,12 +1124,12 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </div>
         </div>
 
-        {/* Progress */}
+        {/* Progress - Mobile optimized */}
         <div className="text-center">
-          <div className="text-gray-300 mb-2">
+          <div className="text-gray-300 mb-2 text-sm sm:text-base">
             Питання {currentQuestionIndex + 1} з {items.length}
           </div>
-          <div className="text-green-400 text-sm mb-2">
+          <div className="text-green-400 text-xs sm:text-sm mb-2">
             Правильних відповідей: {correctAnswers}
           </div>
           <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
@@ -1129,22 +1140,22 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </div>
         </div>
 
-        {/* Question */}
-        <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 rounded-xl p-6 border border-green-500/30">
-          <div className="text-center mb-6">
-            <h3 className="text-white text-xl mb-2">Оберіть правильний переклад:</h3>
-            <div className="text-green-300 text-2xl md:text-3xl font-bold">
+        {/* Question - Mobile optimized */}
+        <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border border-green-500/30">
+          <div className="text-center mb-4 sm:mb-6">
+            <h3 className="text-white text-base sm:text-lg md:text-xl mb-2">Оберіть правильний переклад:</h3>
+            <div className="text-green-300 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold px-2">
               {showWords ? (currentItem as VocabularyWord).word : (currentItem as VocabularyPhrase).phrase}
             </div>
             {showWords && (
-              <div className="text-green-200 text-lg mt-2">
+              <div className="text-green-200 text-sm sm:text-base md:text-lg mt-2">
                 {(currentItem as VocabularyWord).transcription}
               </div>
             )}
           </div>
 
-          {/* Options */}
-          <div className="grid gap-3">
+          {/* Options - Mobile optimized */}
+          <div className="grid gap-2 sm:gap-3">
             {options.map((option, index) => {
               const isSelected = selectedAnswer === option
               const isCorrect = option === correctAnswer
@@ -1155,7 +1166,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
                   key={index}
                   onClick={() => !showResult && handleAnswer(option)}
                   disabled={showResult}
-                  className={`p-4 rounded-lg text-left transition-all duration-200 ${
+                  className={`p-3 sm:p-4 rounded-lg text-left transition-all duration-200 text-sm sm:text-base ${
                     showResult
                       ? isCorrect
                         ? 'bg-green-600 text-white border-2 border-green-400'
@@ -1165,24 +1176,34 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
                       : 'bg-gray-700 hover:bg-gray-600 text-white'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span>{option}</span>
-                    {showResult && isCorrect && <span className="text-green-200">✓</span>}
-                    {showResult && isWrong && <span className="text-red-200">✗</span>}
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="flex-1 pr-2">{option}</span>
+                    {showResult && isCorrect && <span className="text-green-200 flex-shrink-0">✓</span>}
+                    {showResult && isWrong && <span className="text-red-200 flex-shrink-0">✗</span>}
                   </div>
                 </button>
               )
             })}
           </div>
 
-          {/* Next button */}
+          {/* Next button - Mobile optimized */}
           {showResult && (
-            <div className="text-center mt-6">
+            <div className="text-center mt-4 sm:mt-6">
               <button
                 onClick={nextQuestion}
-                className="px-6 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-white transition-colors duration-200"
+                className="px-4 py-2 sm:px-6 sm:py-2 bg-green-600 hover:bg-green-700 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
               >
-                {currentQuestionIndex === items.length - 1 ? 'Завершити тест' : 'Наступне питання'}
+                {currentQuestionIndex === items.length - 1 ? (
+                  <>
+                    <span className="sm:hidden">Готово</span>
+                    <span className="hidden sm:inline">Завершити тест</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="sm:hidden">Далі</span>
+                    <span className="hidden sm:inline">Наступне питання</span>
+                  </>
+                )}
               </button>
             </div>
           )}
@@ -1191,27 +1212,27 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
     )
   }
 
-  // Drag and Drop Component
+  // Drag and Drop Component - Mobile optimized
   const DragDropComponent = () => {
     return (
-      <div className="space-y-6">
-        {/* Header */}
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header - Mobile optimized */}
         <div className="flex items-center justify-between">
           <button
             onClick={resetPractice}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200"
+            className="flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
           >
-            ← Назад
+            ← <span className="hidden sm:inline">Назад</span>
           </button>
         </div>
 
-        {/* Under Development Message */}
-        <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-xl p-12 border border-purple-500/30">
+        {/* Under Development Message - Mobile optimized */}
+        <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-lg sm:rounded-xl p-6 sm:p-8 md:p-12 border border-purple-500/30">
           <div className="text-center">
-            <div className="text-6xl mb-6">🚧</div>
-            <h3 className="text-white text-2xl font-bold mb-4">Драг енд Дроп</h3>
-            <p className="text-purple-300 text-lg mb-4">У розробці</p>
-            <p className="text-gray-400 text-sm">Цей режим практики буде доступний незабаром!</p>
+            <div className="text-4xl sm:text-5xl md:text-6xl mb-4 sm:mb-6">🚧</div>
+            <h3 className="text-white text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4">Драг енд Дроп</h3>
+            <p className="text-purple-300 text-base sm:text-lg mb-3 sm:mb-4">У розробці</p>
+            <p className="text-gray-400 text-xs sm:text-sm">Цей режим практики буде доступний незабаром!</p>
           </div>
         </div>
       </div>
@@ -1243,74 +1264,74 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
     }
 
     return (
-      <div className="space-y-6">
-        {/* Header */}
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header - Mobile optimized */}
         <div className="text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Результати практики</h2>
-          <p className="text-gray-300">Ось ваші результати!</p>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Результати практики</h2>
+          <p className="text-gray-300 text-sm sm:text-base">Ось ваші результати!</p>
         </div>
 
-        {/* Results Card */}
-        <div className="bg-gradient-to-br from-gray-800/95 to-gray-900/95 rounded-xl p-6 md:p-8 border border-gray-600/50">
-          {/* Score */}
-          <div className="text-center mb-8">
-            <div className={`text-4xl md:text-6xl font-bold mb-2 ${getScoreColor()}`}>
+        {/* Results Card - Mobile optimized */}
+        <div className="bg-gradient-to-br from-gray-800/95 to-gray-900/95 rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 border border-gray-600/50">
+          {/* Score - Mobile optimized */}
+          <div className="text-center mb-6 sm:mb-8">
+            <div className={`text-3xl sm:text-4xl md:text-6xl font-bold mb-2 ${getScoreColor()}`}>
               {percentage}%
             </div>
-            <div className={`text-xl md:text-2xl font-semibold mb-4 ${getScoreColor()}`}>
+            <div className={`text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 ${getScoreColor()}`}>
               {getScoreMessage()}
             </div>
-            <div className="text-gray-300">
+            <div className="text-gray-300 text-sm sm:text-base">
               {practiceResults.correct} правильних з {practiceResults.total} питань
             </div>
           </div>
 
-          {/* Statistics */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* Statistics - Mobile optimized */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
             {/* Correct Answers */}
-            <div className="bg-green-600/20 rounded-lg p-4 border border-green-500/30">
+            <div className="bg-green-600/20 rounded-lg p-3 sm:p-4 border border-green-500/30">
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-400 mb-1">
+                <div className="text-xl sm:text-2xl font-bold text-green-400 mb-1">
                   {practiceResults.correct}
                 </div>
-                <div className="text-green-300 text-sm">
+                <div className="text-green-300 text-xs sm:text-sm">
                   Правильних відповідей
                 </div>
               </div>
             </div>
 
             {/* Wrong Answers */}
-            <div className="bg-red-600/20 rounded-lg p-4 border border-red-500/30">
+            <div className="bg-red-600/20 rounded-lg p-3 sm:p-4 border border-red-500/30">
               <div className="text-center">
-                <div className="text-2xl font-bold text-red-400 mb-1">
+                <div className="text-xl sm:text-2xl font-bold text-red-400 mb-1">
                   {practiceResults.total - practiceResults.correct}
                 </div>
-                <div className="text-red-300 text-sm">
+                <div className="text-red-300 text-xs sm:text-sm">
                   Неправильних відповідей
                 </div>
               </div>
             </div>
 
             {/* Time Spent */}
-            <div className="bg-blue-600/20 rounded-lg p-4 border border-blue-500/30">
+            <div className="bg-blue-600/20 rounded-lg p-3 sm:p-4 border border-blue-500/30">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-400 mb-1">
+                <div className="text-xl sm:text-2xl font-bold text-blue-400 mb-1">
                   {minutes > 0 ? `${minutes}:${seconds.toString().padStart(2, '0')}` : `${seconds}с`}
                 </div>
-                <div className="text-blue-300 text-sm">
+                <div className="text-blue-300 text-xs sm:text-sm">
                   Витрачено часу
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Progress Bar */}
-          <div className="mb-8">
-            <div className="flex justify-between text-sm text-gray-300 mb-2">
+          {/* Progress Bar - Mobile optimized */}
+          <div className="mb-6 sm:mb-8">
+            <div className="flex justify-between text-xs sm:text-sm text-gray-300 mb-2">
               <span>Прогрес</span>
               <span>{percentage}%</span>
             </div>
-            <div className="w-full h-4 bg-gray-700 rounded-full overflow-hidden">
+            <div className="w-full h-3 sm:h-4 bg-gray-700 rounded-full overflow-hidden">
               <div 
                 className={`h-full transition-all duration-1000 rounded-full ${
                   percentage >= 75 
@@ -1324,37 +1345,40 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* Action Buttons - Mobile optimized */}
+          <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 justify-center">
             <button
               onClick={resetPractice}
-              className="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition-colors duration-200"
+              className="px-4 py-2.5 sm:px-6 sm:py-3 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition-colors duration-200 text-sm sm:text-base"
             >
-              Практикувати ще раз
+              <span className="sm:hidden">Ще раз</span>
+              <span className="hidden sm:inline">Практикувати ще раз</span>
             </button>
             <button
               onClick={() => {
                 setActiveTab('practice')
                 resetPractice()
               }}
-              className="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition-colors duration-200"
+              className="px-4 py-2.5 sm:px-6 sm:py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition-colors duration-200 text-sm sm:text-base"
             >
-              Вибрати інший режим
+              <span className="sm:hidden">Інший режим</span>
+              <span className="hidden sm:inline">Вибрати інший режим</span>
             </button>
             <button
               onClick={onClose}
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium transition-colors duration-200"
+              className="px-4 py-2.5 sm:px-6 sm:py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium transition-colors duration-200 text-sm sm:text-base"
             >
-              Повернутися до словника
+              <span className="sm:hidden">До словника</span>
+              <span className="hidden sm:inline">Повернутися до словника</span>
             </button>
           </div>
         </div>
 
-        {/* Tips */}
-        <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-lg p-4 border border-purple-500/30">
+        {/* Tips - Mobile optimized */}
+        <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-lg p-3 sm:p-4 border border-purple-500/30">
           <div className="text-center">
-            <h3 className="text-white font-semibold mb-2">💡 Поради для покращення</h3>
-            <div className="text-purple-300 text-sm">
+            <h3 className="text-white font-semibold mb-2 text-sm sm:text-base">💡 Поради для покращення</h3>
+            <div className="text-purple-300 text-xs sm:text-sm">
               {percentage >= 90 ? 
                 "Чудова робота! Спробуйте інші категорії або режими практики." :
                 percentage >= 75 ?
@@ -1371,32 +1395,32 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
   }
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-gradient-to-br from-gray-800/95 to-gray-900/95 backdrop-blur-lg rounded-2xl p-6 md:p-8 max-w-4xl w-full max-h-[80vh] overflow-y-auto border border-gray-600/50" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3 md:gap-4">
-            <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center text-xl md:text-2xl">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4" onClick={onClose}>
+      <div className="bg-gradient-to-br from-gray-800/95 to-gray-900/95 backdrop-blur-lg rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 lg:p-8 max-w-4xl w-full max-h-[90vh] sm:max-h-[85vh] md:max-h-[80vh] overflow-y-auto border border-gray-600/50" onClick={(e) => e.stopPropagation()}>
+        {/* Header - Mobile optimized */}
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center text-lg sm:text-xl md:text-2xl">
               {category.emoji}
             </div>
-            <div>
-              <h2 className="text-xl md:text-2xl font-bold text-white">{category.title}</h2>
-              <p className="text-gray-300 text-sm md:text-base">{category.description}</p>
+            <div className="min-w-0 flex-1">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white truncate">{category.title}</h2>
+              <p className="text-gray-300 text-xs sm:text-sm md:text-base line-clamp-2">{category.description}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 md:w-10 md:h-10 bg-gray-700 hover:bg-gray-600 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors duration-200"
+            className="w-8 h-8 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gray-700 hover:bg-gray-600 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors duration-200 flex-shrink-0"
           >
             ✕
           </button>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="flex gap-2 mb-6 flex-wrap">
+        {/* Tab Navigation - Mobile optimized */}
+        <div className="flex gap-1 sm:gap-2 mb-4 sm:mb-6 overflow-x-auto pb-1">
           <button
             onClick={() => setActiveTab('words')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-xs sm:text-sm whitespace-nowrap ${
               activeTab === 'words'
                 ? 'bg-purple-500 text-white'
                 : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -1406,7 +1430,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </button>
           <button
             onClick={() => setActiveTab('phrases')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-xs sm:text-sm whitespace-nowrap ${
               activeTab === 'phrases'
                 ? 'bg-purple-500 text-white'
                 : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -1416,18 +1440,18 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </button>
           <button
             onClick={() => setActiveTab('practice')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-xs sm:text-sm whitespace-nowrap ${
               activeTab === 'practice'
                 ? 'bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg'
                 : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
             }`}
           >
-            🎯 Практикувати
+            <span className="hidden sm:inline">🎯 </span>Практика
           </button>
         </div>
 
-        {/* Content */}
-        <div className="grid gap-3 md:gap-4">
+        {/* Content - Mobile optimized */}
+        <div className="grid gap-2 sm:gap-3 md:gap-4">
           {practiceState === 'active' && practiceMode === 'flashcards' ? (
             <FlashcardsComponent />
           ) : practiceState === 'active' && practiceMode === 'quiz' ? (
@@ -1437,72 +1461,72 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           ) : practiceState === 'results' ? (
             <ResultsComponent />
           ) : activeTab === 'words' ? (
-            // Words Grid
+            // Words Grid - Mobile optimized
             category.words.map((word, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-r from-gray-700/50 to-gray-800/50 rounded-xl p-3 md:p-4 border border-gray-600/30 hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.02]"
+                className="bg-gradient-to-r from-gray-700/50 to-gray-800/50 rounded-lg sm:rounded-xl p-2.5 sm:p-3 md:p-4 border border-gray-600/30 hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.01] sm:hover:scale-[1.02]"
               >
-                <div className="flex justify-between items-center">
-                  <div className="flex-1">
-                    <div className="flex flex-col md:flex-row md:items-center md:gap-4">
-                      <h3 className="text-white font-semibold text-base md:text-lg">{word.word}</h3>
-                      <span className="text-purple-300 text-sm md:text-base">{word.transcription}</span>
+                <div className="flex justify-between items-center gap-2">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-col md:flex-row md:items-center md:gap-4">
+                      <h3 className="text-white font-semibold text-sm sm:text-base md:text-lg truncate">{word.word}</h3>
+                      <span className="text-purple-300 text-xs sm:text-sm md:text-base">{word.transcription}</span>
                     </div>
-                    <span className="text-gray-300 text-sm md:text-base">{word.translation}</span>
+                    <span className="text-gray-300 text-xs sm:text-sm md:text-base">{word.translation}</span>
                   </div>
-                  <div className="w-6 h-6 md:w-8 md:h-8 bg-purple-500/20 rounded-lg flex items-center justify-center ml-2">
-                    <span className="text-purple-300 text-sm md:text-base">🔊</span>
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-purple-300 text-xs sm:text-sm md:text-base">🔊</span>
                   </div>
                 </div>
               </div>
             ))
           ) : activeTab === 'phrases' ? (
-            // Phrases Grid
+            // Phrases Grid - Mobile optimized
             category.phrases.map((phrase, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-r from-gray-700/50 to-gray-800/50 rounded-xl p-3 md:p-4 border border-gray-600/30 hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.02]"
+                className="bg-gradient-to-r from-gray-700/50 to-gray-800/50 rounded-lg sm:rounded-xl p-2.5 sm:p-3 md:p-4 border border-gray-600/30 hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.01] sm:hover:scale-[1.02]"
               >
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <h3 className="text-white font-semibold text-base md:text-lg mb-1">{phrase.phrase}</h3>
-                    <span className="text-gray-300 text-sm md:text-base">{phrase.translation}</span>
+                <div className="flex justify-between items-start gap-2">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-white font-semibold text-sm sm:text-base md:text-lg mb-1 line-clamp-2">{phrase.phrase}</h3>
+                    <span className="text-gray-300 text-xs sm:text-sm md:text-base">{phrase.translation}</span>
                   </div>
-                  <div className="w-6 h-6 md:w-8 md:h-8 bg-purple-500/20 rounded-lg flex items-center justify-center ml-2">
-                    <span className="text-purple-300 text-sm md:text-base">🔊</span>
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-purple-300 text-xs sm:text-sm md:text-base">🔊</span>
                   </div>
                 </div>
               </div>
             ))
           ) : (
-            // Practice Modes
-            <div className="space-y-4">
-              <div className="text-center mb-6">
-                <h3 className="text-white text-xl md:text-2xl font-bold mb-2">Виберіть режим практики</h3>
-                <p className="text-gray-300 text-sm md:text-base">Оберіть зручний для вас спосіб вивчення матеріалу</p>
+            // Practice Modes - Mobile optimized
+            <div className="space-y-3 sm:space-y-4">
+              <div className="text-center mb-4 sm:mb-6">
+                <h3 className="text-white text-lg sm:text-xl md:text-2xl font-bold mb-2">Виберіть режим практики</h3>
+                <p className="text-gray-300 text-xs sm:text-sm md:text-base">Оберіть зручний для вас спосіб вивчення матеріалу</p>
               </div>
 
-              {/* Practice Mode Cards */}
-              <div className="grid gap-4 md:gap-6">
+              {/* Practice Mode Cards - Mobile optimized */}
+              <div className="grid gap-3 sm:gap-4 md:gap-6">
                 {/* Flashcards Mode */}
                 <div 
                   onClick={() => startPractice('flashcards')}
-                  className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-xl p-4 md:p-6 border border-blue-500/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.02]"
+                  className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border border-blue-500/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02]"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                       🃏
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-white font-bold text-lg md:text-xl mb-1">Картки</h4>
-                      <p className="text-gray-300 text-sm md:text-base mb-2">Вивчайте слова та фрази за допомогою інтерактивних карток</p>
-                      <div className="flex gap-2">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-white font-bold text-base sm:text-lg md:text-xl mb-1">Картки</h4>
+                      <p className="text-gray-300 text-xs sm:text-sm md:text-base mb-2 line-clamp-2">Вивчайте слова та фрази за допомогою інтерактивних карток</p>
+                      <div className="flex gap-1 sm:gap-2 text-xs flex-wrap">
                         <span className="bg-blue-500/20 text-blue-300 px-2 py-1 rounded text-xs">Слова: {category.words.length}</span>
                         <span className="bg-cyan-500/20 text-cyan-300 px-2 py-1 rounded text-xs">Фрази: {category.phrases.length}</span>
                       </div>
                     </div>
-                    <div className="text-blue-400 text-2xl group-hover:translate-x-1 transition-transform duration-300">
+                    <div className="text-blue-400 text-lg sm:text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
                       →
                     </div>
                   </div>
@@ -1511,21 +1535,21 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
                 {/* Quiz Mode */}
                 <div 
                   onClick={() => startPractice('quiz')}
-                  className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-xl p-4 md:p-6 border border-green-500/30 hover:border-green-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.02]"
+                  className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border border-green-500/30 hover:border-green-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02]"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                       📝
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-white font-bold text-lg md:text-xl mb-1">Тести</h4>
-                      <p className="text-gray-300 text-sm md:text-base mb-2">Перевірте свої знання за допомогою тестових завдань</p>
-                      <div className="flex gap-2">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-white font-bold text-base sm:text-lg md:text-xl mb-1">Тести</h4>
+                      <p className="text-gray-300 text-xs sm:text-sm md:text-base mb-2 line-clamp-2">Перевірте свої знання за допомогою тестових завдань</p>
+                      <div className="flex gap-1 sm:gap-2 text-xs flex-wrap">
                         <span className="bg-green-500/20 text-green-300 px-2 py-1 rounded text-xs">Множинний вибір</span>
                         <span className="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded text-xs">Переклад</span>
                       </div>
                     </div>
-                    <div className="text-green-400 text-2xl group-hover:translate-x-1 transition-transform duration-300">
+                    <div className="text-green-400 text-lg sm:text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
                       →
                     </div>
                   </div>
@@ -1534,21 +1558,21 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
                 {/* Drag and Drop Mode */}
                 <div 
                   onClick={() => startPractice('dragdrop')}
-                  className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-xl p-4 md:p-6 border border-purple-500/30 hover:border-purple-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.02]"
+                  className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border border-purple-500/30 hover:border-purple-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02]"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                       🎯
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-white font-bold text-lg md:text-xl mb-1">Драг енд Дроп</h4>
-                      <p className="text-gray-300 text-sm md:text-base mb-2">З'єднайте слова з їх перекладами перетягуванням</p>
-                      <div className="flex gap-2">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-white font-bold text-base sm:text-lg md:text-xl mb-1">Драг енд Дроп</h4>
+                      <p className="text-gray-300 text-xs sm:text-sm md:text-base mb-2 line-clamp-2">З'єднайте слова з їх перекладами перетягуванням</p>
+                      <div className="flex gap-1 sm:gap-2 text-xs flex-wrap">
                         <span className="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">Інтерактивно</span>
                         <span className="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">Весело</span>
                       </div>
                     </div>
-                    <div className="text-purple-400 text-2xl group-hover:translate-x-1 transition-transform duration-300">
+                    <div className="text-purple-400 text-lg sm:text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
                       →
                     </div>
                   </div>
@@ -1565,9 +1589,9 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
 }
 
 export default function VocabularyPage() {
-  const [isLoaded, setIsLoaded] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
-  const [completedCategories, setCompletedCategories] = useState<Set<string>>(new Set())
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [completedCategories] = useState<Set<string>>(new Set())
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -1576,7 +1600,6 @@ export default function VocabularyPage() {
 
   const handleCategoryClick = (category: Category) => {
     setSelectedCategory(category)
-    setCompletedCategories(prev => new Set([...Array.from(prev), category.id]))
   }
 
   const closeModal = () => {
@@ -1595,13 +1618,13 @@ export default function VocabularyPage() {
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tl from-pink-600/30 via-transparent to-cyan-600/30 animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      {/* Navigation */}
-      <nav className={`relative z-10 flex items-center justify-between p-4 md:p-6 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
-        <Link href="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300">
-          <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-xl shadow-purple-500/50">
+      {/* Navigation - Optimized for mobile */}
+      <nav className={`relative z-10 flex items-center justify-between p-3 sm:p-4 md:p-6 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
+        <Link href="/" className="flex items-center gap-2 sm:gap-3 hover:scale-105 transition-transform duration-300">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-lg md:text-xl shadow-xl shadow-purple-500/50">
             T
           </div>
-          <span className="text-white text-lg md:text-xl font-semibold">Travelingo</span>
+          <span className="text-white text-base sm:text-lg md:text-xl font-semibold">Travelingo</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -1615,24 +1638,24 @@ export default function VocabularyPage() {
         {/* Mobile Menu Button */}
         <button 
           onClick={toggleMobileMenu}
-          className="md:hidden w-10 h-10 bg-gray-800/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-white hover:bg-gray-700/80 transition-colors duration-200"
+          className="md:hidden w-8 h-8 sm:w-10 sm:h-10 bg-gray-800/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-white hover:bg-gray-700/80 transition-colors duration-200"
         >
           <div className="flex flex-col gap-1">
-            <div className={`w-5 h-0.5 bg-current transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
-            <div className={`w-5 h-0.5 bg-current transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></div>
-            <div className={`w-5 h-0.5 bg-current transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
+            <div className={`w-4 h-0.5 sm:w-5 bg-current transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
+            <div className={`w-4 h-0.5 sm:w-5 bg-current transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></div>
+            <div className={`w-4 h-0.5 sm:w-5 bg-current transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
           </div>
         </button>
 
         {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (
           <div className="md:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40" onClick={toggleMobileMenu}>
-            <div className="absolute top-20 right-4 bg-gray-800/95 backdrop-blur-lg rounded-xl p-6 min-w-[200px] border border-gray-600/50" onClick={(e) => e.stopPropagation()}>
-              <div className="flex flex-col gap-4">
-                <Link href="/" className="text-gray-300 hover:text-purple-300 transition-colors duration-200 py-2">Головна</Link>
-                <Link href="/tenses" className="text-gray-300 hover:text-blue-300 transition-colors duration-200 py-2">Часи</Link>
-                <span className="text-purple-400 font-semibold py-2">Словник</span>
-                <Link href="/practice" className="text-gray-300 hover:text-cyan-300 transition-colors duration-200 py-2">Практика</Link>
+            <div className="absolute top-16 sm:top-20 right-3 sm:right-4 bg-gray-800/95 backdrop-blur-lg rounded-xl p-4 sm:p-6 min-w-[180px] sm:min-w-[200px] border border-gray-600/50" onClick={(e) => e.stopPropagation()}>
+              <div className="flex flex-col gap-3 sm:gap-4">
+                <Link href="/" className="text-gray-300 hover:text-purple-300 transition-colors duration-200 py-2 text-sm sm:text-base">Головна</Link>
+                <Link href="/tenses" className="text-gray-300 hover:text-blue-300 transition-colors duration-200 py-2 text-sm sm:text-base">Часи</Link>
+                <span className="text-purple-400 font-semibold py-2 text-sm sm:text-base">Словник</span>
+                <Link href="/practice" className="text-gray-300 hover:text-cyan-300 transition-colors duration-200 py-2 text-sm sm:text-base">Практика</Link>
               </div>
             </div>
           </div>
@@ -1640,22 +1663,22 @@ export default function VocabularyPage() {
       </nav>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-8">
-        {/* Header */}
-        <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-4 md:mb-6">
+      <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 md:px-6 py-2 sm:py-4 md:py-8">
+        {/* Header - Mobile optimized */}
+        <div className={`text-center mb-6 sm:mb-8 md:mb-16 transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-3 sm:mb-4 md:mb-6">
             Словник для
             <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent block animate-pulse">
               подорожей
             </span>
           </h1>
-          <p className="text-gray-200 text-base md:text-lg lg:text-xl max-w-2xl mx-auto px-4">
+          <p className="text-gray-200 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto px-2 sm:px-4">
             Пройдіть шлях подорожі від планування до повернення додому
           </p>
         </div>
 
-        {/* Journey Path */}
-        <div className={`relative min-h-[1800px] md:min-h-[2400px] transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+        {/* Journey Path - Mobile optimized */}
+        <div className={`relative min-h-[1400px] sm:min-h-[1600px] md:min-h-[2400px] transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           {/* Single connecting line through all categories */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }} viewBox="0 0 100 100" preserveAspectRatio="none">
             <defs>
@@ -1701,11 +1724,11 @@ export default function VocabularyPage() {
             />
           </svg>
 
-          {/* Category Nodes with Enhanced Design */}
+          {/* Category Nodes - Mobile optimized sizes */}
           {vocabularyCategories.map((category, index) => (
             <div
               key={category.id}
-              className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-700 hover:scale-125 cursor-pointer group ${
+              className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-700 hover:scale-110 sm:hover:scale-125 cursor-pointer group ${
                 completedCategories.has(category.id) ? 'z-30' : 'z-20'
               }`}
               style={{
@@ -1715,41 +1738,41 @@ export default function VocabularyPage() {
               }}
               onClick={() => handleCategoryClick(category)}
             >
-              {/* Outer Glow Ring */}
-              <div className={`absolute inset-0 w-20 h-20 md:w-32 md:h-32 rounded-full transition-all duration-500 ${
+              {/* Outer Glow Ring - Smaller on mobile */}
+              <div className={`absolute inset-0 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-32 lg:h-32 rounded-full transition-all duration-500 ${
                 completedCategories.has(category.id)
                   ? 'bg-green-400/20 shadow-2xl shadow-green-400/40'
                   : 'bg-purple-500/20 shadow-2xl shadow-purple-500/40'
               } group-hover:scale-150 group-hover:shadow-3xl animate-pulse`}></div>
 
-              {/* Main Node Circle - Larger on Desktop */}
-              <div className={`relative w-16 h-16 md:w-28 md:h-28 rounded-full border-4 md:border-6 transition-all duration-500 backdrop-blur-sm ${
+              {/* Main Node Circle - Mobile optimized */}
+              <div className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-28 lg:h-28 rounded-full border-2 sm:border-3 md:border-4 lg:border-6 transition-all duration-500 backdrop-blur-sm ${
                 completedCategories.has(category.id)
                   ? 'bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 border-green-300 shadow-2xl shadow-green-400/60'
                   : 'bg-gradient-to-r from-purple-500 via-blue-600 to-indigo-600 border-purple-300 shadow-2xl shadow-purple-500/60'
               } hover:shadow-3xl hover:border-white/90 group-hover:rotate-12`}>
                 
                 {/* Inner gradient glow effect */}
-                <div className={`absolute inset-2 rounded-full ${
+                <div className={`absolute inset-1 sm:inset-2 rounded-full ${
                   completedCategories.has(category.id)
                     ? 'bg-gradient-to-r from-green-300/50 to-emerald-400/50'
                     : 'bg-gradient-to-r from-purple-400/50 to-blue-500/50'
                 } blur-sm`}></div>
 
-                {/* Completion Checkmark */}
+                {/* Completion Checkmark - Mobile optimized */}
                 {completedCategories.has(category.id) && (
-                  <div className="absolute -top-3 -right-3 md:-top-4 md:-right-4 w-8 h-8 md:w-12 md:h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center border-3 md:border-4 border-white shadow-xl animate-bounce z-20">
-                    <span className="text-white text-sm md:text-lg font-bold">✓</span>
+                  <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 md:-top-4 md:-right-4 w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center border-2 sm:border-3 md:border-4 border-white shadow-xl animate-bounce z-20">
+                    <span className="text-white text-xs sm:text-sm md:text-lg font-bold">✓</span>
                   </div>
                 )}
 
-                {/* Category Number Badge */}
-                <div className="absolute -top-2 -left-2 md:-top-3 md:-left-3 w-6 h-6 md:w-10 md:h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-2 md:border-3 border-white shadow-lg text-white text-xs md:text-sm font-bold z-20">
+                {/* Category Number Badge - Mobile optimized */}
+                <div className="absolute -top-1 -left-1 sm:-top-2 sm:-left-2 md:-top-3 md:-left-3 w-5 h-5 sm:w-6 sm:h-6 md:w-10 md:h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-1 sm:border-2 md:border-3 border-white shadow-lg text-white text-xs sm:text-xs md:text-sm font-bold z-20">
                   {index + 1}
                 </div>
 
-                {/* Category Emoji - Larger on Desktop */}
-                <div className="relative w-full h-full flex items-center justify-center text-xl md:text-4xl z-10 group-hover:scale-110 transition-transform duration-300">
+                {/* Category Emoji - Mobile optimized */}
+                <div className="relative w-full h-full flex items-center justify-center text-lg sm:text-xl md:text-2xl lg:text-4xl z-10 group-hover:scale-110 transition-transform duration-300">
                   {category.emoji}
                 </div>
 
@@ -1757,25 +1780,25 @@ export default function VocabularyPage() {
                 <div className={`absolute inset-0 rounded-full border-2 ${
                   completedCategories.has(category.id) ? 'border-green-400' : 'border-purple-400'
                 } animate-ping opacity-30`}></div>
-                <div className={`absolute inset-2 rounded-full border ${
+                <div className={`absolute inset-1 sm:inset-2 rounded-full border ${
                   completedCategories.has(category.id) ? 'border-green-300' : 'border-purple-300'
                 } animate-ping opacity-20`} style={{ animationDelay: '0.5s' }}></div>
-                <div className={`absolute inset-4 rounded-full border ${
+                <div className={`absolute inset-2 sm:inset-4 rounded-full border ${
                   completedCategories.has(category.id) ? 'border-green-200' : 'border-purple-200'
                 } animate-ping opacity-10`} style={{ animationDelay: '1s' }}></div>
               </div>
 
-              {/* Enhanced Category Label with Background */}
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-8 md:mt-12 text-center min-w-max max-w-[150px] md:max-w-[200px]">
+              {/* Enhanced Category Label - Mobile optimized */}
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 sm:mt-6 md:mt-8 lg:mt-12 text-center min-w-max max-w-[120px] sm:max-w-[140px] md:max-w-[150px] lg:max-w-[200px]">
                 {/* Always visible title */}
-                <div className="bg-black/85 backdrop-blur-md rounded-lg px-3 py-2 md:px-4 md:py-3 border border-gray-600/50 shadow-xl group-hover:border-purple-400/70 transition-all duration-300">
-                  <h3 className="text-white font-bold text-xs md:text-sm drop-shadow-lg">
+                <div className="bg-black/85 backdrop-blur-md rounded-lg px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3 border border-gray-600/50 shadow-xl group-hover:border-purple-400/70 transition-all duration-300">
+                  <h3 className="text-white font-bold text-xs sm:text-xs md:text-sm drop-shadow-lg">
                     {category.title}
                   </h3>
                 </div>
                 
-                {/* Description visible only on hover */}
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
+                {/* Description visible only on hover - Hidden on mobile for space */}
+                <div className="hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
                   <div className="bg-black/90 backdrop-blur-md rounded-lg px-3 py-2 md:px-4 md:py-3 border border-purple-400/50 shadow-xl">
                     <p className="text-gray-300 text-xs md:text-sm leading-tight mb-2">
                       {category.description}
@@ -1796,78 +1819,51 @@ export default function VocabularyPage() {
             </div>
           ))}
 
-          {/* Journey Progress Indicator - Enhanced */}
-          <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-black/85 backdrop-blur-md rounded-2xl p-4 md:p-6 border border-gray-600/50 shadow-2xl z-40">
-            <h3 className="text-white font-bold mb-3 text-sm md:text-lg flex items-center gap-2">
-              <span className="text-yellow-400">🗺️</span>
-              Прогрес подорожі
+          {/* Journey Progress Indicator - Mobile optimized */}
+          <div className="absolute top-2 right-2 sm:top-4 sm:right-4 md:top-6 md:right-6 bg-black/85 backdrop-blur-md rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 border border-gray-600/50 shadow-2xl z-40 max-w-[160px] sm:max-w-none">
+            <h3 className="text-white font-bold mb-2 sm:mb-3 text-xs sm:text-sm md:text-lg flex items-center gap-1 sm:gap-2">
+              <span className="text-yellow-400 text-sm sm:text-base">🗺️</span>
+              <span className="hidden sm:inline">Прогрес подорожі</span>
+              <span className="sm:hidden">Прогрес</span>
             </h3>
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-24 md:w-40 h-3 md:h-4 bg-gray-700 rounded-full overflow-hidden border border-gray-600">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+              <div className="w-16 sm:w-24 md:w-40 h-2 sm:h-3 md:h-4 bg-gray-700 rounded-full overflow-hidden border border-gray-600">
                 <div 
                   className="h-full bg-gradient-to-r from-purple-500 via-blue-500 to-green-500 rounded-full transition-all duration-1000 shadow-lg"
                   style={{ width: `${(completedCategories.size / vocabularyCategories.length) * 100}%` }}
                 ></div>
               </div>
-              <span className="text-white text-sm md:text-base font-bold">
+              <span className="text-white text-xs sm:text-sm md:text-base font-bold">
                 {completedCategories.size}/{vocabularyCategories.length}
               </span>
             </div>
-            <div className="text-gray-300 text-xs md:text-sm">
-              {completedCategories.size === 0 && "Почніть свою подорож! 🚀"}
-              {completedCategories.size > 0 && completedCategories.size < vocabularyCategories.length && "Продовжуйте навчання! 📚"}
-              {completedCategories.size === vocabularyCategories.length && "Подорож завершена! 🎉"}
+            <div className="text-gray-300 text-xs sm:text-xs md:text-sm">
+              {completedCategories.size === 0 && "Почніть! 🚀"}
+              {completedCategories.size > 0 && completedCategories.size < vocabularyCategories.length && "Продовжуйте! 📚"}
+              {completedCategories.size === vocabularyCategories.length && "Готово! 🎉"}
             </div>
           </div>
 
-          {/* Journey Start/End Markers - Enhanced */}
+          {/* Journey Start/End Markers - Mobile optimized */}
           <div className="absolute" style={{ top: '1%', left: '30%', transform: 'translate(-50%, -100%)' }}>
-            <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-bold shadow-xl border-2 border-white animate-bounce">
-              🚀 СТАРТ ПОДОРОЖІ
+            <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-2 py-1 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded-full text-xs sm:text-sm md:text-base font-bold shadow-xl border-1 sm:border-2 border-white animate-bounce">
+              <span className="sm:hidden">🚀 СТАРТ</span>
+              <span className="hidden sm:inline">🚀 СТАРТ ПОДОРОЖІ</span>
             </div>
           </div>
           
-          <div className="absolute" style={{ top: '98%', left: '70%', transform: 'translate(-50%, 100%)' }}>
-            <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-bold shadow-xl border-2 border-white animate-pulse">
-              🏁 КІНЕЦЬ ПОДОРОЖІ
+          <div className="absolute" style={{ top: '97%', left: '70%', transform: 'translate(-50%, 0%)' }}>
+            <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white px-2 py-1 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded-full text-xs sm:text-sm md:text-base font-bold shadow-xl border-1 sm:border-2 border-white animate-bounce">
+              <span className="sm:hidden">🏠 ФІНІШ</span>
+              <span className="hidden sm:inline">🏠 ПОВЕРНЕННЯ ДОДОМУ</span>
             </div>
-          </div>
-
-          {/* Background decorative elements */}
-          <div className="absolute top-10 left-10 w-20 h-20 md:w-32 md:h-32 bg-purple-500/10 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute top-1/3 right-10 w-16 h-16 md:w-24 md:h-24 bg-blue-500/10 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute bottom-20 left-1/4 w-24 h-24 md:w-40 md:h-40 bg-green-500/10 rounded-full blur-xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
-
-        {/* Progress */}
-        <div className={`text-center mt-8 md:mt-16 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <span className="text-gray-300 text-sm md:text-base">Прогрес:</span>
-            <div className="flex gap-2">
-              {vocabularyCategories.map((category) => (
-                <div
-                  key={category.id}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    completedCategories.has(category.id)
-                      ? 'bg-green-500'
-                      : 'bg-gray-600'
-                  }`}
-                ></div>
-              ))}
-            </div>
-            <span className="text-purple-300 font-semibold text-sm md:text-base">
-              {completedCategories.size}/{vocabularyCategories.length}
-            </span>
           </div>
         </div>
       </div>
 
       {/* Modal */}
       {selectedCategory && (
-        <VocabularyModal 
-          category={selectedCategory} 
-          onClose={closeModal} 
-        />
+        <VocabularyModal category={selectedCategory} onClose={closeModal} />
       )}
     </div>
   )
