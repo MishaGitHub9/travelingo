@@ -1678,143 +1678,76 @@ export default function VocabularyPage() {
           </p>
         </div>
 
-        {/* Journey Path - Mobile-first with curved S-path like in the image */}
-        <div className={`relative min-h-[2800px] transition-all duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+        {/* Journey Path - Mobile optimized and simplified */}
+        <div className={`relative min-h-[1800px] sm:min-h-[2000px] md:min-h-[2400px] lg:min-h-[2800px] transition-all duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
           
-          {/* Curved path using SVG */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-5" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.8" />
-                <stop offset="25%" stopColor="#3b82f6" stopOpacity="0.8" />
-                <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.8" />
-                <stop offset="75%" stopColor="#10b981" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.8" />
-              </linearGradient>
-            </defs>
-            
-            {/* Main S-curved path */}
-            <path
-              d="M 50,5
-                 Q 50,8 50,12
-                 Q 50,15 80,18
-                 Q 95,20 80,25
-                 Q 65,30 50,32
-                 Q 35,34 20,39
-                 Q 5,44 20,49
-                 Q 35,54 50,56
-                 Q 65,58 80,63
-                 Q 95,68 80,73
-                 Q 65,78 50,80
-                 Q 35,82 20,87
-                 Q 5,92 50,95"
-              stroke="url(#pathGradient)"
-              strokeWidth="1.5"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          
-          {/* Categories positioned along the S-curve */}
-          <div className="relative z-10 py-8 px-4">
-            {vocabularyCategories.map((category, index) => {
-              // Define positions along the S-curve
-              const positions = [
-                { top: '12%', left: '50%' },   // center top
-                { top: '18%', left: '80%' },   // right
-                { top: '25%', left: '80%' },   // right
-                { top: '32%', left: '50%' },   // center
-                { top: '39%', left: '20%' },   // left
-                { top: '49%', left: '20%' },   // left
-                { top: '56%', left: '50%' },   // center
-                { top: '63%', left: '80%' },   // right
-                { top: '73%', left: '80%' },   // right
-                { top: '80%', left: '50%' },   // center
-                { top: '87%', left: '20%' },   // left
-                { top: '92%', left: '20%' },   // left
-                { top: '95%', left: '50%' },   // center bottom
-                { top: '98%', left: '50%' }    // center bottom
-              ];
-              
-              const position = positions[index] || positions[positions.length - 1];
-              
-              return (
-                <div
-                  key={category.id}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 hover:scale-105 cursor-pointer group"
-                  style={{
-                    top: position.top,
-                    left: position.left
-                  }}
-                  onClick={() => handleCategoryClick(category)}
-                >
-                  {/* Main Category Circle */}
-                  <div className={`relative w-20 h-20 rounded-full border-4 transition-all duration-300 backdrop-blur-sm ${
-                    completedCategories.has(category.id)
-                      ? 'bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 border-green-300 shadow-xl shadow-green-400/50'
-                      : 'bg-gradient-to-r from-purple-500 via-blue-600 to-indigo-600 border-purple-300 shadow-xl shadow-purple-500/50'
-                  } group-hover:shadow-2xl group-hover:border-white/80`}>
-                    
-                    {/* Category Number Badge */}
-                    <div className="absolute -top-2 -left-2 w-7 h-7 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg text-white text-xs font-bold z-10">
-                      {index + 1}
-                    </div>
-
-                    {/* Completion Checkmark */}
-                    {completedCategories.has(category.id) && (
-                      <div className="absolute -top-2 -right-2 w-7 h-7 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center border-2 border-white shadow-lg z-10">
-                        <span className="text-white text-xs font-bold">✓</span>
-                      </div>
-                    )}
-
-                    {/* Category Emoji */}
-                    <div className="relative w-full h-full flex items-center justify-center text-3xl z-5 group-hover:scale-110 transition-transform duration-200">
-                      {category.emoji}
-                    </div>
+          {/* Simple grid layout for mobile */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 p-4 sm:p-6 md:p-8">
+            {vocabularyCategories.map((category, index) => (
+              <div
+                key={category.id}
+                className={`flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer group`}
+                onClick={() => handleCategoryClick(category)}
+              >
+                {/* Main Category Circle - Much bigger on mobile */}
+                <div className={`relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full border-4 sm:border-4 md:border-5 lg:border-6 transition-all duration-300 backdrop-blur-sm ${
+                  completedCategories.has(category.id)
+                    ? 'bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 border-green-300 shadow-xl shadow-green-400/50'
+                    : 'bg-gradient-to-r from-purple-500 via-blue-600 to-indigo-600 border-purple-300 shadow-xl shadow-purple-500/50'
+                } group-hover:shadow-2xl group-hover:border-white/80`}>
+                  
+                  {/* Category Number Badge */}
+                  <div className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-2 sm:border-3 border-white shadow-lg text-white text-sm sm:text-base md:text-lg font-bold z-10">
+                    {index + 1}
                   </div>
 
-                  {/* Category Title - positioned to avoid overlap */}
-                  <div className={`absolute text-center ${
-                    position.left === '20%' ? 'left-full ml-2' : 
-                    position.left === '80%' ? 'right-full mr-2' : 
-                    'top-full mt-2'
-                  } ${position.left === '50%' ? 'transform -translate-x-1/2' : ''}`}>
-                    <div className="bg-black/90 backdrop-blur-sm rounded-lg px-2 py-1 border border-gray-600/50 shadow-lg whitespace-nowrap">
-                      <h3 className="text-white font-semibold text-xs leading-tight">
-                        {category.title}
-                      </h3>
+                  {/* Completion Checkmark */}
+                  {completedCategories.has(category.id) && (
+                    <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center border-2 sm:border-3 border-white shadow-lg z-10">
+                      <span className="text-white text-sm sm:text-base md:text-lg font-bold">✓</span>
                     </div>
+                  )}
+
+                  {/* Category Emoji - Much bigger */}
+                  <div className="relative w-full h-full flex items-center justify-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl z-5 group-hover:scale-110 transition-transform duration-200">
+                    {category.emoji}
                   </div>
                 </div>
-              );
-            })}
+
+                {/* Category Title - Better spacing and sizing */}
+                <div className="mt-4 sm:mt-5 md:mt-6 text-center max-w-[140px] sm:max-w-[160px] md:max-w-[180px]">
+                  <div className="bg-black/80 backdrop-blur-sm rounded-lg px-3 py-2 sm:px-4 sm:py-2.5 border border-gray-600/50 shadow-lg group-hover:border-purple-400/60 transition-all duration-200">
+                    <h3 className="text-white font-semibold text-sm sm:text-base md:text-lg text-center leading-tight">
+                      {category.title}
+                    </h3>
+                  </div>
+                  
+                  {/* Word count indicator - visible on mobile */}
+                  <div className="mt-2 flex justify-center gap-1 text-xs">
+                    <span className="bg-purple-500/70 px-2 py-1 rounded text-white font-medium">
+                      {category.words.length} слів
+                    </span>
+                    <span className="bg-blue-500/70 px-2 py-1 rounded text-white font-medium">
+                      {category.phrases.length} фраз
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Start marker */}
-          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-20">
-            <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-xl border-2 border-white">
-              🚀 СТАРТ
-            </div>
-          </div>
-
-          {/* End marker */}
-          <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-20">
-            <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-xl border-2 border-white">
-              🏠 ФІНІШ
-            </div>
-          </div>
-
-          {/* Compact progress indicator */}
-          <div className="absolute top-4 right-4 bg-black/90 backdrop-blur-sm rounded-lg px-2 py-1.5 border border-gray-600/50 text-center z-20">
-            <div className="text-white text-xs font-medium mb-1">
-              {completedCategories.size}/{vocabularyCategories.length}
-            </div>
-            <div className="w-10 h-1 bg-gray-700 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-purple-500 to-green-500 rounded-full transition-all duration-500"
-                style={{ width: `${(completedCategories.size / vocabularyCategories.length) * 100}%` }}
-              ></div>
+          {/* Simple progress indicator at bottom */}
+          <div className="mt-8 mb-6 text-center">
+            <div className="inline-flex items-center gap-2 bg-black/80 backdrop-blur-sm rounded-full px-4 py-2 border border-gray-600/50">
+              <span className="text-white text-sm font-medium">
+                Вивчено: {completedCategories.size}/{vocabularyCategories.length}
+              </span>
+              <div className="w-20 h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-purple-500 to-green-500 rounded-full transition-all duration-500"
+                  style={{ width: `${(completedCategories.size / vocabularyCategories.length) * 100}%` }}
+                ></div>
+              </div>
             </div>
           </div>
         </div>
