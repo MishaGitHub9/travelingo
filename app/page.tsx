@@ -2,12 +2,99 @@
 
 import React, { useEffect, useState } from 'react'
 
+interface QuizOption {
+  letter: string
+  text: string
+  correct: boolean
+}
+
+interface Quiz {
+  question: string
+  options: QuizOption[]
+  explanation: string
+  correctAnswer: string
+}
+
+const quizzes: Quiz[] = [
+  {
+    question: "Як сказати 'Де знаходиться найближчий банкомат?'",
+    options: [
+      { letter: 'A', text: 'Where is the nearest ATM?', correct: true },
+      { letter: 'B', text: 'What is the nearest ATM?', correct: false },
+      { letter: 'C', text: 'How is the nearest ATM?', correct: false }
+    ],
+    explanation: "Використовуємо 'Where' для запитання про місце розташування.",
+    correctAnswer: "Where is the nearest ATM?"
+  },
+  {
+    question: "Як запитати 'Скільки це коштує?'",
+    options: [
+      { letter: 'A', text: 'How many does it cost?', correct: false },
+      { letter: 'B', text: 'How much does it cost?', correct: true },
+      { letter: 'C', text: 'How does it cost?', correct: false }
+    ],
+    explanation: "'How much' використовується для запитання про ціну або кількість незлічуваних речей.",
+    correctAnswer: "How much does it cost?"
+  },
+  {
+    question: "Як сказати 'Я хотів би замовити номер'",
+    options: [
+      { letter: 'A', text: 'I want to book a room', correct: false },
+      { letter: 'B', text: 'I would like to book a room', correct: true },
+      { letter: 'C', text: 'I will book a room', correct: false }
+    ],
+    explanation: "'Would like' більш ввічливий спосіб висловити бажання порівняно з 'want'.",
+    correctAnswer: "I would like to book a room"
+  },
+  {
+    question: "Як запитати дорогу до аеропорту?",
+    options: [
+      { letter: 'A', text: 'Where is the airport?', correct: false },
+      { letter: 'B', text: 'How can I get to the airport?', correct: true },
+      { letter: 'C', text: 'What is the airport?', correct: false }
+    ],
+    explanation: "'How can I get to...' - стандартний спосіб запитати маршрут до місця призначення.",
+    correctAnswer: "How can I get to the airport?"
+  }
+]
+
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)
+  const [currentQuizIndex, setCurrentQuizIndex] = useState(0)
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+  const [showResult, setShowResult] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   useEffect(() => {
     setIsLoaded(true)
   }, [])
+
+  useEffect(() => {
+    if (showResult) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(true)
+        setTimeout(() => {
+          setCurrentQuizIndex((prev) => (prev + 1) % quizzes.length)
+          setSelectedAnswer(null)
+          setShowResult(false)
+          setIsTransitioning(false)
+        }, 500)
+      }, 4000) // Show result for 4 seconds
+
+      return () => clearTimeout(timer)
+    }
+  }, [showResult])
+
+  const handleAnswerClick = (option: QuizOption) => {
+    if (showResult) return
+    
+    setSelectedAnswer(option.letter)
+    setTimeout(() => {
+      setShowResult(true)
+    }, 500)
+  }
+
+  const currentQuiz = quizzes[currentQuizIndex]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-indigo-950 relative overflow-hidden">
@@ -153,67 +240,175 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right Side - Quiz Card */}
+        {/* Right Side - Interactive Quiz */}
         <div className={`hidden lg:block flex-1 max-w-md transition-all duration-1000 delay-800 ${isLoaded ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-95'}`}>
-          <div className="bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-lg border-2 border-gray-600/70 rounded-2xl p-8 shadow-2xl hover:shadow-purple-500/30 transition-all duration-500 hover:scale-105 hover:border-purple-500/50">
+          <div className={`bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-lg border-2 border-gray-600/70 rounded-2xl p-8 shadow-2xl hover:shadow-purple-500/30 transition-all duration-500 hover:scale-105 hover:border-purple-500/50 ${isTransitioning ? 'opacity-50 scale-95' : ''}`}>
+            {/* Progress indicator */}
+            <div className="flex gap-2 mb-6">
+              {quizzes.map((_, index) => (
+                <div
+                  key={index}
+                  className={`h-1 flex-1 rounded-full transition-all duration-500 ${
+                    index === currentQuizIndex 
+                      ? 'bg-purple-500' 
+                      : index < currentQuizIndex 
+                        ? 'bg-green-500' 
+                        : 'bg-gray-600'
+                  }`}
+                ></div>
+              ))}
+            </div>
+
             <div className="mb-6">
               <h3 className="text-purple-300 text-lg font-medium mb-4 animate-pulse">
-                Як сказати 'Де знаходиться найближчий банкомат?'
+                {currentQuiz.question}
               </h3>
             </div>
 
-            <div className="space-y-3">
-              {[
-                { letter: 'A', text: 'Where is the nearest ATM?', correct: true },
-                { letter: 'B', text: 'What is the nearest ATM?', correct: false },
-                { letter: 'C', text: 'How is the nearest ATM?', correct: false }
-              ].map((option, index) => (
+            <div className="space-y-3 mb-6">
+              {currentQuiz.options.map((option) => (
                 <div 
-                  key={index}
-                  className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer hover:scale-105 ${
-                    option.correct 
-                      ? 'bg-purple-500/30 border-purple-400/70 hover:bg-purple-500/40 hover:shadow-xl hover:shadow-purple-500/40' 
-                      : 'bg-gray-700/50 border-gray-500/70 hover:bg-gray-600/60 hover:border-gray-400'
+                  key={option.letter}
+                  onClick={() => handleAnswerClick(option)}
+                  className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
+                    showResult
+                      ? option.correct
+                        ? 'bg-green-500/30 border-green-400/70 shadow-xl shadow-green-500/40'
+                        : selectedAnswer === option.letter
+                          ? 'bg-red-500/30 border-red-400/70 shadow-xl shadow-red-500/40'
+                          : 'bg-gray-700/30 border-gray-500/50'
+                      : selectedAnswer === option.letter
+                        ? 'bg-purple-500/40 border-purple-400/70 scale-105'
+                        : 'bg-gray-700/50 border-gray-500/70 hover:bg-gray-600/60 hover:border-gray-400 hover:scale-105'
                   }`}
                 >
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
-                    option.correct 
-                      ? 'bg-purple-500 text-white shadow-xl shadow-purple-500/50' 
-                      : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
+                    showResult
+                      ? option.correct
+                        ? 'bg-green-500 text-white shadow-xl shadow-green-500/50'
+                        : selectedAnswer === option.letter
+                          ? 'bg-red-500 text-white shadow-xl shadow-red-500/50'
+                          : 'bg-gray-600 text-gray-200'
+                      : selectedAnswer === option.letter
+                        ? 'bg-purple-500 text-white shadow-xl shadow-purple-500/50'
+                        : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
                   }`}>
-                    {option.letter}
+                    {showResult && option.correct ? '✓' : showResult && selectedAnswer === option.letter && !option.correct ? '✗' : option.letter}
                   </div>
                   <span className="text-gray-100 font-medium">{option.text}</span>
                 </div>
               ))}
             </div>
+
+            {/* Explanation */}
+            {showResult && (
+              <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/50 rounded-xl p-4 animate-pulse">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold mt-0.5">
+                    !
+                  </div>
+                  <div>
+                    <h4 className="text-purple-300 font-semibold mb-2">Пояснення:</h4>
+                    <p className="text-gray-200 text-sm leading-relaxed mb-2">
+                      {currentQuiz.explanation}
+                    </p>
+                    <p className="text-green-300 font-medium text-sm">
+                      Правильна відповідь: "{currentQuiz.correctAnswer}"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Quiz counter */}
+            <div className="text-center mt-4 text-gray-400 text-sm">
+              Тест {currentQuizIndex + 1} з {quizzes.length}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Features - Mobile Responsive */}
+      {/* Bottom Features - Mobile Responsive Quiz */}
       <div className={`lg:hidden relative z-10 max-w-4xl mx-auto px-6 pb-12 transition-all duration-1000 delay-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-        <div className="bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-lg border-2 border-gray-600/70 rounded-2xl p-6 shadow-2xl">
+        <div className={`bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-lg border-2 border-gray-600/70 rounded-2xl p-6 shadow-2xl ${isTransitioning ? 'opacity-50 scale-95' : ''}`}>
+          {/* Progress indicator */}
+          <div className="flex gap-2 mb-6">
+            {quizzes.map((_, index) => (
+              <div
+                key={index}
+                className={`h-1 flex-1 rounded-full transition-all duration-500 ${
+                  index === currentQuizIndex 
+                    ? 'bg-purple-500' 
+                    : index < currentQuizIndex 
+                      ? 'bg-green-500' 
+                      : 'bg-gray-600'
+                }`}
+              ></div>
+            ))}
+          </div>
+
           <h3 className="text-purple-300 text-lg font-medium mb-4 animate-pulse">
-            Як сказати 'Де знаходиться найближчий банкомат?'
+            {currentQuiz.question}
           </h3>
           
-          <div className="space-y-3">
-            {[
-              { letter: 'A', text: 'Where is the nearest ATM?' },
-              { letter: 'B', text: 'What is the nearest ATM?' },
-              { letter: 'C', text: 'How is the nearest ATM?' }
-            ].map((option, index) => (
+          <div className="space-y-3 mb-6">
+            {currentQuiz.options.map((option) => (
               <div 
-                key={index}
-                className="flex items-center gap-4 p-4 rounded-xl bg-gray-700/50 border-2 border-gray-500/70 hover:bg-gray-600/60 transition-all duration-300 hover:scale-105"
+                key={option.letter}
+                onClick={() => handleAnswerClick(option)}
+                className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
+                  showResult
+                    ? option.correct
+                      ? 'bg-green-500/30 border-green-400/70'
+                      : selectedAnswer === option.letter
+                        ? 'bg-red-500/30 border-red-400/70'
+                        : 'bg-gray-700/30 border-gray-500/50'
+                    : selectedAnswer === option.letter
+                      ? 'bg-purple-500/40 border-purple-400/70 scale-105'
+                      : 'bg-gray-700/50 border-gray-500/70 hover:bg-gray-600/60 hover:scale-105'
+                }`}
               >
-                <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-sm font-semibold text-gray-200">
-                  {option.letter}
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                  showResult
+                    ? option.correct
+                      ? 'bg-green-500 text-white'
+                      : selectedAnswer === option.letter
+                        ? 'bg-red-500 text-white'
+                        : 'bg-gray-600 text-gray-200'
+                    : selectedAnswer === option.letter
+                      ? 'bg-purple-500 text-white'
+                      : 'bg-gray-600 text-gray-200'
+                }`}>
+                  {showResult && option.correct ? '✓' : showResult && selectedAnswer === option.letter && !option.correct ? '✗' : option.letter}
                 </div>
                 <span className="text-gray-100 font-medium">{option.text}</span>
               </div>
             ))}
+          </div>
+
+          {/* Explanation for mobile */}
+          {showResult && (
+            <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/50 rounded-xl p-4 animate-pulse">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold mt-0.5">
+                  !
+                </div>
+                <div>
+                  <h4 className="text-purple-300 font-semibold mb-2">Пояснення:</h4>
+                  <p className="text-gray-200 text-sm leading-relaxed mb-2">
+                    {currentQuiz.explanation}
+                  </p>
+                  <p className="text-green-300 font-medium text-sm">
+                    Правильна відповідь: "{currentQuiz.correctAnswer}"
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Quiz counter for mobile */}
+          <div className="text-center mt-4 text-gray-400 text-sm">
+            Тест {currentQuizIndex + 1} з {quizzes.length}
           </div>
         </div>
       </div>
