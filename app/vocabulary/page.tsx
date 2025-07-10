@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import Link from 'next/link'
 
 interface VocabularyWord {
@@ -861,7 +861,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
     setPracticeResults(null)
   }
 
-  // Flashcards Component
+  // Flashcards Component - Optimized for performance
   const FlashcardsComponent = () => {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isFlipped, setIsFlipped] = useState(false)
@@ -869,12 +869,12 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
     const [startTime] = useState(Date.now())
     const [completedCards, setCompletedCards] = useState(0)
 
-    const items = showWords ? category.words : category.phrases
-    const currentItem = items[currentIndex]
+    const items = useMemo(() => showWords ? category.words : category.phrases, [showWords, category.words, category.phrases])
+    const currentItem = useMemo(() => items[currentIndex], [items, currentIndex])
 
-    const nextCard = () => {
+    const nextCard = useCallback(() => {
       if (currentIndex < items.length - 1) {
-        setCurrentIndex(currentIndex + 1)
+        setCurrentIndex(prev => prev + 1)
         setIsFlipped(false)
         setCompletedCards(prev => prev + 1)
       } else {
@@ -885,14 +885,14 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           timeSpent: Math.round((Date.now() - startTime) / 1000)
         })
       }
-    }
+    }, [currentIndex, items.length, completedCards, startTime, finishPractice])
 
-    const prevCard = () => {
+    const prevCard = useCallback(() => {
       if (currentIndex > 0) {
-        setCurrentIndex(currentIndex - 1)
+        setCurrentIndex(prev => prev - 1)
         setIsFlipped(false)
       }
-    }
+    }, [currentIndex])
 
     return (
       <div className="space-y-4 sm:space-y-6">
@@ -1010,7 +1010,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
     )
   }
 
-  // Quiz Component
+  // Quiz Component - Optimized for performance
   const QuizComponent = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
@@ -1025,12 +1025,12 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
       return Array.from({ length: items.length }, (_, i) => i).sort(() => Math.random() - 0.5)
     })
 
-    const items = showWords ? category.words : category.phrases
-    const currentIndex = randomizedIndexes[currentQuestionIndex]
-    const currentItem = items[currentIndex]
+    const items = useMemo(() => showWords ? category.words : category.phrases, [showWords, category.words, category.phrases])
+    const currentIndex = useMemo(() => randomizedIndexes[currentQuestionIndex], [randomizedIndexes, currentQuestionIndex])
+    const currentItem = useMemo(() => items[currentIndex], [items, currentIndex])
 
-    // Generate wrong answers
-    const generateOptions = () => {
+    // Generate wrong answers - memoized for performance
+    const generateOptions = useCallback(() => {
       const correctAnswer = showWords ? 
         (currentItem as VocabularyWord).translation : 
         (currentItem as VocabularyPhrase).translation
@@ -1043,7 +1043,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
 
       const allOptions = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5)
       return allOptions
-    }
+    }, [showWords, currentItem, items, currentIndex])
 
     // Update options when currentQuestionIndex or showWords changes
     useEffect(() => {
@@ -1062,7 +1062,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
       setShowResult(false)
     }, [showWords])
 
-    const handleAnswer = (answer: string) => {
+    const handleAnswer = useCallback((answer: string) => {
       const correctAnswer = showWords ? 
         (currentItem as VocabularyWord).translation : 
         (currentItem as VocabularyPhrase).translation
@@ -1073,26 +1073,27 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
       if (answer === correctAnswer) {
         setCorrectAnswers(prev => prev + 1)
       }
-    }
+    }, [showWords, currentItem])
 
-    const nextQuestion = () => {
+    const nextQuestion = useCallback(() => {
       if (currentQuestionIndex < items.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1)
+        setCurrentQuestionIndex(prev => prev + 1)
         setSelectedAnswer(null)
         setShowResult(false)
       } else {
         // Finished quiz
+        const finalCorrect = correctAnswers + (selectedAnswer === (showWords ? (currentItem as VocabularyWord).translation : (currentItem as VocabularyPhrase).translation) ? 1 : 0)
         finishPractice({
-          correct: correctAnswers + (selectedAnswer === (showWords ? (currentItem as VocabularyWord).translation : (currentItem as VocabularyPhrase).translation) ? 1 : 0),
+          correct: finalCorrect,
           total: items.length,
           timeSpent: Math.round((Date.now() - startTime) / 1000)
         })
       }
-    }
+    }, [currentQuestionIndex, items.length, correctAnswers, selectedAnswer, showWords, currentItem, startTime, finishPractice])
 
-    const correctAnswer = showWords ? 
+    const correctAnswer = useMemo(() => showWords ? 
       (currentItem as VocabularyWord).translation : 
-      (currentItem as VocabularyPhrase).translation
+      (currentItem as VocabularyPhrase).translation, [showWords, currentItem])
 
     return (
       <div className="space-y-4 sm:space-y-6">
@@ -1677,20 +1678,23 @@ export default function VocabularyPage() {
           </p>
         </div>
 
-        {/* Journey Path - Mobile optimized */}
-        <div className={`relative min-h-[2000px] sm:min-h-[2400px] md:min-h-[2800px] lg:min-h-[3200px] transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-          {/* Single connecting line through all categories */}
+        {/* Journey Path - Mobile optimized with better performance */}
+        <div className={`relative min-h-[2200px] sm:min-h-[2400px] md:min-h-[2800px] lg:min-h-[3200px] transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+          {/* Enhanced connecting line through all categories */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }} viewBox="0 0 100 100" preserveAspectRatio="none">
             <defs>
               <linearGradient id="connectingLineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.8" />
-                <stop offset="25%" stopColor="#3b82f6" stopOpacity="0.7" />
-                <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.7" />
-                <stop offset="75%" stopColor="#10b981" stopOpacity="0.7" />
-                <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.8" />
+                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.9" />
+                <stop offset="15%" stopColor="#3b82f6" stopOpacity="0.8" />
+                <stop offset="30%" stopColor="#06b6d4" stopOpacity="0.8" />
+                <stop offset="45%" stopColor="#10b981" stopOpacity="0.8" />
+                <stop offset="60%" stopColor="#f59e0b" stopOpacity="0.8" />
+                <stop offset="75%" stopColor="#ef4444" stopOpacity="0.8" />
+                <stop offset="90%" stopColor="#8b5cf6" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.9" />
               </linearGradient>
               <filter id="lineGlow">
-                <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+                <feGaussianBlur stdDeviation="1.2" result="coloredBlur"/>
                 <feMerge> 
                   <feMergeNode in="coloredBlur"/>
                   <feMergeNode in="SourceGraphic"/>
@@ -1698,44 +1702,60 @@ export default function VocabularyPage() {
               </filter>
             </defs>
             
-            {/* Main connecting path through all categories in order */}
+            {/* Main connecting path - smoother curves between categories */}
             <path
-              d="M 30,2 
-                 L 70,6
-                 L 15,10
-                 L 85,14
-                 L 45,18
-                 L 10,22
-                 L 75,26
-                 L 25,30
-                 L 60,34
-                 L 15,38
-                 L 85,42
-                 L 40,46
-                 L 10,50
-                 L 70,54
-                 L 30,58
-                 L 80,62
-                 L 20,66
-                 L 60,70
-                 L 40,74
-                 L 15,78
-                 L 85,82
-                 L 50,86
-                 L 25,90
-                 L 75,94
-                 L 50,98"
+              d="M 30,1.5 
+                 Q 50,4 70,6
+                 Q 40,8 15,10
+                 Q 50,12 85,14
+                 Q 65,16 45,18
+                 Q 25,20 10,22
+                 Q 40,24 75,26
+                 Q 50,28 25,30
+                 Q 45,32 60,34
+                 Q 35,36 15,38
+                 Q 50,40 85,42
+                 Q 65,44 40,46
+                 Q 25,48 10,50
+                 Q 40,52 70,54
+                 Q 50,56 30,58
+                 Q 55,60 80,62
+                 Q 45,64 20,66
+                 Q 40,68 60,70
+                 Q 50,72 40,74
+                 Q 25,76 15,78
+                 Q 50,80 85,82
+                 Q 70,84 50,86
+                 Q 35,88 25,90
+                 Q 50,92 75,94
+                 Q 60,96 50,98"
               stroke="url(#connectingLineGradient)"
-              strokeWidth="0.6"
+              strokeWidth="0.8"
               fill="none"
-              strokeDasharray="4 3"
+              strokeDasharray="5 3"
               filter="url(#lineGlow)"
               className="animate-pulse"
-              style={{ animationDuration: '4s' }}
+              style={{ animationDuration: '5s' }}
             />
+            
+            {/* Connection dots at category positions */}
+            <circle cx="30" cy="3" r="0.8" fill="#8b5cf6" opacity="0.8" className="animate-pulse" />
+            <circle cx="70" cy="8" r="0.8" fill="#3b82f6" opacity="0.8" className="animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <circle cx="15" cy="13" r="0.8" fill="#06b6d4" opacity="0.8" className="animate-pulse" style={{ animationDelay: '1s' }} />
+            <circle cx="85" cy="18" r="0.8" fill="#10b981" opacity="0.8" className="animate-pulse" style={{ animationDelay: '1.5s' }} />
+            <circle cx="45" cy="23" r="0.8" fill="#f59e0b" opacity="0.8" className="animate-pulse" style={{ animationDelay: '2s' }} />
+            <circle cx="10" cy="28" r="0.8" fill="#ef4444" opacity="0.8" className="animate-pulse" style={{ animationDelay: '2.5s' }} />
+            <circle cx="75" cy="33" r="0.8" fill="#8b5cf6" opacity="0.8" className="animate-pulse" style={{ animationDelay: '3s' }} />
+            <circle cx="25" cy="38" r="0.8" fill="#3b82f6" opacity="0.8" className="animate-pulse" style={{ animationDelay: '3.5s' }} />
+            <circle cx="60" cy="43" r="0.8" fill="#06b6d4" opacity="0.8" className="animate-pulse" style={{ animationDelay: '4s' }} />
+            <circle cx="15" cy="48" r="0.8" fill="#10b981" opacity="0.8" className="animate-pulse" style={{ animationDelay: '4.5s' }} />
+            <circle cx="85" cy="53" r="0.8" fill="#f59e0b" opacity="0.8" className="animate-pulse" style={{ animationDelay: '5s' }} />
+            <circle cx="40" cy="58" r="0.8" fill="#ef4444" opacity="0.8" className="animate-pulse" style={{ animationDelay: '5.5s' }} />
+            <circle cx="10" cy="63" r="0.8" fill="#8b5cf6" opacity="0.8" className="animate-pulse" style={{ animationDelay: '6s' }} />
+            <circle cx="70" cy="68" r="0.8" fill="#3b82f6" opacity="0.8" className="animate-pulse" style={{ animationDelay: '6.5s' }} />
           </svg>
 
-          {/* Category Nodes - Enhanced for mobile */}
+          {/* Category Nodes - Enhanced mobile sizes, desktop unchanged */}
           {vocabularyCategories.map((category, index) => (
             <div
               key={category.id}
@@ -1749,15 +1769,15 @@ export default function VocabularyPage() {
               }}
               onClick={() => handleCategoryClick(category)}
             >
-              {/* Outer Glow Ring - Larger for mobile */}
-              <div className={`absolute inset-0 w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-36 lg:h-36 rounded-full transition-all duration-500 ${
+              {/* Outer Glow Ring - Bigger on mobile only */}
+              <div className={`absolute inset-0 w-24 h-24 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-36 lg:h-36 rounded-full transition-all duration-500 ${
                 completedCategories.has(category.id)
                   ? 'bg-green-400/20 shadow-2xl shadow-green-400/40'
                   : 'bg-purple-500/20 shadow-2xl shadow-purple-500/40'
               } group-hover:scale-150 group-hover:shadow-3xl animate-pulse`}></div>
 
-              {/* Main Node Circle - Significantly larger for mobile */}
-              <div className={`relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-full border-3 sm:border-4 md:border-5 lg:border-6 transition-all duration-500 backdrop-blur-sm ${
+              {/* Main Node Circle - Significantly larger on mobile only */}
+              <div className={`relative w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-full border-4 sm:border-4 md:border-5 lg:border-6 transition-all duration-500 backdrop-blur-sm ${
                 completedCategories.has(category.id)
                   ? 'bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 border-green-300 shadow-2xl shadow-green-400/60'
                   : 'bg-gradient-to-r from-purple-500 via-blue-600 to-indigo-600 border-purple-300 shadow-2xl shadow-purple-500/60'
@@ -1770,39 +1790,39 @@ export default function VocabularyPage() {
                     : 'bg-gradient-to-r from-purple-400/50 to-blue-500/50'
                 } blur-sm`}></div>
 
-                {/* Completion Checkmark - Proportionally larger */}
+                {/* Completion Checkmark - Proportionally larger on mobile */}
                 {completedCategories.has(category.id) && (
-                  <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 md:-top-5 md:-right-5 w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center border-3 sm:border-4 md:border-5 border-white shadow-xl animate-bounce z-20">
-                    <span className="text-white text-sm sm:text-base md:text-xl font-bold">✓</span>
+                  <div className="absolute -top-4 -right-4 sm:-top-4 sm:-right-4 md:-top-5 md:-right-5 w-10 h-10 sm:w-10 sm:h-10 md:w-14 md:h-14 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center border-3 sm:border-4 md:border-5 border-white shadow-xl animate-bounce z-20">
+                    <span className="text-white text-base sm:text-base md:text-xl font-bold">✓</span>
                   </div>
                 )}
 
-                {/* Category Number Badge - Larger */}
-                <div className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3 md:-top-4 md:-left-4 w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-2 sm:border-3 md:border-4 border-white shadow-lg text-white text-sm sm:text-sm md:text-base font-bold z-20">
+                {/* Category Number Badge - Larger on mobile */}
+                <div className="absolute -top-3 -left-3 sm:-top-3 sm:-left-3 md:-top-4 md:-left-4 w-8 h-8 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-3 sm:border-3 md:border-4 border-white shadow-lg text-white text-sm sm:text-sm md:text-base font-bold z-20">
                   {index + 1}
                 </div>
 
-                {/* Category Emoji - Larger */}
-                <div className="relative w-full h-full flex items-center justify-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl z-10 group-hover:scale-110 transition-transform duration-300">
+                {/* Category Emoji - Larger on mobile */}
+                <div className="relative w-full h-full flex items-center justify-center text-3xl sm:text-3xl md:text-4xl lg:text-5xl z-10 group-hover:scale-110 transition-transform duration-300">
                   {category.emoji}
                 </div>
 
                 {/* Multiple Pulsing Rings Animation */}
-                <div className={`absolute inset-0 rounded-full border-2 sm:border-3 ${
+                <div className={`absolute inset-0 rounded-full border-3 sm:border-3 ${
                   completedCategories.has(category.id) ? 'border-green-400' : 'border-purple-400'
                 } animate-ping opacity-30`}></div>
-                <div className={`absolute inset-2 sm:inset-3 rounded-full border ${
+                <div className={`absolute inset-3 sm:inset-3 rounded-full border-2 ${
                   completedCategories.has(category.id) ? 'border-green-300' : 'border-purple-300'
                 } animate-ping opacity-20`} style={{ animationDelay: '0.5s' }}></div>
-                <div className={`absolute inset-3 sm:inset-5 rounded-full border ${
+                <div className={`absolute inset-4 sm:inset-5 rounded-full border ${
                   completedCategories.has(category.id) ? 'border-green-200' : 'border-purple-200'
                 } animate-ping opacity-10`} style={{ animationDelay: '1s' }}></div>
               </div>
 
               {/* Enhanced Category Label - Better spacing for larger circles */}
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-6 sm:mt-8 md:mt-10 lg:mt-14 text-center min-w-max max-w-[140px] sm:max-w-[160px] md:max-w-[180px] lg:max-w-[220px]">
-                {/* Always visible title - Larger text */}
-                <div className="bg-black/85 backdrop-blur-md rounded-lg px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 border border-gray-600/50 shadow-xl group-hover:border-purple-400/70 transition-all duration-300">
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-8 sm:mt-8 md:mt-10 lg:mt-14 text-center min-w-max max-w-[160px] sm:max-w-[160px] md:max-w-[180px] lg:max-w-[220px]">
+                {/* Always visible title - Larger text on mobile */}
+                <div className="bg-black/85 backdrop-blur-md rounded-lg px-4 py-2.5 sm:px-4 sm:py-2.5 md:px-5 md:py-3 border border-gray-600/50 shadow-xl group-hover:border-purple-400/70 transition-all duration-300">
                   <h3 className="text-white font-bold text-sm sm:text-sm md:text-base drop-shadow-lg">
                     {category.title}
                   </h3>
@@ -1830,30 +1850,7 @@ export default function VocabularyPage() {
             </div>
           ))}
 
-          {/* Journey Progress Indicator - Mobile optimized */}
-          <div className="absolute top-2 right-2 sm:top-4 sm:right-4 md:top-6 md:right-6 bg-black/85 backdrop-blur-md rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 border border-gray-600/50 shadow-2xl z-40 max-w-[160px] sm:max-w-none">
-            <h3 className="text-white font-bold mb-2 sm:mb-3 text-xs sm:text-sm md:text-lg flex items-center gap-1 sm:gap-2">
-              <span className="text-yellow-400 text-sm sm:text-base">🗺️</span>
-              <span className="hidden sm:inline">Прогрес подорожі</span>
-              <span className="sm:hidden">Прогрес</span>
-            </h3>
-            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-              <div className="w-16 sm:w-24 md:w-40 h-2 sm:h-3 md:h-4 bg-gray-700 rounded-full overflow-hidden border border-gray-600">
-                <div 
-                  className="h-full bg-gradient-to-r from-purple-500 via-blue-500 to-green-500 rounded-full transition-all duration-1000 shadow-lg"
-                  style={{ width: `${(completedCategories.size / vocabularyCategories.length) * 100}%` }}
-                ></div>
-              </div>
-              <span className="text-white text-xs sm:text-sm md:text-base font-bold">
-                {completedCategories.size}/{vocabularyCategories.length}
-              </span>
-            </div>
-            <div className="text-gray-300 text-xs sm:text-xs md:text-sm">
-              {completedCategories.size === 0 && "Почніть! 🚀"}
-              {completedCategories.size > 0 && completedCategories.size < vocabularyCategories.length && "Продовжуйте! 📚"}
-              {completedCategories.size === vocabularyCategories.length && "Готово! 🎉"}
-            </div>
-          </div>
+
 
           {/* Journey Start/End Markers - Mobile optimized */}
           <div className="absolute" style={{ top: '0.5%', left: '30%', transform: 'translate(-50%, -100%)' }}>
