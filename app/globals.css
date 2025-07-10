@@ -14,26 +14,57 @@
     perspective: 1000;
   }
   
+  /* Disable complex animations on mobile for better performance */
+  .animate-pulse,
+  .animate-bounce,
+  .animate-ping {
+    animation: none !important;
+  }
+  
+  /* Simplify transitions on mobile */
+  .transition-all {
+    transition: transform 0.2s ease-out !important;
+  }
+  
   /* Reduce motion for better performance on low-end devices */
   @media (prefers-reduced-motion: reduce) {
     .animate-pulse,
     .animate-bounce,
-    .animate-ping {
+    .animate-ping,
+    .transition-all,
+    .transition-transform {
       animation: none !important;
+      transition: none !important;
     }
   }
 }
 
 /* Hardware acceleration for animations */
-.animate-pulse,
-.animate-bounce,
-.animate-ping,
 .transition-all,
 .transition-transform,
 .transition-colors {
   will-change: transform;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+}
+
+/* Optimize hover effects for touch devices */
+@media (hover: hover) {
+  .group:hover .group-hover\:scale-110 {
+    transform: scale(1.1) translateZ(0);
+  }
+  
+  .group:hover .group-hover\:scale-105 {
+    transform: scale(1.05) translateZ(0);
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+  .group:hover .group-hover\:scale-110,
+  .group:hover .group-hover\:scale-105 {
+    transform: none !important;
+  }
 }
 
 /* Line clamp utilities for text truncation */
@@ -106,5 +137,12 @@ html {
 .bg-gradient-to-r,
 .bg-gradient-to-br,
 .bg-gradient-to-tl {
-  background-attachment: fixed;
+  background-attachment: scroll;
+}
+
+/* Mobile-first grid optimization */
+@media (max-width: 640px) {
+  .grid {
+    contain: layout style;
+  }
 } 
