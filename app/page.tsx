@@ -63,6 +63,7 @@ export default function Home() {
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0)
   const [showResult, setShowResult] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
@@ -111,6 +112,10 @@ export default function Home() {
   }, []) // Only run once on mount
 
   const currentQuiz = quizzes[currentQuizIndex]
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-indigo-950 relative overflow-hidden">
@@ -205,30 +210,56 @@ export default function Home() {
       </div>
 
       {/* Navigation */}
-      <nav className={`relative z-10 flex items-center justify-between p-6 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
+      <nav className={`relative z-10 flex items-center justify-between p-4 md:p-6 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-xl shadow-purple-500/50 hover:shadow-purple-500/75 transition-all duration-300 hover:scale-110">
+          <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-xl shadow-purple-500/50 hover:shadow-purple-500/75 transition-all duration-300 hover:scale-110">
             T
           </div>
-          <span className="text-white text-xl font-semibold">Travelingo</span>
+          <span className="text-white text-lg md:text-xl font-semibold">Travelingo</span>
         </div>
 
-        {/* Navigation Links */}
+        {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-8 text-gray-300">
           <a href="/" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-purple-300">Головна</a>
           <a href="/tenses" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-blue-300">Часи</a>
           <a href="/vocabulary" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-pink-300">Словник</a>
           <a href="/practice" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-cyan-300">Практика</a>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button 
+          onClick={toggleMobileMenu}
+          className="md:hidden w-10 h-10 bg-gray-800/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-white hover:bg-gray-700/80 transition-colors duration-200"
+        >
+          <div className="flex flex-col gap-1">
+            <div className={`w-5 h-0.5 bg-current transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
+            <div className={`w-5 h-0.5 bg-current transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></div>
+            <div className={`w-5 h-0.5 bg-current transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
+          </div>
+        </button>
+
+        {/* Mobile Menu Overlay */}
+        {mobileMenuOpen && (
+          <div className="md:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40" onClick={toggleMobileMenu}>
+            <div className="absolute top-20 right-4 bg-gray-800/95 backdrop-blur-lg rounded-xl p-6 min-w-[200px] border border-gray-600/50" onClick={(e) => e.stopPropagation()}>
+              <div className="flex flex-col gap-4">
+                <span className="text-purple-400 font-semibold py-2">Головна</span>
+                <a href="/tenses" className="text-gray-300 hover:text-blue-300 transition-colors duration-200 py-2">Часи</a>
+                <a href="/vocabulary" className="text-gray-300 hover:text-pink-300 transition-colors duration-200 py-2">Словник</a>
+                <a href="/practice" className="text-gray-300 hover:text-cyan-300 transition-colors duration-200 py-2">Практика</a>
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center max-w-7xl mx-auto px-6 py-8 lg:py-16 min-h-[calc(100vh-120px)]">
+      <div className="relative z-10 flex items-center justify-center max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-8 lg:py-16 min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)]">
         {/* Left Side - Title and Content */}
-        <div className="flex-1 max-w-2xl pr-8">
+        <div className="flex-1 max-w-2xl lg:pr-8">
           <div className={`transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h1 className="text-5xl lg:text-7xl font-bold text-white leading-tight mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6 md:mb-8">
               Вивчайте <br />
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-pulse drop-shadow-lg">
                 англійську
@@ -241,16 +272,16 @@ export default function Home() {
           </div>
 
           <div className={`transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <p className="text-gray-200 text-lg lg:text-xl leading-relaxed mb-12 max-w-lg">
+            <p className="text-gray-200 text-base md:text-lg lg:text-xl leading-relaxed mb-8 md:mb-12 max-w-lg">
               Практичні фрази та граматика для реальних ситуацій у подорожі.
             </p>
           </div>
 
-          <div className={`flex gap-4 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <a href="/vocabulary" className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50 inline-block">
+          <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <a href="/vocabulary" className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50 inline-block text-center">
               <span className="group-hover:animate-pulse">Почати зі слів</span>
             </a>
-            <a href="/tenses" className="border-2 border-gray-500 text-gray-200 px-8 py-4 rounded-xl font-semibold hover:border-purple-400 hover:text-white transition-all duration-300 hover:scale-105 hover:bg-purple-500/20 backdrop-blur-sm hover:shadow-lg inline-block">
+            <a href="/tenses" className="border-2 border-gray-500 text-gray-200 px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold hover:border-purple-400 hover:text-white transition-all duration-300 hover:scale-105 hover:bg-purple-500/20 backdrop-blur-sm hover:shadow-lg inline-block text-center">
               Часи
             </a>
           </div>
