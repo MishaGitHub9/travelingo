@@ -241,22 +241,61 @@ export default function Home() {
 
         {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 bg-black/90 backdrop-blur-sm z-50" onClick={toggleMobileMenu}>
-            <div className="flex items-center justify-center min-h-screen px-4 py-8">
-              <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl p-8 w-full max-w-sm border border-gray-600/50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-white text-xl font-bold">Меню</h3>
-                  <button 
-                    onClick={toggleMobileMenu}
-                    className="w-8 h-8 bg-gray-700/80 rounded-lg flex items-center justify-center text-white hover:bg-gray-600/80 transition-colors"
-                  >
-                    ✕
-                  </button>
+          <div className="md:hidden fixed inset-0 z-50">
+            {/* Backdrop */}
+            <div 
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
+              onClick={toggleMobileMenu}
+            ></div>
+            
+            {/* Slide-out Menu */}
+            <div className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-gray-900/95 backdrop-blur-xl border-l border-gray-600/50 shadow-2xl transform transition-transform duration-300 ease-out ${
+              mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}>
+              {/* Menu Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    T
+                  </div>
+                  <span className="text-white text-lg font-semibold">Travelingo</span>
                 </div>
-                <div className="flex flex-col gap-3">
-                  <div className="bg-purple-600/30 text-purple-300 px-4 py-3 rounded-xl font-semibold text-center">Головна</div>
-                  <a href="/vocabulary" className="text-gray-300 hover:text-pink-300 hover:bg-gray-800/50 px-4 py-3 rounded-xl transition-all duration-200 text-center" onClick={toggleMobileMenu}>Словник</a>
-                  <a href="/practice" className="text-gray-300 hover:text-cyan-300 hover:bg-gray-800/50 px-4 py-3 rounded-xl transition-all duration-200 text-center" onClick={toggleMobileMenu}>Практика</a>
+                <button 
+                  onClick={toggleMobileMenu}
+                  className="w-10 h-10 bg-gray-700/80 rounded-lg flex items-center justify-center text-white hover:bg-gray-600/80 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Menu Items */}
+              <nav className="p-6 space-y-2">
+                <div className="bg-purple-600/30 text-purple-300 px-4 py-4 rounded-xl font-semibold flex items-center gap-3">
+                  <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
+                  Головна
+                </div>
+                <a 
+                  href="/vocabulary" 
+                  className="text-gray-300 hover:text-pink-300 hover:bg-gray-800/50 px-4 py-4 rounded-xl transition-all duration-200 flex items-center gap-3 group"
+                  onClick={toggleMobileMenu}
+                >
+                  <span className="w-2 h-2 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Словник
+                </a>
+                <a 
+                  href="/practice" 
+                  className="text-gray-300 hover:text-cyan-300 hover:bg-gray-800/50 px-4 py-4 rounded-xl transition-all duration-200 flex items-center gap-3 group"
+                  onClick={toggleMobileMenu}
+                >
+                  <span className="w-2 h-2 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Практика
+                </a>
+              </nav>
+
+              {/* Menu Footer */}
+              <div className="absolute bottom-6 left-6 right-6">
+                <div className="text-center text-gray-500 text-sm">
+                  Вивчайте англійську для подорожей
                 </div>
               </div>
             </div>
