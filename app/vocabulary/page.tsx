@@ -844,6 +844,10 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
   const [practiceMode, setPracticeMode] = useState<PracticeMode | null>(null)
   const [practiceState, setPracticeState] = useState<PracticeState>('selection')
   const [practiceResults, setPracticeResults] = useState<PracticeResults | null>(null)
+  
+  // Touch gestures for closing modal
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null)
+  const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null)
 
   const startPractice = (mode: PracticeMode) => {
     setPracticeMode(mode)
@@ -859,6 +863,43 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
     setPracticeMode(null)
     setPracticeState('selection')
     setPracticeResults(null)
+  }
+
+  // Touch gesture handlers - mobile only
+  const handleTouchStart = (e: React.TouchEvent) => {
+    // Only handle touch on mobile devices
+    if (window.innerWidth >= 640) return
+    
+    setTouchEnd(null)
+    setTouchStart({
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY
+    })
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    // Only handle touch on mobile devices
+    if (window.innerWidth >= 640) return
+    
+    setTouchEnd({
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY
+    })
+  }
+
+  const handleTouchEnd = () => {
+    // Only handle touch on mobile devices
+    if (window.innerWidth >= 640) return
+    if (!touchStart || !touchEnd) return
+    
+    const distanceX = touchStart.x - touchEnd.x
+    const distanceY = touchStart.y - touchEnd.y
+    const isDownSwipe = distanceY < -100
+    
+    // Close modal on swipe down (mobile gesture)
+    if (isDownSwipe && Math.abs(distanceY) > Math.abs(distanceX)) {
+      onClose()
+    }
   }
 
   // Flashcards Component - Optimized for performance
@@ -900,14 +941,14 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
         <div className="flex items-center justify-between gap-2">
           <button
             onClick={resetPractice}
-            className="flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
+            className="flex items-center gap-1 sm:gap-2 px-4 py-2.5 sm:px-4 sm:py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base touch-manipulation"
           >
             ← <span className="hidden sm:inline">Назад</span>
           </button>
           <div className="flex gap-1 sm:gap-2">
             <button
               onClick={() => setShowWords(true)}
-              className={`px-2 py-1 sm:px-3 sm:py-1 rounded-lg text-xs sm:text-sm transition-colors duration-200 ${
+              className={`px-3 py-2 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-sm transition-colors duration-200 touch-manipulation ${
                 showWords ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
@@ -915,7 +956,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
             </button>
             <button
               onClick={() => setShowWords(false)}
-              className={`px-2 py-1 sm:px-3 sm:py-1 rounded-lg text-xs sm:text-sm transition-colors duration-200 ${
+              className={`px-3 py-2 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-sm transition-colors duration-200 touch-manipulation ${
                 !showWords ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
@@ -980,18 +1021,18 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
         </div>
 
         {/* Controls - Mobile optimized */}
-        <div className="flex justify-center gap-2 sm:gap-4 px-2 sm:px-0">
+        <div className="flex justify-center gap-3 sm:gap-4 px-2 sm:px-0">
           <button
             onClick={prevCard}
             disabled={currentIndex === 0}
-            className="px-4 py-2 sm:px-6 sm:py-2 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
+            className="px-6 py-3 sm:px-6 sm:py-2 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white transition-colors duration-200 text-sm sm:text-base touch-manipulation min-w-[100px] sm:min-w-0"
           >
             <span className="sm:hidden">←</span>
             <span className="hidden sm:inline">Попередня</span>
           </button>
           <button
             onClick={nextCard}
-            className="px-4 py-2 sm:px-6 sm:py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
+            className="px-6 py-3 sm:px-6 sm:py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base touch-manipulation min-w-[100px] sm:min-w-0"
           >
             {currentIndex === items.length - 1 ? (
               <>
@@ -1101,14 +1142,14 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
         <div className="flex items-center justify-between gap-2">
           <button
             onClick={resetPractice}
-            className="flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
+            className="flex items-center gap-1 sm:gap-2 px-4 py-2.5 sm:px-4 sm:py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base touch-manipulation"
           >
             ← <span className="hidden sm:inline">Назад</span>
           </button>
           <div className="flex gap-1 sm:gap-2">
             <button
               onClick={() => setShowWords(true)}
-              className={`px-2 py-1 sm:px-3 sm:py-1 rounded-lg text-xs sm:text-sm transition-colors duration-200 ${
+              className={`px-3 py-2 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-sm transition-colors duration-200 touch-manipulation ${
                 showWords ? 'bg-green-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
@@ -1116,7 +1157,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
             </button>
             <button
               onClick={() => setShowWords(false)}
-              className={`px-2 py-1 sm:px-3 sm:py-1 rounded-lg text-xs sm:text-sm transition-colors duration-200 ${
+              className={`px-3 py-2 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-sm transition-colors duration-200 touch-manipulation ${
                 !showWords ? 'bg-green-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
@@ -1167,7 +1208,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
                   key={index}
                   onClick={() => !showResult && handleAnswer(option)}
                   disabled={showResult}
-                  className={`p-3 sm:p-4 rounded-lg text-left transition-all duration-200 text-sm sm:text-base ${
+                  className={`p-4 sm:p-4 rounded-lg text-left transition-all duration-200 text-sm sm:text-base touch-manipulation min-h-[48px] ${
                     showResult
                       ? isCorrect
                         ? 'bg-green-600 text-white border-2 border-green-400'
@@ -1192,7 +1233,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
             <div className="text-center mt-4 sm:mt-6">
               <button
                 onClick={nextQuestion}
-                className="px-4 py-2 sm:px-6 sm:py-2 bg-green-600 hover:bg-green-700 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
+                className="px-6 py-3 sm:px-6 sm:py-2 bg-green-600 hover:bg-green-700 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base touch-manipulation min-w-[120px]"
               >
                 {currentQuestionIndex === items.length - 1 ? (
                   <>
@@ -1221,7 +1262,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
         <div className="flex items-center justify-between">
           <button
             onClick={resetPractice}
-            className="flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base"
+            className="flex items-center gap-1 sm:gap-2 px-4 py-2.5 sm:px-4 sm:py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors duration-200 text-sm sm:text-base touch-manipulation"
           >
             ← <span className="hidden sm:inline">Назад</span>
           </button>
@@ -1347,10 +1388,10 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </div>
 
           {/* Action Buttons - Mobile optimized */}
-          <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 justify-center">
+          <div className="flex flex-col gap-3 sm:gap-3 md:gap-4 justify-center">
             <button
               onClick={resetPractice}
-              className="px-4 py-2.5 sm:px-6 sm:py-3 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition-colors duration-200 text-sm sm:text-base"
+              className="px-6 py-3 sm:px-6 sm:py-3 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition-colors duration-200 text-sm sm:text-base touch-manipulation min-h-[48px]"
             >
               <span className="sm:hidden">Ще раз</span>
               <span className="hidden sm:inline">Практикувати ще раз</span>
@@ -1360,14 +1401,14 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
                 setActiveTab('practice')
                 resetPractice()
               }}
-              className="px-4 py-2.5 sm:px-6 sm:py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition-colors duration-200 text-sm sm:text-base"
+              className="px-6 py-3 sm:px-6 sm:py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition-colors duration-200 text-sm sm:text-base touch-manipulation min-h-[48px]"
             >
               <span className="sm:hidden">Інший режим</span>
               <span className="hidden sm:inline">Вибрати інший режим</span>
             </button>
             <button
               onClick={onClose}
-              className="px-4 py-2.5 sm:px-6 sm:py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium transition-colors duration-200 text-sm sm:text-base"
+              className="px-6 py-3 sm:px-6 sm:py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium transition-colors duration-200 text-sm sm:text-base touch-manipulation min-h-[48px]"
             >
               <span className="sm:hidden">До словника</span>
               <span className="hidden sm:inline">Повернутися до словника</span>
@@ -1396,10 +1437,21 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
   }
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4" onClick={onClose}>
-      <div className="bg-gradient-to-br from-gray-800/95 to-gray-900/95 backdrop-blur-lg rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 lg:p-8 max-w-4xl w-full max-h-[90vh] sm:max-h-[85vh] md:max-h-[80vh] overflow-y-auto border border-gray-600/50" onClick={(e) => e.stopPropagation()}>
-        {/* Header - Mobile optimized */}
-        <div className="flex items-center justify-between mb-4 sm:mb-6">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 modal-container" onClick={onClose}>
+      <div 
+        className="bg-gradient-to-br from-gray-800/95 to-gray-900/95 backdrop-blur-lg rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 lg:p-8 max-w-4xl w-full max-h-[90vh] sm:h-auto sm:max-h-[85vh] md:max-h-[80vh] border border-gray-600/50 modal-content overflow-y-auto" 
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Swipe indicator - Mobile only */}
+        <div className="sm:hidden flex justify-center pt-2 pb-1">
+          <div className="w-12 h-1 bg-gray-600 rounded-full"></div>
+        </div>
+
+        {/* Header - Mobile optimized with safe area */}
+        <div className="flex items-center justify-between mb-4 sm:mb-6 pt-safe">
           <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
             <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center text-lg sm:text-xl md:text-2xl">
               {category.emoji}
@@ -1411,7 +1463,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gray-700 hover:bg-gray-600 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors duration-200 flex-shrink-0"
+            className="w-10 h-10 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gray-700 hover:bg-gray-600 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors duration-200 flex-shrink-0 touch-manipulation"
           >
             ✕
           </button>
@@ -1421,7 +1473,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
         <div className="flex gap-1 sm:gap-2 mb-4 sm:mb-6 overflow-x-auto pb-1">
           <button
             onClick={() => setActiveTab('words')}
-            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-xs sm:text-sm whitespace-nowrap ${
+            className={`px-4 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-sm whitespace-nowrap touch-manipulation ${
               activeTab === 'words'
                 ? 'bg-purple-500 text-white'
                 : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -1431,7 +1483,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </button>
           <button
             onClick={() => setActiveTab('phrases')}
-            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-xs sm:text-sm whitespace-nowrap ${
+            className={`px-4 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-sm whitespace-nowrap touch-manipulation ${
               activeTab === 'phrases'
                 ? 'bg-purple-500 text-white'
                 : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -1441,7 +1493,7 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </button>
           <button
             onClick={() => setActiveTab('practice')}
-            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-xs sm:text-sm whitespace-nowrap ${
+            className={`px-4 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-sm whitespace-nowrap touch-manipulation ${
               activeTab === 'practice'
                 ? 'bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg'
                 : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -1451,8 +1503,8 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
           </button>
         </div>
 
-        {/* Content - Mobile optimized */}
-        <div className="grid gap-2 sm:gap-3 md:gap-4">
+        {/* Content - Mobile optimized with proper scrolling */}
+        <div className="grid gap-2 sm:gap-3 md:gap-4 pb-safe modal-body">
           {practiceState === 'active' && practiceMode === 'flashcards' ? (
             <FlashcardsComponent />
           ) : practiceState === 'active' && practiceMode === 'quiz' ? (

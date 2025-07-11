@@ -8,6 +8,13 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Travelingo - Learn Tourist English',
   description: 'Master travel English with interactive vocabulary and grammar lessons',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: 'cover'
+  }
 }
 
 export default function RootLayout({
