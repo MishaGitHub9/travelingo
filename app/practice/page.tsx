@@ -252,35 +252,44 @@ export default function PracticePage() {
             {/* Mobile menu button */}
             <button
               onClick={toggleMobileMenu}
-              className="md:hidden text-white p-2"
+              className="md:hidden w-10 h-10 bg-gray-800/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-white hover:bg-gray-700/80 transition-colors duration-200"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+              <div className="flex flex-col gap-1">
+                <div className={`w-5 h-0.5 bg-current transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
+                <div className={`w-5 h-0.5 bg-current transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></div>
+                <div className={`w-5 h-0.5 bg-current transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
+              </div>
             </button>
           </div>
-
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <div className="md:hidden bg-black/30 backdrop-blur-md rounded-lg mt-2 p-4 border border-white/10">
-              <div className="flex flex-col space-y-4">
-                <Link href="/" className="text-white/80 hover:text-white transition-colors">
-                  Головна
-                </Link>
-                <Link href="/vocabulary" className="text-white/80 hover:text-white transition-colors">
-                  Словник
-                </Link>
-                <Link href="/practice" className="text-white bg-purple-600/30 px-4 py-2 rounded-lg">
-                  Практика
-                </Link>
-              </div>
-            </div>
-          )}
         </div>
       </nav>
 
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 bg-black/90 backdrop-blur-sm z-50" onClick={toggleMobileMenu}>
+          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+            <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl p-8 mx-4 w-full max-w-sm border border-gray-600/50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-white text-xl font-bold">Меню</h3>
+                <button 
+                  onClick={toggleMobileMenu}
+                  className="w-8 h-8 bg-gray-700/80 rounded-lg flex items-center justify-center text-white hover:bg-gray-600/80 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="flex flex-col gap-3">
+                <Link href="/" className="text-gray-300 hover:text-purple-300 hover:bg-gray-800/50 px-4 py-3 rounded-xl transition-all duration-200 text-center">Головна</Link>
+                <Link href="/vocabulary" className="text-gray-300 hover:text-pink-300 hover:bg-gray-800/50 px-4 py-3 rounded-xl transition-all duration-200 text-center">Словник</Link>
+                <div className="bg-purple-600/30 text-purple-300 px-4 py-3 rounded-xl font-semibold text-center">Практика</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main Content */}
-      <div className="relative z-10 pt-8 pb-20">
+      <div className="relative z-10 pt-4 pb-20">
         {!selectedTopic ? (
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">

@@ -241,13 +241,23 @@ export default function Home() {
 
         {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40" onClick={toggleMobileMenu}>
-            <div className="absolute top-20 right-4 bg-gray-800/95 backdrop-blur-lg rounded-xl p-6 min-w-[200px] border border-gray-600/50" onClick={(e) => e.stopPropagation()}>
-              <div className="flex flex-col gap-4">
-                <span className="text-purple-400 font-semibold py-2">Головна</span>
-                <a href="/tenses" className="text-gray-300 hover:text-blue-300 transition-colors duration-200 py-2">Часи</a>
-                <a href="/vocabulary" className="text-gray-300 hover:text-pink-300 transition-colors duration-200 py-2">Словник</a>
-                <a href="/practice" className="text-gray-300 hover:text-cyan-300 transition-colors duration-200 py-2">Практика</a>
+          <div className="md:hidden fixed inset-0 bg-black/90 backdrop-blur-sm z-50" onClick={toggleMobileMenu}>
+            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+              <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl p-8 mx-4 w-full max-w-sm border border-gray-600/50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-white text-xl font-bold">Меню</h3>
+                  <button 
+                    onClick={toggleMobileMenu}
+                    className="w-8 h-8 bg-gray-700/80 rounded-lg flex items-center justify-center text-white hover:bg-gray-600/80 transition-colors"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <a href="/" className="bg-purple-600/30 text-purple-300 px-4 py-3 rounded-xl font-semibold text-center">Головна</a>
+                  <a href="/vocabulary" className="text-gray-300 hover:text-pink-300 hover:bg-gray-800/50 px-4 py-3 rounded-xl transition-all duration-200 text-center">Словник</a>
+                  <a href="/practice" className="text-gray-300 hover:text-cyan-300 hover:bg-gray-800/50 px-4 py-3 rounded-xl transition-all duration-200 text-center">Практика</a>
+                </div>
               </div>
             </div>
           </div>
@@ -255,7 +265,7 @@ export default function Home() {
       </nav>
 
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-8 lg:py-16 min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)]">
+      <div className="relative z-10 flex items-center justify-center max-w-7xl mx-auto px-4 md:px-6 pt-2 md:pt-4 lg:pt-8 pb-4 md:pb-8 lg:pb-16 min-h-[calc(100vh-140px)] md:min-h-[calc(100vh-160px)]">
         {/* Left Side - Title and Content */}
         <div className="flex-1 max-w-2xl lg:pr-8">
           <div className={`transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
