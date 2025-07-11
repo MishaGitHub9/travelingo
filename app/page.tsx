@@ -304,11 +304,11 @@ export default function Home() {
       </nav>
 
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center max-w-7xl mx-auto px-4 md:px-6 pt-2 md:pt-4 lg:pt-8 pb-4 md:pb-8 lg:pb-16 min-h-[calc(100vh-140px)] md:min-h-[calc(100vh-160px)]">
+      <div className="relative z-10 flex items-center justify-center max-w-7xl mx-auto px-4 md:px-6 pt-4 md:pt-4 lg:pt-8 pb-8 md:pb-8 lg:pb-16 min-h-[calc(100vh-180px)] md:min-h-[calc(100vh-160px)]">
         {/* Left Side - Title and Content */}
         <div className="flex-1 max-w-2xl lg:pr-8">
           <div className={`transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6 md:mb-8">
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white leading-tight mb-4 md:mb-8">
               Вивчайте <br />
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-pulse drop-shadow-lg">
                 англійську
@@ -321,17 +321,17 @@ export default function Home() {
           </div>
 
           <div className={`transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <p className="text-gray-200 text-base md:text-lg lg:text-xl leading-relaxed mb-8 md:mb-12 max-w-lg">
+            <p className="text-gray-200 text-sm md:text-lg lg:text-xl leading-relaxed mb-6 md:mb-12 max-w-lg">
               Практичні фрази та граматика для реальних ситуацій у подорожі.
             </p>
           </div>
 
-          <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <a href="/vocabulary" className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50 inline-block text-center">
+          <div className={`flex flex-col sm:flex-row gap-3 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <a href="/vocabulary" className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-5 md:px-8 py-3 md:py-4 rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50 inline-block text-center text-sm md:text-base">
               <span className="group-hover:animate-pulse">Почати зі слів</span>
             </a>
-            <a href="/tenses" className="border-2 border-gray-500 text-gray-200 px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold hover:border-purple-400 hover:text-white transition-all duration-300 hover:scale-105 hover:bg-purple-500/20 backdrop-blur-sm hover:shadow-lg inline-block text-center">
-              Часи
+            <a href="/practice" className="border-2 border-cyan-500 text-cyan-200 px-5 md:px-8 py-3 md:py-4 rounded-xl font-semibold hover:border-cyan-400 hover:text-white transition-all duration-300 hover:scale-105 hover:bg-cyan-500/20 backdrop-blur-sm hover:shadow-lg inline-block text-center text-sm md:text-base">
+              Практика
             </a>
           </div>
         </div>
