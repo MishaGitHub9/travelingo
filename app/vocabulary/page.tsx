@@ -1554,82 +1554,82 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
             ))
           ) : (
             // Practice Modes - Mobile optimized
-            <div className="space-y-3 sm:space-y-4">
-              <div className="text-center mb-4 sm:mb-6">
-                <h3 className="text-white text-lg sm:text-xl md:text-2xl font-bold mb-2">Виберіть режим практики</h3>
-                <p className="text-gray-300 text-xs sm:text-sm md:text-base">Оберіть зручний для вас спосіб вивчення матеріалу</p>
+            <div className="space-y-4 sm:space-y-4">
+              <div className="text-center mb-6 sm:mb-6">
+                <h3 className="text-white text-xl sm:text-xl md:text-2xl font-bold mb-3">Виберіть режим практики</h3>
+                <p className="text-gray-300 text-sm sm:text-sm md:text-base px-2">Оберіть зручний для вас спосіб вивчення матеріалу</p>
               </div>
 
               {/* Practice Mode Cards - Mobile optimized */}
               <div className="grid gap-3 sm:gap-4 md:gap-6">
                 {/* Flashcards Mode */}
-                <div 
+                <button 
                   onClick={() => startPractice('flashcards')}
-                  className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border border-blue-500/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02]"
+                  className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-lg sm:rounded-xl p-4 sm:p-4 md:p-6 border border-blue-500/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02] touch-manipulation min-h-[80px] text-left w-full"
                 >
                   <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                    <div className="w-12 h-12 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center text-xl sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                       🃏
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-white font-bold text-base sm:text-lg md:text-xl mb-1">Картки</h4>
-                      <p className="text-gray-300 text-xs sm:text-sm md:text-base mb-2 line-clamp-2">Вивчайте слова та фрази за допомогою інтерактивних карток</p>
+                      <p className="text-gray-300 text-sm sm:text-sm md:text-base mb-2 line-clamp-2">Вивчайте слова та фрази за допомогою інтерактивних карток</p>
                       <div className="flex gap-1 sm:gap-2 text-xs flex-wrap">
                         <span className="bg-blue-500/20 text-blue-300 px-2 py-1 rounded text-xs">Слова: {category.words.length}</span>
                         <span className="bg-cyan-500/20 text-cyan-300 px-2 py-1 rounded text-xs">Фрази: {category.phrases.length}</span>
                       </div>
                     </div>
-                    <div className="text-blue-400 text-lg sm:text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
+                    <div className="text-blue-400 text-xl sm:text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
                       →
                     </div>
                   </div>
-                </div>
+                </button>
 
                 {/* Quiz Mode */}
-                <div 
+                <button 
                   onClick={() => startPractice('quiz')}
-                  className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border border-green-500/30 hover:border-green-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02]"
+                  className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-lg sm:rounded-xl p-4 sm:p-4 md:p-6 border border-green-500/30 hover:border-green-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02] touch-manipulation min-h-[80px] text-left w-full"
                 >
                   <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                    <div className="w-12 h-12 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg sm:rounded-xl flex items-center justify-center text-xl sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                       📝
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-white font-bold text-base sm:text-lg md:text-xl mb-1">Тести</h4>
-                      <p className="text-gray-300 text-xs sm:text-sm md:text-base mb-2 line-clamp-2">Перевірте свої знання за допомогою тестових завдань</p>
+                      <p className="text-gray-300 text-sm sm:text-sm md:text-base mb-2 line-clamp-2">Перевірте свої знання за допомогою тестових завдань</p>
                       <div className="flex gap-1 sm:gap-2 text-xs flex-wrap">
                         <span className="bg-green-500/20 text-green-300 px-2 py-1 rounded text-xs">Множинний вибір</span>
                         <span className="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded text-xs">Переклад</span>
                       </div>
                     </div>
-                    <div className="text-green-400 text-lg sm:text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
+                    <div className="text-green-400 text-xl sm:text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
                       →
                     </div>
                   </div>
-                </div>
+                </button>
 
                 {/* Drag and Drop Mode */}
-                <div 
+                <button 
                   onClick={() => startPractice('dragdrop')}
-                  className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 border border-purple-500/30 hover:border-purple-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02]"
+                  className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg sm:rounded-xl p-4 sm:p-4 md:p-6 border border-purple-500/30 hover:border-purple-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02] touch-manipulation min-h-[80px] text-left w-full"
                 >
                   <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                    <div className="w-12 h-12 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg sm:rounded-xl flex items-center justify-center text-xl sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                       🎯
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-white font-bold text-base sm:text-lg md:text-xl mb-1">Драг енд Дроп</h4>
-                      <p className="text-gray-300 text-xs sm:text-sm md:text-base mb-2 line-clamp-2">З'єднайте слова з їх перекладами перетягуванням</p>
+                      <p className="text-gray-300 text-sm sm:text-sm md:text-base mb-2 line-clamp-2">З'єднайте слова з їх перекладами перетягуванням</p>
                       <div className="flex gap-1 sm:gap-2 text-xs flex-wrap">
                         <span className="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">Інтерактивно</span>
                         <span className="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">Весело</span>
                       </div>
                     </div>
-                    <div className="text-purple-400 text-lg sm:text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
+                    <div className="text-purple-400 text-xl sm:text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
                       →
                     </div>
                   </div>
-                </div>
+                </button>
               </div>
 
 
