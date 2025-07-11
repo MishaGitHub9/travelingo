@@ -1703,8 +1703,8 @@ export default function VocabularyPage() {
         {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (
           <div className="md:hidden fixed inset-0 bg-black/90 backdrop-blur-sm z-50" onClick={toggleMobileMenu}>
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-              <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl p-8 mx-4 w-full max-w-sm border border-gray-600/50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-center min-h-screen px-4 py-8">
+              <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl p-8 w-full max-w-sm border border-gray-600/50 shadow-2xl" onClick={(e) => e.stopPropagation()}>
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-white text-xl font-bold">Меню</h3>
                   <button 
@@ -1715,9 +1715,9 @@ export default function VocabularyPage() {
                   </button>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <Link href="/" className="text-gray-300 hover:text-purple-300 hover:bg-gray-800/50 px-4 py-3 rounded-xl transition-all duration-200 text-center">Головна</Link>
+                  <Link href="/" className="text-gray-300 hover:text-purple-300 hover:bg-gray-800/50 px-4 py-3 rounded-xl transition-all duration-200 text-center" onClick={toggleMobileMenu}>Головна</Link>
                   <div className="bg-purple-600/30 text-purple-300 px-4 py-3 rounded-xl font-semibold text-center">Словник</div>
-                  <Link href="/practice" className="text-gray-300 hover:text-cyan-300 hover:bg-gray-800/50 px-4 py-3 rounded-xl transition-all duration-200 text-center">Практика</Link>
+                  <Link href="/practice" className="text-gray-300 hover:text-cyan-300 hover:bg-gray-800/50 px-4 py-3 rounded-xl transition-all duration-200 text-center" onClick={toggleMobileMenu}>Практика</Link>
                 </div>
               </div>
             </div>
