@@ -1437,69 +1437,70 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
   }
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 modal-container" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 md:p-4 modal-container" onClick={onClose}>
       <div 
-        className="bg-gradient-to-br from-gray-800/95 to-gray-900/95 backdrop-blur-lg rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 lg:p-8 max-w-4xl w-full max-h-[90vh] sm:h-auto sm:max-h-[85vh] md:max-h-[80vh] border border-gray-600/50 modal-content overflow-y-auto" 
+        className="bg-white rounded-xl md:rounded-2xl p-3 md:p-6 lg:p-8 max-w-4xl w-full max-h-[95vh] md:max-h-[90vh] border border-gray-200 modal-content overflow-y-auto shadow-2xl" 
         onClick={(e) => e.stopPropagation()}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
         {/* Swipe indicator - Mobile only */}
-        <div className="sm:hidden flex justify-center pt-2 pb-1">
-          <div className="w-12 h-1 bg-gray-600 rounded-full"></div>
+        <div className="md:hidden flex justify-center pt-2 pb-1">
+          <div className="w-12 h-1 bg-gray-300 rounded-full"></div>
         </div>
 
         {/* Header - Mobile optimized with safe area */}
-        <div className="flex items-center justify-between mb-4 sm:mb-6 pt-safe">
-          <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center text-lg sm:text-xl md:text-2xl">
+        <div className="flex items-center justify-between mb-4 md:mb-6 pt-safe">
+          <div className="flex items-center gap-2 md:gap-4">
+            <div className="w-10 h-10 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center text-lg md:text-2xl">
               {category.emoji}
             </div>
             <div className="min-w-0 flex-1">
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white truncate">{category.title}</h2>
-              <p className="text-gray-300 text-xs sm:text-sm md:text-base line-clamp-2">{category.description}</p>
+              <h2 className="text-lg md:text-2xl font-bold text-gray-900 truncate">{category.title}</h2>
+              <p className="text-gray-600 text-xs md:text-base line-clamp-2">{category.description}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gray-700 hover:bg-gray-600 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-colors duration-200 flex-shrink-0 touch-manipulation"
+            className="w-10 h-10 md:w-10 md:h-10 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center justify-center text-gray-700 hover:text-gray-900 transition-colors duration-200 flex-shrink-0 touch-manipulation"
+            aria-label="Закрити модальне вікно"
           >
             ✕
           </button>
         </div>
 
         {/* Tab Navigation - Mobile optimized */}
-        <div className="flex gap-1 sm:gap-2 mb-4 sm:mb-6 overflow-x-auto pb-1">
+        <div className="flex gap-1 md:gap-2 mb-4 md:mb-6 overflow-x-auto pb-1 border-b border-gray-200">
           <button
             onClick={() => setActiveTab('words')}
-            className={`px-4 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-sm whitespace-nowrap touch-manipulation ${
+            className={`px-4 py-2 md:px-4 md:py-2 rounded-lg font-medium transition-all duration-200 text-sm whitespace-nowrap touch-manipulation ${
               activeTab === 'words'
-                ? 'bg-purple-500 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
             Слова ({category.words.length})
           </button>
           <button
             onClick={() => setActiveTab('phrases')}
-            className={`px-4 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-sm whitespace-nowrap touch-manipulation ${
+            className={`px-4 py-2 md:px-4 md:py-2 rounded-lg font-medium transition-all duration-200 text-sm whitespace-nowrap touch-manipulation ${
               activeTab === 'phrases'
-                ? 'bg-purple-500 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
             Фрази ({category.phrases.length})
           </button>
           <button
             onClick={() => setActiveTab('practice')}
-            className={`px-4 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-sm whitespace-nowrap touch-manipulation ${
+            className={`px-4 py-2 md:px-4 md:py-2 rounded-lg font-medium transition-all duration-200 text-sm whitespace-nowrap touch-manipulation ${
               activeTab === 'practice'
                 ? 'bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
-            <span className="hidden sm:inline">🎯 </span>Практика
+            <span className="hidden md:inline">🎯 </span>Практика
           </button>
         </div>
 
@@ -1518,18 +1519,18 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
             category.words.map((word, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-r from-gray-700/50 to-gray-800/50 rounded-lg sm:rounded-xl p-2.5 sm:p-3 md:p-4 border border-gray-600/30 hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.01] sm:hover:scale-[1.02]"
+                className="bg-gray-50 rounded-lg md:rounded-xl p-2.5 md:p-4 border border-gray-200 hover:border-blue-300 transition-all duration-300 hover:shadow-md"
               >
                 <div className="flex justify-between items-center gap-2">
                   <div className="flex-1 min-w-0">
-                    <div className="flex flex-col sm:flex-col md:flex-row md:items-center md:gap-4">
-                      <h3 className="text-white font-semibold text-sm sm:text-base md:text-lg truncate">{word.word}</h3>
-                      <span className="text-purple-300 text-xs sm:text-sm md:text-base">{word.transcription}</span>
+                    <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+                      <h3 className="text-gray-900 font-semibold text-sm md:text-lg truncate">{word.word}</h3>
+                      <span className="text-blue-600 text-xs md:text-base">{word.transcription}</span>
                     </div>
-                    <span className="text-gray-300 text-xs sm:text-sm md:text-base">{word.translation}</span>
+                    <span className="text-gray-600 text-xs md:text-base">{word.translation}</span>
                   </div>
-                  <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-purple-300 text-xs sm:text-sm md:text-base">🔊</span>
+                  <div className="w-5 h-5 md:w-8 md:h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-blue-600 text-xs md:text-base">🔊</span>
                   </div>
                 </div>
               </div>
@@ -1539,25 +1540,25 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
             category.phrases.map((phrase, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-r from-gray-700/50 to-gray-800/50 rounded-lg sm:rounded-xl p-2.5 sm:p-3 md:p-4 border border-gray-600/30 hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.01] sm:hover:scale-[1.02]"
+                className="bg-gray-50 rounded-lg md:rounded-xl p-2.5 md:p-4 border border-gray-200 hover:border-blue-300 transition-all duration-300 hover:shadow-md"
               >
                 <div className="flex justify-between items-start gap-2">
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-white font-semibold text-sm sm:text-base md:text-lg mb-1 line-clamp-2">{phrase.phrase}</h3>
-                    <span className="text-gray-300 text-xs sm:text-sm md:text-base">{phrase.translation}</span>
+                    <h3 className="text-gray-900 font-semibold text-sm md:text-lg mb-1 line-clamp-2">{phrase.phrase}</h3>
+                    <span className="text-gray-600 text-xs md:text-base">{phrase.translation}</span>
                   </div>
-                  <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-purple-300 text-xs sm:text-sm md:text-base">🔊</span>
+                  <div className="w-5 h-5 md:w-8 md:h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-blue-600 text-xs md:text-base">🔊</span>
                   </div>
                 </div>
               </div>
             ))
           ) : (
             // Practice Modes - Mobile optimized
-            <div className="space-y-4 sm:space-y-4">
-              <div className="text-center mb-6 sm:mb-6">
-                <h3 className="text-white text-xl sm:text-xl md:text-2xl font-bold mb-3">Виберіть режим практики</h3>
-                <p className="text-gray-300 text-sm sm:text-sm md:text-base px-2">Оберіть зручний для вас спосіб вивчення матеріалу</p>
+            <div className="space-y-4 md:space-y-4">
+              <div className="text-center mb-6 md:mb-6">
+                <h3 className="text-gray-900 text-xl md:text-2xl font-bold mb-3">Виберіть режим практики</h3>
+                <p className="text-gray-600 text-sm md:text-base px-2">Оберіть зручний для вас спосіб вивчення матеріалу</p>
               </div>
 
               {/* Practice Mode Cards - Mobile optimized */}
@@ -1565,21 +1566,21 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
                 {/* Flashcards Mode */}
                 <button 
                   onClick={() => startPractice('flashcards')}
-                  className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-lg sm:rounded-xl p-4 sm:p-4 md:p-6 border border-blue-500/30 hover:border-blue-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02] touch-manipulation min-h-[80px] text-left w-full"
+                  className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg md:rounded-xl p-4 md:p-6 border border-blue-200 hover:border-blue-300 transition-all duration-300 cursor-pointer group hover:shadow-lg touch-manipulation min-h-[80px] text-left w-full"
                 >
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-12 h-12 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center text-xl sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg md:rounded-xl flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                       🃏
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-white font-bold text-base sm:text-lg md:text-xl mb-1">Картки</h4>
-                      <p className="text-gray-300 text-sm sm:text-sm md:text-base mb-2 line-clamp-2">Вивчайте слова та фрази за допомогою інтерактивних карток</p>
-                      <div className="flex gap-1 sm:gap-2 text-xs flex-wrap">
-                        <span className="bg-blue-500/20 text-blue-300 px-2 py-1 rounded text-xs">Слова: {category.words.length}</span>
-                        <span className="bg-cyan-500/20 text-cyan-300 px-2 py-1 rounded text-xs">Фрази: {category.phrases.length}</span>
+                      <h4 className="text-gray-900 font-bold text-base md:text-xl mb-1">Картки</h4>
+                      <p className="text-gray-600 text-sm md:text-base mb-2 line-clamp-2">Вивчайте слова та фрази за допомогою інтерактивних карток</p>
+                      <div className="flex gap-1 md:gap-2 text-xs flex-wrap">
+                        <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Слова: {category.words.length}</span>
+                        <span className="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-xs">Фрази: {category.phrases.length}</span>
                       </div>
                     </div>
-                    <div className="text-blue-400 text-xl sm:text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
+                    <div className="text-blue-500 text-xl md:text-2xl group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
                       →
                     </div>
                   </div>
@@ -1588,16 +1589,16 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
                 {/* Quiz Mode */}
                 <button 
                   onClick={() => startPractice('quiz')}
-                  className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-lg sm:rounded-xl p-4 sm:p-4 md:p-6 border border-green-500/30 hover:border-green-400/60 transition-all duration-300 cursor-pointer group hover:scale-[1.01] sm:hover:scale-[1.02] touch-manipulation min-h-[80px] text-left w-full"
+                  className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg md:rounded-xl p-4 md:p-6 border border-green-200 hover:border-green-300 transition-all duration-300 cursor-pointer group hover:shadow-lg touch-manipulation min-h-[80px] text-left w-full"
                 >
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-12 h-12 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg sm:rounded-xl flex items-center justify-center text-xl sm:text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg md:rounded-xl flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                       📝
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-white font-bold text-base sm:text-lg md:text-xl mb-1">Тести</h4>
-                      <p className="text-gray-300 text-sm sm:text-sm md:text-base mb-2 line-clamp-2">Перевірте свої знання за допомогою тестових завдань</p>
-                      <div className="flex gap-1 sm:gap-2 text-xs flex-wrap">
+                      <h4 className="text-gray-900 font-bold text-base md:text-xl mb-1">Тести</h4>
+                      <p className="text-gray-600 text-sm md:text-base mb-2 line-clamp-2">Перевірте свої знання за допомогою тестових завдань</p>
+                      <div className="flex gap-1 md:gap-2 text-xs flex-wrap">
                         <span className="bg-green-500/20 text-green-300 px-2 py-1 rounded text-xs">Множинний вибір</span>
                         <span className="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded text-xs">Переклад</span>
                       </div>
@@ -1643,13 +1644,18 @@ function VocabularyModal({ category, onClose }: { category: Category; onClose: (
 
 export default function VocabularyPage() {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [completedCategories] = useState<Set<string>>(new Set())
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
+  
+  const categories: Category[] = Object.entries(vocabularyData).map(([id, data]) => ({
+    id,
+    title: data.title,
+    emoji: data.icon,
+    description: `${data.words.length} слів, ${data.phrases.length} фраз`,
+    words: data.words,
+    phrases: data.phrases,
+    position: { top: '0%', left: '0%' },
+    completed: false
+  }))
 
   const handleCategoryClick = (category: Category) => {
     setSelectedCategory(category)
@@ -1664,195 +1670,153 @@ export default function VocabularyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-indigo-950 relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 opacity-60">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-700/40 via-transparent to-blue-700/40 animate-pulse"></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tl from-pink-600/30 via-transparent to-cyan-600/30 animate-pulse" style={{ animationDelay: '2s' }}></div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Mobile-First Navigation */}
+      <nav className="bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-50 h-14 md:h-16 lg:h-18">
+        <div className="max-w-7xl mx-auto px-3 md:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-full">
+            {/* Logo */}
+            <Link href="/" className="flex items-center space-x-2 md:space-x-3">
+              <div className="w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm md:text-base lg:text-lg">T</span>
+              </div>
+              <span className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900">Travelingo</span>
+            </Link>
 
-      {/* Navigation - Optimized for mobile */}
-      <nav className={`relative z-10 flex items-center justify-between p-3 sm:p-4 md:p-6 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
-        <Link href="/" className="flex items-center gap-2 sm:gap-3 hover:scale-105 transition-transform duration-300">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-lg md:text-xl shadow-xl shadow-purple-500/50">
-            T
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+              <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+                Головна
+              </Link>
+              <Link href="/practice" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+                Практика
+              </Link>
+              <span className="text-blue-600 font-semibold">Словник</span>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={toggleMobileMenu}
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label="Toggle mobile menu"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {mobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
-          <span className="text-white text-base sm:text-lg md:text-xl font-semibold">Travelingo</span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8 text-gray-300">
-          <Link href="/" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-purple-300">Головна</Link>
-          <Link href="/tenses" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-blue-300">Часи</Link>
-          <span className="text-purple-400 font-semibold">Словник</span>
-          <Link href="/practice" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-cyan-300">Практика</Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button 
-          onClick={toggleMobileMenu}
-          className="md:hidden w-8 h-8 sm:w-10 sm:h-10 bg-gray-800/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-white hover:bg-gray-700/80 transition-colors duration-200"
-        >
-          <div className="flex flex-col gap-1">
-            <div className={`w-4 h-0.5 sm:w-5 bg-current transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
-            <div className={`w-4 h-0.5 sm:w-5 bg-current transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></div>
-            <div className={`w-4 h-0.5 sm:w-5 bg-current transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
-          </div>
-        </button>
-
-        {/* Mobile Menu Overlay */}
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-50">
-            {/* Backdrop */}
-            <div 
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
-              onClick={toggleMobileMenu}
-            ></div>
-            
-            {/* Slide-out Menu */}
-            <div className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-gray-900/95 backdrop-blur-xl border-l border-gray-600/50 shadow-2xl transform transition-transform duration-300 ease-out ${
-              mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}>
-              {/* Menu Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                    T
-                  </div>
-                  <span className="text-white text-lg font-semibold">Travelingo</span>
-                </div>
-                <button 
-                  onClick={toggleMobileMenu}
-                  className="w-10 h-10 bg-gray-700/80 rounded-lg flex items-center justify-center text-white hover:bg-gray-600/80 transition-colors"
-                >
-                  ✕
-                </button>
-              </div>
-
-              {/* Menu Items */}
-              <nav className="p-6 space-y-2">
-                <Link 
-                  href="/" 
-                  className="text-gray-300 hover:text-purple-300 hover:bg-gray-800/50 px-4 py-4 rounded-xl transition-all duration-200 flex items-center gap-3 group"
-                  onClick={toggleMobileMenu}
-                >
-                  <span className="w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  Головна
-                </Link>
-                <div className="bg-purple-600/30 text-purple-300 px-4 py-4 rounded-xl font-semibold flex items-center gap-3">
-                  <span className="w-2 h-2 bg-pink-400 rounded-full"></span>
-                  Словник
-                </div>
-                <Link 
-                  href="/practice" 
-                  className="text-gray-300 hover:text-cyan-300 hover:bg-gray-800/50 px-4 py-4 rounded-xl transition-all duration-200 flex items-center gap-3 group"
-                  onClick={toggleMobileMenu}
-                >
-                  <span className="w-2 h-2 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  Практика
-                </Link>
-              </nav>
-
-              {/* Menu Footer */}
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="text-center text-gray-500 text-sm">
-                  Вивчайте англійську для подорожей
-                </div>
-              </div>
+          <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
+            <div className="px-4 py-3 space-y-2">
+              <Link
+                href="/"
+                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Головна
+              </Link>
+              <Link
+                href="/practice"
+                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Практика
+              </Link>
+              <span className="block px-3 py-2 text-blue-600 font-semibold bg-blue-50 rounded-lg">
+                Словник
+              </span>
             </div>
           </div>
         )}
       </nav>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 md:px-6 pt-2 sm:pt-2 md:pt-4">
-        {/* Header - Mobile optimized */}
-        <div className={`text-center mb-8 sm:mb-12 md:mb-20 transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 md:mb-8">
-            Словник для
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent block animate-pulse">
-              подорожей
-            </span>
+      <main className="max-w-7xl mx-auto px-3 md:px-6 lg:px-8 py-6 md:py-8 lg:py-12">
+        {/* Header */}
+        <header className="text-center mb-8 md:mb-10 lg:mb-12">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-3 md:mb-4">
+            📚 Словник подорожей
           </h1>
-          <p className="text-gray-200 text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto px-4 sm:px-6">
-            Пройдіть шлях подорожі від планування до повернення додому
+          <p className="text-sm md:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Вивчайте корисні слова та фрази для подорожей. Кожна категорія містить словник та інтерактивні вправи.
           </p>
-        </div>
+        </header>
 
-        {/* Journey Path - Mobile optimized and simplified */}
-        <div className={`relative min-h-[1800px] sm:min-h-[2000px] md:min-h-[2400px] lg:min-h-[2800px] transition-all duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-          
-          {/* Simple grid layout for mobile */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 p-4 sm:p-6 md:p-8">
-            {vocabularyCategories.map((category, index) => (
-              <div
-                key={category.id}
-                className={`flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer group`}
-                onClick={() => handleCategoryClick(category)}
-              >
-                {/* Main Category Circle - Much bigger on mobile */}
-                <div className={`relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full border-4 sm:border-4 md:border-5 lg:border-6 transition-all duration-300 backdrop-blur-sm ${
-                  completedCategories.has(category.id)
-                    ? 'bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 border-green-300 shadow-xl shadow-green-400/50'
-                    : 'bg-gradient-to-r from-purple-500 via-blue-600 to-indigo-600 border-purple-300 shadow-xl shadow-purple-500/50'
-                } group-hover:shadow-2xl group-hover:border-white/80`}>
-                  
-                  {/* Category Number Badge */}
-                  <div className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-2 sm:border-3 border-white shadow-lg text-white text-sm sm:text-base md:text-lg font-bold z-10">
-                    {index + 1}
-                  </div>
-
-                  {/* Completion Checkmark */}
-                  {completedCategories.has(category.id) && (
-                    <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center border-2 sm:border-3 border-white shadow-lg z-10">
-                      <span className="text-white text-sm sm:text-base md:text-lg font-bold">✓</span>
+        {/* Categories Grid */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+          {categories.map((category) => (
+            <article
+              key={category.id}
+              onClick={() => handleCategoryClick(category)}
+              className="bg-white rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-100 hover:border-blue-200"
+            >
+              <div className="p-4 md:p-5 lg:p-6">
+                <div className="text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  {category.emoji}
+                </div>
+                <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-2 md:mb-3 group-hover:text-blue-600 transition-colors">
+                  {category.title}
+                </h3>
+                <p className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4">
+                  {category.description}
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs md:text-sm text-blue-600 font-medium">
+                    Відкрити →
+                  </span>
+                  {category.completed && (
+                    <div className="w-4 h-4 md:w-5 md:h-5 bg-green-500 rounded-full flex items-center justify-center">
+                      <svg className="w-2 h-2 md:w-3 md:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
                     </div>
                   )}
-
-                  {/* Category Emoji - Much bigger */}
-                  <div className="relative w-full h-full flex items-center justify-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl z-5 group-hover:scale-110 transition-transform duration-200">
-                    {category.emoji}
-                  </div>
-                </div>
-
-                {/* Category Title - Better spacing and sizing */}
-                <div className="mt-4 sm:mt-5 md:mt-6 text-center max-w-[140px] sm:max-w-[160px] md:max-w-[180px]">
-                  <div className="bg-black/80 backdrop-blur-sm rounded-lg px-3 py-2 sm:px-4 sm:py-2.5 border border-gray-600/50 shadow-lg group-hover:border-purple-400/60 transition-all duration-200">
-                    <h3 className="text-white font-semibold text-sm sm:text-base md:text-lg text-center leading-tight">
-                      {category.title}
-                    </h3>
-                  </div>
-                  
-                  {/* Word count indicator - visible on mobile */}
-                  <div className="mt-2 flex justify-center gap-1 text-xs">
-                    <span className="bg-purple-500/70 px-2 py-1 rounded text-white font-medium">
-                      {category.words.length} слів
-                    </span>
-                    <span className="bg-blue-500/70 px-2 py-1 rounded text-white font-medium">
-                      {category.phrases.length} фраз
-                    </span>
-                  </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </article>
+          ))}
+        </section>
 
-          {/* Simple progress indicator at bottom */}
-          <div className="mt-8 mb-6 text-center">
-            <div className="inline-flex items-center gap-2 bg-black/80 backdrop-blur-sm rounded-full px-4 py-2 border border-gray-600/50">
-              <span className="text-white text-sm font-medium">
-                Вивчено: {completedCategories.size}/{vocabularyCategories.length}
-              </span>
-              <div className="w-20 h-2 bg-gray-700 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-gradient-to-r from-purple-500 to-green-500 rounded-full transition-all duration-500"
-                  style={{ width: `${(completedCategories.size / vocabularyCategories.length) * 100}%` }}
-                ></div>
+        {/* Stats Section */}
+        <section className="mt-8 md:mt-12 lg:mt-16 bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 lg:p-8">
+          <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-gray-900 mb-4 md:mb-6 text-center">
+            📊 Статистика вивчення
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-blue-600 mb-1 md:mb-2">
+                {categories.length}
               </div>
+              <div className="text-xs md:text-sm text-gray-600">Категорій</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-green-600 mb-1 md:mb-2">
+                {categories.reduce((sum, cat) => sum + cat.words.length, 0)}
+              </div>
+              <div className="text-xs md:text-sm text-gray-600">Слів</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-purple-600 mb-1 md:mb-2">
+                {categories.reduce((sum, cat) => sum + cat.phrases.length, 0)}
+              </div>
+              <div className="text-xs md:text-sm text-gray-600">Фраз</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-orange-600 mb-1 md:mb-2">
+                {categories.filter(cat => cat.completed).length}
+              </div>
+              <div className="text-xs md:text-sm text-gray-600">Завершено</div>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
 
       {/* Modal */}
       {selectedCategory && (

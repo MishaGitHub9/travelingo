@@ -221,77 +221,90 @@ export default function PracticePage() {
         <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] bg-gradient-to-tr from-blue-500/40 to-purple-500/40 rounded-full blur-3xl animate-pulse opacity-70" style={{ animationDelay: '3s' }}></div>
       </div>
 
-      {/* Navigation */}
+      {/* Navigation - Mobile First */}
       <nav className="relative z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-sm md:text-lg shadow-xl shadow-purple-500/50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-14 md:h-16">
+            {/* Logo - Mobile First */}
+            <Link href="/" className="flex items-center space-x-2 md:space-x-3">
+              <div className="w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg md:rounded-xl flex items-center justify-center text-white font-bold text-xs md:text-sm lg:text-lg shadow-lg md:shadow-xl shadow-purple-500/50">
                 T
               </div>
-              <span className="text-lg md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="text-base md:text-lg lg:text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                 Travelingo
               </span>
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-white/80 hover:text-white transition-colors">
+            {/* Desktop Navigation - Hidden on Mobile */}
+            <div className="hidden md:flex items-center space-x-4 lg:space-x-8">
+              <Link href="/" className="text-white/80 hover:text-white transition-colors text-sm lg:text-base">
                 Головна
               </Link>
-              <Link href="/vocabulary" className="text-white/80 hover:text-white transition-colors">
+              <Link href="/vocabulary" className="text-white/80 hover:text-white transition-colors text-sm lg:text-base">
                 Словник
               </Link>
-              <Link href="/practice" className="text-white bg-purple-600/30 px-4 py-2 rounded-lg">
+              <Link href="/practice" className="text-white bg-purple-600/30 px-3 py-1.5 lg:px-4 lg:py-2 rounded-lg text-sm lg:text-base">
                 Практика
               </Link>
             </div>
 
-            {/* Mobile Navigation - Simple back button */}
+            {/* Mobile Navigation - Back Button */}
             <div className="md:hidden">
               <Link 
                 href="/" 
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
+                className="text-white/80 hover:text-white transition-colors text-sm font-medium flex items-center gap-1"
               >
-                ← Назад
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Назад
               </Link>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Main Content */}
-      <div className="relative z-10 pt-4 pb-20">
+      {/* Main Content - Mobile First */}
+      <main className="relative z-10 pt-4 pb-16 md:pb-20">
         {!selectedTopic ? (
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8 md:mb-12">
-              <h1 className="text-3xl md:text-6xl font-bold mb-4 md:mb-6">
+          <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+            {/* Header - Mobile First */}
+            <header className="text-center mb-6 md:mb-8 lg:mb-12">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-6xl font-bold mb-3 md:mb-4 lg:mb-6">
                 <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
                   AI Практика 🤖
                 </span>
               </h1>
-              <p className="text-base md:text-xl text-white/80 max-w-3xl mx-auto px-2">
+              <p className="text-sm md:text-base lg:text-lg xl:text-xl text-white/80 max-w-3xl mx-auto px-2">
                 Оберіть тему для розмови з ШІ та практикуйте англійську мову в реальних туристичних ситуаціях
               </p>
-            </div>
+            </header>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            {/* Topics Grid - Mobile First */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
               {topics.map((topic) => (
-                <div
+                <article
                   key={topic.id}
                   onClick={() => startConversation(topic)}
-                  className="group cursor-pointer bg-white/5 backdrop-blur-md rounded-2xl p-4 md:p-6 border border-white/10 hover:border-purple-400/50 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20"
+                  className="group cursor-pointer bg-white/5 backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-4 lg:p-6 border border-white/10 hover:border-purple-400/50 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-xl md:hover:shadow-2xl hover:shadow-purple-500/20"
                 >
                   <div className="text-center">
-                    <div className="text-3xl md:text-4xl mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    {/* Topic Icon - Mobile First */}
+                    <div className="text-2xl md:text-3xl lg:text-4xl mb-2 md:mb-3 lg:mb-4 group-hover:scale-110 transition-transform duration-300">
                       {topic.emoji}
                     </div>
-                    <h3 className="text-base md:text-lg font-semibold text-white mb-2">
+                    
+                    {/* Topic Title - Mobile First */}
+                    <h3 className="text-sm md:text-base lg:text-lg font-semibold text-white mb-1 md:mb-2">
                       {topic.title}
                     </h3>
-                    <p className="text-xs md:text-sm text-white/70 mb-3 md:mb-4">
+                    
+                    {/* Topic Description - Mobile First */}
+                    <p className="text-xs md:text-sm text-white/70 mb-2 md:mb-3 lg:mb-4 leading-relaxed">
                       {topic.description}
                     </p>
+                    
+                    {/* Examples - Hidden on Mobile */}
                     <div className="space-y-1 hidden md:block">
                       <p className="text-xs text-white/50 font-medium">Приклади фраз:</p>
                       {topic.examples.slice(0, 2).map((example, index) => (
@@ -301,26 +314,28 @@ export default function PracticePage() {
                       ))}
                     </div>
                   </div>
-                  <div className="mt-3 md:mt-4 flex justify-center">
-                    <span className="text-xs bg-purple-600/30 text-purple-300 px-3 py-1 rounded-full">
+                  
+                  {/* CTA Badge - Mobile First */}
+                  <div className="mt-2 md:mt-3 lg:mt-4 flex justify-center">
+                    <span className="text-xs bg-purple-600/30 text-purple-300 px-2 py-1 md:px-3 md:py-1 rounded-full">
                       Почати розмову
                     </span>
                   </div>
-                </div>
+                </article>
               ))}
             </div>
           </div>
         ) : (
-          <div className="max-w-4xl mx-auto px-2 md:px-4 sm:px-6 lg:px-8 h-full">
-            {/* Chat Header */}
-            <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-md rounded-t-2xl p-3 md:p-4 border border-white/10 border-b-0 shadow-lg">
+          <section className="max-w-4xl mx-auto px-2 md:px-4 lg:px-8 h-full">
+            {/* Chat Header - Mobile First */}
+            <header className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-md rounded-t-xl md:rounded-t-2xl p-3 md:p-4 border border-white/10 border-b-0 shadow-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2 md:space-x-3">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg">
-                    <span className="text-xl md:text-2xl">{selectedTopic.emoji}</span>
+                  <div className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
+                    <span className="text-lg md:text-xl lg:text-2xl">{selectedTopic.emoji}</span>
                   </div>
                   <div>
-                    <h2 className="text-base md:text-lg font-semibold text-white">
+                    <h2 className="text-sm md:text-base lg:text-lg font-semibold text-white">
                       {selectedTopic.title}
                     </h2>
                     <p className="text-xs md:text-sm text-white/60">
@@ -330,24 +345,25 @@ export default function PracticePage() {
                 </div>
                 <button
                   onClick={resetConversation}
-                  className="text-white/60 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
+                  className="text-white/60 hover:text-white transition-colors p-1.5 md:p-2 hover:bg-white/10 rounded-lg"
+                  aria-label="Скинути розмову"
                 >
                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
-            </div>
+            </header>
 
-            {/* Chat Messages */}
-            <div className="bg-black/20 backdrop-blur-md border-x border-white/10 h-[60vh] md:h-96 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4">
+            {/* Chat Messages - Mobile First */}
+            <div className="bg-black/20 backdrop-blur-md border-x border-white/10 h-[55vh] md:h-[60vh] lg:h-96 overflow-y-auto p-2 md:p-3 lg:p-4 space-y-2 md:space-y-3 lg:space-y-4">
               {messages.map((message, index) => (
                 <div
                   key={index}
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] md:max-w-xs lg:max-w-md px-3 md:px-4 py-2 md:py-3 rounded-2xl shadow-lg ${
+                    className={`max-w-[90%] md:max-w-[85%] lg:max-w-md px-2 md:px-3 lg:px-4 py-2 md:py-3 rounded-xl md:rounded-2xl shadow-md md:shadow-lg ${
                       message.role === 'user'
                         ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white'
                         : 'bg-white/10 text-white border border-white/20 backdrop-blur-sm'
@@ -357,19 +373,19 @@ export default function PracticePage() {
                       <div className="text-xs md:text-sm prose prose-invert prose-sm max-w-none">
                         <ReactMarkdown
                           components={{
-                            // Кастомізація компонентів Markdown
-                            p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                            // Mobile-First Markdown Components
+                            p: ({ children }) => <p className="mb-1 md:mb-2 last:mb-0">{children}</p>,
                             strong: ({ children }) => <strong className="font-bold text-yellow-300">{children}</strong>,
                             em: ({ children }) => <em className="italic text-blue-300">{children}</em>,
-                            code: ({ children }) => <code className="bg-gray-800/80 px-1.5 py-0.5 rounded text-green-300 text-xs">{children}</code>,
-                            ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
-                            ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
+                            code: ({ children }) => <code className="bg-gray-800/80 px-1 md:px-1.5 py-0.5 rounded text-green-300 text-xs">{children}</code>,
+                            ul: ({ children }) => <ul className="list-disc list-inside mb-1 md:mb-2 space-y-0.5 md:space-y-1">{children}</ul>,
+                            ol: ({ children }) => <ol className="list-decimal list-inside mb-1 md:mb-2 space-y-0.5 md:space-y-1">{children}</ol>,
                             li: ({ children }) => <li className="text-xs md:text-sm">{children}</li>,
-                            h1: ({ children }) => <h1 className="text-sm md:text-lg font-bold mb-2 text-purple-300">{children}</h1>,
-                            h2: ({ children }) => <h2 className="text-sm md:text-base font-bold mb-2 text-purple-300">{children}</h2>,
+                            h1: ({ children }) => <h1 className="text-sm md:text-lg font-bold mb-1 md:mb-2 text-purple-300">{children}</h1>,
+                            h2: ({ children }) => <h2 className="text-sm md:text-base font-bold mb-1 md:mb-2 text-purple-300">{children}</h2>,
                             h3: ({ children }) => <h3 className="text-xs md:text-sm font-bold mb-1 text-purple-300">{children}</h3>,
-                            blockquote: ({ children }) => <blockquote className="border-l-2 border-purple-400 pl-3 italic text-purple-200 my-2">{children}</blockquote>,
-                            hr: () => <hr className="border-gray-600 my-2" />
+                            blockquote: ({ children }) => <blockquote className="border-l-2 border-purple-400 pl-2 md:pl-3 italic text-purple-200 my-1 md:my-2">{children}</blockquote>,
+                            hr: () => <hr className="border-gray-600 my-1 md:my-2" />
                           }}
                         >
                           {message.content}
@@ -387,13 +403,15 @@ export default function PracticePage() {
                   </div>
                 </div>
               ))}
+              
+              {/* Loading Indicator - Mobile First */}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-white/10 text-white border border-white/20 px-4 py-3 rounded-2xl backdrop-blur-sm">
+                  <div className="bg-white/10 text-white border border-white/20 px-3 md:px-4 py-2 md:py-3 rounded-xl md:rounded-2xl backdrop-blur-sm">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-purple-400 rounded-full animate-bounce"></div>
+                      <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -401,8 +419,8 @@ export default function PracticePage() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Chat Input */}
-            <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-md rounded-b-2xl p-3 md:p-4 border border-white/10 border-t-0 shadow-lg">
+            {/* Chat Input - Mobile First */}
+            <footer className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-md rounded-b-xl md:rounded-b-2xl p-2 md:p-3 lg:p-4 border border-white/10 border-t-0 shadow-lg">
               <div className="flex space-x-2 md:space-x-3">
                 <textarea
                   ref={textareaRef}
@@ -410,14 +428,15 @@ export default function PracticePage() {
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Напишіть повідомлення англійською..."
-                  className="flex-1 bg-white/10 border border-white/20 rounded-xl px-3 md:px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 resize-none min-h-[40px] max-h-32 text-sm md:text-base backdrop-blur-sm"
+                  className="flex-1 bg-white/10 border border-white/20 rounded-lg md:rounded-xl px-2 md:px-3 lg:px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-purple-400 focus:ring-1 md:focus:ring-2 focus:ring-purple-400/30 resize-none min-h-[36px] md:min-h-[40px] max-h-24 md:max-h-32 text-sm md:text-base backdrop-blur-sm"
                   rows={1}
                   disabled={isLoading}
                 />
                 <button
                   onClick={sendMessage}
                   disabled={!inputMessage.trim() || isLoading}
-                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-gray-600 disabled:to-gray-600 disabled:cursor-not-allowed text-white px-4 md:px-6 py-2 rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none"
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-gray-600 disabled:to-gray-600 disabled:cursor-not-allowed text-white px-3 md:px-4 lg:px-6 py-2 rounded-lg md:rounded-xl transition-all duration-200 font-medium shadow-md md:shadow-lg hover:shadow-lg md:hover:shadow-xl transform hover:scale-105 disabled:transform-none"
+                  aria-label="Відправити повідомлення"
                 >
                   {isLoading ? (
                     <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -431,10 +450,10 @@ export default function PracticePage() {
               <p className="text-xs text-white/50 mt-2 hidden md:block">
                 Натисніть Enter для відправки, Shift+Enter для нового рядка
               </p>
-            </div>
-          </div>
+            </footer>
+          </section>
         )}
-      </div>
+      </main>
     </div>
   )
 } 

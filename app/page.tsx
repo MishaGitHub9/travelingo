@@ -204,250 +204,277 @@ export default function Home() {
         </svg>
       </div>
 
-      {/* Navigation */}
-      <nav className={`relative z-10 flex items-center justify-between p-4 md:p-6 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-xl shadow-purple-500/50 hover:shadow-purple-500/75 transition-all duration-300 hover:scale-110">
-            T
+            {/* Navigation - Mobile First */}
+      <nav className={`relative z-10 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
+        <div className="flex items-center justify-between p-4 md:p-6 lg:px-8">
+          {/* Logo - Mobile First */}
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg md:rounded-xl flex items-center justify-center text-white font-bold text-sm md:text-lg lg:text-xl shadow-lg md:shadow-xl shadow-purple-500/50 hover:shadow-purple-500/75 transition-all duration-300 hover:scale-110">
+              T
+            </div>
+            <span className="text-white text-base md:text-lg lg:text-xl font-semibold">Travelingo</span>
           </div>
-          <span className="text-white text-lg md:text-xl font-semibold">Travelingo</span>
+
+          {/* Desktop Navigation Links - Hidden on Mobile */}
+          <div className="hidden md:flex items-center gap-4 lg:gap-8 text-gray-300">
+            <a href="/" className="text-sm lg:text-base hover:text-white transition-all duration-200 hover:scale-110 hover:text-purple-300">Головна</a>
+            <a href="/vocabulary" className="text-sm lg:text-base hover:text-white transition-all duration-200 hover:scale-110 hover:text-pink-300">Словник</a>
+            <a href="/practice" className="text-sm lg:text-base hover:text-white transition-all duration-200 hover:scale-110 hover:text-cyan-300">Практика</a>
+          </div>
         </div>
-
-        {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-8 text-gray-300">
-          <a href="/" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-purple-300">Головна</a>
-          <a href="/tenses" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-blue-300">Часи</a>
-          <a href="/vocabulary" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-pink-300">Словник</a>
-          <a href="/practice" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-cyan-300">Практика</a>
-        </div>
-
-
       </nav>
 
-      {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center max-w-7xl mx-auto px-4 md:px-6 pt-4 md:pt-4 lg:pt-8 pb-8 md:pb-8 lg:pb-16 min-h-[calc(100vh-180px)] md:min-h-[calc(100vh-160px)]">
-        {/* Left Side - Title and Content */}
-        <div className="flex-1 max-w-2xl lg:pr-8">
-          <div className={`transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white leading-tight mb-4 md:mb-8">
-              Вивчайте <br />
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-pulse drop-shadow-lg">
-                англійську
-              </span>
-              <br />
-              <span className="text-purple-200 animate-pulse" style={{ animationDelay: '0.5s' }}>для</span>
-              <br />
-              <span className="text-purple-300 animate-pulse drop-shadow-lg" style={{ animationDelay: '1s' }}>подорожей</span>
-            </h1>
-          </div>
-
-          <div className={`transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <p className="text-gray-200 text-sm md:text-lg lg:text-xl leading-relaxed mb-6 md:mb-12 max-w-lg">
-              Практичні фрази та граматика для реальних ситуацій у подорожі.
-            </p>
-          </div>
-
-          <div className={`flex flex-col sm:flex-row gap-3 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <a href="/vocabulary" className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-5 md:px-8 py-3 md:py-4 rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50 inline-block text-center text-sm md:text-base">
-              <span className="group-hover:animate-pulse">Почати зі слів</span>
-            </a>
-            <a href="/practice" className="border-2 border-cyan-500 text-cyan-200 px-5 md:px-8 py-3 md:py-4 rounded-xl font-semibold hover:border-cyan-400 hover:text-white transition-all duration-300 hover:scale-105 hover:bg-cyan-500/20 backdrop-blur-sm hover:shadow-lg inline-block text-center text-sm md:text-base">
-              Практика
-            </a>
-          </div>
-        </div>
-
-        {/* Right Side - Auto Demo Quiz */}
-        <div className={`hidden lg:block flex-1 max-w-lg transition-all duration-1000 delay-800 ${isLoaded ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-95'}`}>
-          <div className={`bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-lg border-2 border-gray-600/70 rounded-2xl p-8 shadow-2xl hover:shadow-purple-500/30 transition-all duration-500 hover:scale-105 hover:border-purple-500/50 ${isTransitioning ? 'opacity-50 scale-95' : ''}`}>
-            {/* Progress indicators */}
-            <div className="flex gap-2 mb-6">
-              {quizzes.map((_, index) => (
-                <div
-                  key={index}
-                  className={`h-1 flex-1 rounded-full transition-all duration-500 ${
-                    index === currentQuizIndex 
-                      ? 'bg-purple-500' 
-                      : index < currentQuizIndex 
-                        ? 'bg-green-500' 
-                        : 'bg-gray-600'
-                  }`}
-                ></div>
-              ))}
-            </div>
-
-            <div className="mb-6">
-              <h3 className="text-purple-300 text-lg font-medium mb-4 animate-pulse">
-                {currentQuiz.question}
-              </h3>
-            </div>
-
-            <div className="space-y-3 mb-6">
-              {currentQuiz.options.map((option) => (
-                <div 
-                  key={option.letter}
-                  className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-500 ${
-                    showResult
-                      ? option.correct
-                        ? 'bg-green-500/30 border-green-400/70 shadow-xl shadow-green-500/40 scale-105'
-                        : 'bg-gray-700/30 border-gray-500/50'
-                      : 'bg-gray-700/50 border-gray-500/70'
-                  }`}
-                >
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-500 ${
-                    showResult && option.correct
-                      ? 'bg-green-500 text-white shadow-xl shadow-green-500/50'
-                      : 'bg-gray-600 text-gray-200'
-                  }`}>
-                    {showResult && option.correct ? '✓' : option.letter}
-                  </div>
-                  <span className="text-gray-100 font-medium">{option.text}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Explanation */}
-            {showResult && (
-              <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/50 rounded-xl p-4 animate-pulse">
-                <div>
-                  <p className="text-gray-200 text-sm leading-relaxed mb-2">
-                    {currentQuiz.explanation}
-                  </p>
-                  <p className="text-green-300 font-medium text-sm">
-                    Правильна відповідь: "{currentQuiz.correctAnswer}"
-                  </p>
-                </div>
+      {/* Main Content - Mobile First */}
+      <div className="relative z-10 min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)] lg:min-h-[calc(100vh-140px)]">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 pt-8 md:pt-12 lg:pt-16 pb-8 md:pb-12 lg:pb-16">
+          <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-12">
+            
+            {/* Main Content - Mobile First */}
+            <div className="flex-1 text-center lg:text-left max-w-2xl lg:max-w-none">
+              {/* Title - Mobile First */}
+              <div className={`transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-white leading-tight mb-4 md:mb-6 lg:mb-8">
+                  Вивчайте <br />
+                  <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-pulse drop-shadow-lg">
+                    англійську
+                  </span>
+                  <br />
+                  <span className="text-purple-200 animate-pulse" style={{ animationDelay: '0.5s' }}>для</span>
+                  <br />
+                  <span className="text-purple-300 animate-pulse drop-shadow-lg" style={{ animationDelay: '1s' }}>подорожей</span>
+                </h1>
               </div>
-            )}
+
+              {/* Description - Mobile First */}
+              <div className={`transition-all duration-1000 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                <p className="text-gray-200 text-sm md:text-base lg:text-lg xl:text-xl leading-relaxed mb-6 md:mb-8 lg:mb-12 max-w-lg mx-auto lg:mx-0">
+                  Практичні фрази та граматика для реальних ситуацій у подорожі.
+                </p>
+              </div>
+
+              {/* Buttons - Mobile First */}
+              <div className={`flex flex-col sm:flex-row gap-3 md:gap-4 lg:gap-6 transition-all duration-1000 delay-600 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                <a href="/vocabulary" className="group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 md:px-8 lg:px-10 py-3 md:py-4 rounded-xl font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 lg:hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50 inline-block text-center text-sm md:text-base">
+                  <span className="group-hover:animate-pulse">Почати зі слів</span>
+                </a>
+                <a href="/practice" className="border-2 border-cyan-500 text-cyan-200 px-6 md:px-8 lg:px-10 py-3 md:py-4 rounded-xl font-semibold hover:border-cyan-400 hover:text-white transition-all duration-300 hover:scale-105 hover:bg-cyan-500/20 backdrop-blur-sm hover:shadow-lg inline-block text-center text-sm md:text-base">
+                  Практика
+                </a>
+              </div>
+            </div>
+
+            {/* Right Side - Quiz Demo - Hidden on Mobile */}
+            <div className={`hidden lg:block flex-1 max-w-lg transition-all duration-1000 delay-800 ${isLoaded ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-95'}`}>
+              <div className={`bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-lg border-2 border-gray-600/70 rounded-2xl p-6 lg:p-8 shadow-2xl hover:shadow-purple-500/30 transition-all duration-500 hover:scale-105 hover:border-purple-500/50 ${isTransitioning ? 'opacity-50 scale-95' : ''}`}>
+                {/* Progress indicators */}
+                <div className="flex gap-2 mb-4 lg:mb-6">
+                  {quizzes.map((_, index) => (
+                    <div
+                      key={index}
+                      className={`h-1 flex-1 rounded-full transition-all duration-500 ${
+                        index === currentQuizIndex 
+                          ? 'bg-purple-500' 
+                          : index < currentQuizIndex 
+                            ? 'bg-green-500' 
+                            : 'bg-gray-600'
+                      }`}
+                    ></div>
+                  ))}
+                </div>
+
+                <div className="mb-4 lg:mb-6">
+                  <h3 className="text-purple-300 text-base lg:text-lg font-medium mb-3 lg:mb-4 animate-pulse">
+                    {currentQuiz.question}
+                  </h3>
+                </div>
+
+                <div className="space-y-2 lg:space-y-3 mb-4 lg:mb-6">
+                  {currentQuiz.options.map((option) => (
+                    <div 
+                      key={option.letter}
+                      className={`flex items-center gap-3 lg:gap-4 p-3 lg:p-4 rounded-xl border-2 transition-all duration-500 ${
+                        showResult
+                          ? option.correct
+                            ? 'bg-green-500/30 border-green-400/70 shadow-xl shadow-green-500/40 scale-105'
+                            : 'bg-gray-700/30 border-gray-500/50'
+                          : 'bg-gray-700/50 border-gray-500/70'
+                      }`}
+                    >
+                      <div className={`w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center text-xs lg:text-sm font-semibold transition-all duration-500 ${
+                        showResult && option.correct
+                          ? 'bg-green-500 text-white shadow-xl shadow-green-500/50'
+                          : 'bg-gray-600 text-gray-200'
+                      }`}>
+                        {showResult && option.correct ? '✓' : option.letter}
+                      </div>
+                      <span className="text-gray-100 font-medium text-sm lg:text-base">{option.text}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Explanation */}
+                {showResult && (
+                  <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/50 rounded-xl p-3 lg:p-4 animate-pulse">
+                    <div>
+                      <p className="text-gray-200 text-xs lg:text-sm leading-relaxed mb-2">
+                        {currentQuiz.explanation}
+                      </p>
+                      <p className="text-green-300 font-medium text-xs lg:text-sm">
+                        Правильна відповідь: "{currentQuiz.correctAnswer}"
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile Landing Pages - Only visible on mobile */}
+
+
+      {/* Mobile Landing Pages - Mobile First */}
       <div className="md:hidden relative z-10">
-        {/* Vocabulary Section */}
-        <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/70 to-pink-900/50 relative overflow-hidden">
-          {/* Background Effects */}
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-r from-pink-500/40 to-purple-500/40 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-r from-purple-500/40 to-pink-500/40 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        {/* Vocabulary Section - Mobile First */}
+        <section className="min-h-screen bg-gradient-to-br from-black via-purple-900/70 to-pink-900/50 relative overflow-hidden">
+          {/* Background Effects - Mobile Optimized */}
+          <div className="absolute inset-0 opacity-20 md:opacity-30">
+            <div className="absolute top-16 left-6 w-32 h-32 md:w-40 md:h-40 bg-gradient-to-r from-pink-500/40 to-purple-500/40 rounded-full blur-2xl md:blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-16 right-6 w-28 h-28 md:w-32 md:h-32 bg-gradient-to-r from-purple-500/40 to-pink-500/40 rounded-full blur-xl md:blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
           </div>
           
-          <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
-            <div className="max-w-sm text-center">
-              <div className="relative mb-8">
-                <div className="w-24 h-24 bg-gradient-to-r from-pink-500 to-purple-500 rounded-3xl flex items-center justify-center text-white text-4xl font-bold mx-auto shadow-2xl shadow-pink-500/50 animate-pulse">
+          <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-8 md:py-12">
+            <div className="w-full max-w-xs md:max-w-sm text-center">
+              {/* Icon - Mobile First */}
+              <div className="relative mb-6 md:mb-8">
+                <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-pink-500 to-purple-500 rounded-2xl md:rounded-3xl flex items-center justify-center text-white text-3xl md:text-4xl font-bold mx-auto shadow-xl md:shadow-2xl shadow-pink-500/50 animate-pulse">
                   📚
                 </div>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-bounce"></div>
+                <div className="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-5 h-5 md:w-6 md:h-6 bg-yellow-400 rounded-full animate-bounce"></div>
               </div>
               
-              <h2 className="text-4xl font-bold text-white mb-4 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+              {/* Title - Mobile First */}
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
                 Словник
               </h2>
-              <p className="text-gray-300 text-sm leading-relaxed mb-8 px-2">
+              
+              {/* Description - Mobile First */}
+              <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6 md:mb-8 px-2">
                 Вивчайте найважливіші слова та фрази для подорожей. Від замовлення їжі до бронювання готелю.
               </p>
               
-              <div className="space-y-3 mb-8">
-                <div className="bg-gradient-to-r from-pink-600/20 to-purple-600/20 backdrop-blur-sm border border-pink-500/30 rounded-xl p-3 text-left">
+              {/* Example Card - Mobile First */}
+              <div className="mb-6 md:mb-8">
+                <div className="bg-gradient-to-r from-pink-600/20 to-purple-600/20 backdrop-blur-sm border border-pink-500/30 rounded-xl p-3 md:p-4 text-left">
                   <div className="text-pink-300 text-xs font-semibold mb-1">ПРИКЛАД</div>
-                  <div className="text-white text-sm">"How much does it cost?" - Скільки це коштує?</div>
+                  <div className="text-white text-sm md:text-base">"How much does it cost?" - Скільки це коштує?</div>
                 </div>
               </div>
               
+              {/* CTA Button - Mobile First */}
               <a 
                 href="/vocabulary" 
-                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold hover:from-pink-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-pink-500/30 inline-block"
+                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-semibold hover:from-pink-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-lg md:shadow-xl shadow-pink-500/30 inline-block text-sm md:text-base"
               >
                 Почати вивчати →
               </a>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Practice Section */}
-        <div className="min-h-screen bg-gradient-to-br from-black via-cyan-900/70 to-blue-900/50 relative overflow-hidden">
-          {/* Background Effects */}
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute top-32 right-8 w-36 h-36 bg-gradient-to-r from-cyan-500/40 to-blue-500/40 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-32 left-8 w-44 h-44 bg-gradient-to-r from-blue-500/40 to-cyan-500/40 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '3s' }}></div>
+        {/* Practice Section - Mobile First */}
+        <section className="min-h-screen bg-gradient-to-br from-black via-cyan-900/70 to-blue-900/50 relative overflow-hidden">
+          {/* Background Effects - Mobile Optimized */}
+          <div className="absolute inset-0 opacity-20 md:opacity-30">
+            <div className="absolute top-24 right-4 w-30 h-30 md:w-36 md:h-36 bg-gradient-to-r from-cyan-500/40 to-blue-500/40 rounded-full blur-2xl md:blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-24 left-4 w-36 h-36 md:w-44 md:h-44 bg-gradient-to-r from-blue-500/40 to-cyan-500/40 rounded-full blur-xl md:blur-2xl animate-pulse" style={{ animationDelay: '3s' }}></div>
           </div>
           
-          <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
-            <div className="max-w-sm text-center">
-              <div className="relative mb-8">
-                <div className="w-24 h-24 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl flex items-center justify-center text-white text-4xl font-bold mx-auto shadow-2xl shadow-cyan-500/50 animate-pulse">
+          <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-8 md:py-12">
+            <div className="w-full max-w-xs md:max-w-sm text-center">
+              {/* Icon - Mobile First */}
+              <div className="relative mb-6 md:mb-8">
+                <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl md:rounded-3xl flex items-center justify-center text-white text-3xl md:text-4xl font-bold mx-auto shadow-xl md:shadow-2xl shadow-cyan-500/50 animate-pulse">
                   💬
                 </div>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }}></div>
+                <div className="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-5 h-5 md:w-6 md:h-6 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }}></div>
               </div>
               
-              <h2 className="text-4xl font-bold text-white mb-4 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              {/* Title - Mobile First */}
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
                 Практика
               </h2>
-              <p className="text-gray-300 text-sm leading-relaxed mb-8 px-2">
+              
+              {/* Description - Mobile First */}
+              <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6 md:mb-8 px-2">
                 Практикуйте розмовну англійську з ШІ. Реальні ситуації з подорожей у безпечному середовищі.
               </p>
               
-              <div className="space-y-3 mb-8">
-                <div className="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 backdrop-blur-sm border border-cyan-500/30 rounded-xl p-3 text-left">
+              {/* Feature Card - Mobile First */}
+              <div className="mb-6 md:mb-8">
+                <div className="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 backdrop-blur-sm border border-cyan-500/30 rounded-xl p-3 md:p-4 text-left">
                   <div className="text-cyan-300 text-xs font-semibold mb-1">ШІ ДОПОМАГАЄ</div>
-                  <div className="text-white text-sm">Розмовляйте про готелі, ресторани, транспорт</div>
+                  <div className="text-white text-sm md:text-base">Розмовляйте про готелі, ресторани, транспорт</div>
                 </div>
               </div>
               
+              {/* CTA Button - Mobile First */}
               <a 
                 href="/practice" 
-                className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-8 py-4 rounded-2xl font-semibold hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-cyan-500/30 inline-block"
+                className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-semibold hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 shadow-lg md:shadow-xl shadow-cyan-500/30 inline-block text-sm md:text-base"
               >
                 Почати практику →
               </a>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Tenses Section */}
-        <div className="min-h-screen bg-gradient-to-br from-black via-indigo-900/70 to-purple-900/50 relative overflow-hidden">
-          {/* Background Effects */}
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute top-24 left-12 w-38 h-38 bg-gradient-to-r from-indigo-500/40 to-purple-500/40 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-24 right-12 w-40 h-40 bg-gradient-to-r from-purple-500/40 to-indigo-500/40 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+        {/* Tenses Section - Mobile First */}
+        <section className="min-h-screen bg-gradient-to-br from-black via-indigo-900/70 to-purple-900/50 relative overflow-hidden">
+          {/* Background Effects - Mobile Optimized */}
+          <div className="absolute inset-0 opacity-20 md:opacity-30">
+            <div className="absolute top-20 left-8 w-32 h-32 md:w-38 md:h-38 bg-gradient-to-r from-indigo-500/40 to-purple-500/40 rounded-full blur-2xl md:blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-20 right-8 w-34 h-34 md:w-40 md:h-40 bg-gradient-to-r from-purple-500/40 to-indigo-500/40 rounded-full blur-xl md:blur-2xl animate-pulse" style={{ animationDelay: '4s' }}></div>
           </div>
           
-          <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
-            <div className="max-w-sm text-center">
-              <div className="relative mb-8">
-                <div className="w-24 h-24 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl flex items-center justify-center text-white text-4xl font-bold mx-auto shadow-2xl shadow-indigo-500/50 animate-pulse">
+          <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-8 md:py-12">
+            <div className="w-full max-w-xs md:max-w-sm text-center">
+              {/* Icon - Mobile First */}
+              <div className="relative mb-6 md:mb-8">
+                <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl md:rounded-3xl flex items-center justify-center text-white text-3xl md:text-4xl font-bold mx-auto shadow-xl md:shadow-2xl shadow-indigo-500/50 animate-pulse">
                   ⏰
                 </div>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-5 h-5 md:w-6 md:h-6 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '1s' }}></div>
               </div>
               
-              <h2 className="text-4xl font-bold text-white mb-4 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              {/* Title - Mobile First */}
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 Часи
               </h2>
-              <p className="text-gray-300 text-sm leading-relaxed mb-8 px-2">
+              
+              {/* Description - Mobile First */}
+              <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6 md:mb-8 px-2">
                 Опануйте англійські часи через практичні приклади з туристичних ситуацій.
               </p>
               
-              <div className="space-y-3 mb-8">
-                <div className="bg-gradient-to-r from-indigo-600/20 to-purple-600/20 backdrop-blur-sm border border-indigo-500/30 rounded-xl p-3 text-left">
+              {/* Feature Card - Mobile First */}
+              <div className="mb-6 md:mb-8">
+                <div className="bg-gradient-to-r from-indigo-600/20 to-purple-600/20 backdrop-blur-sm border border-indigo-500/30 rounded-xl p-3 md:p-4 text-left">
                   <div className="text-indigo-300 text-xs font-semibold mb-1">ГРАМАТИКА</div>
-                  <div className="text-white text-sm">Present, Past, Future у туристичних фразах</div>
+                  <div className="text-white text-sm md:text-base">Present, Past, Future у туристичних фразах</div>
                 </div>
               </div>
               
+              {/* CTA Button - Mobile First */}
               <a 
                 href="/tenses" 
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-indigo-500/30 inline-block"
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-lg md:shadow-xl shadow-indigo-500/30 inline-block text-sm md:text-base"
               >
                 Вивчити часи →
               </a>
             </div>
           </div>
-        </div>
+        </section>
       </div>
 
 
