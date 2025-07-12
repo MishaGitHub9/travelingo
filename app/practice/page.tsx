@@ -114,7 +114,6 @@ export default function PracticePage() {
   const [messages, setMessages] = useState<Message[]>([])
   const [inputMessage, setInputMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -201,10 +200,6 @@ export default function PracticePage() {
     setInputMessage('')
   }
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen)
-  }
-
   // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
@@ -231,7 +226,10 @@ export default function PracticePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-sm md:text-lg shadow-xl shadow-purple-500/50">
+                T
+              </div>
+              <span className="text-lg md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                 Travelingo
               </span>
             </Link>
@@ -249,117 +247,52 @@ export default function PracticePage() {
               </Link>
             </div>
 
-            {/* Mobile menu button */}
-            <button
-              onClick={toggleMobileMenu}
-              className="md:hidden w-10 h-10 bg-gray-800/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-white hover:bg-gray-700/80 transition-colors duration-200"
-            >
-              <div className="flex flex-col gap-1">
-                <div className={`w-5 h-0.5 bg-current transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
-                <div className={`w-5 h-0.5 bg-current transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></div>
-                <div className={`w-5 h-0.5 bg-current transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
-              </div>
-            </button>
+            {/* Mobile Navigation - Simple back button */}
+            <div className="md:hidden">
+              <Link 
+                href="/" 
+                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
+              >
+                ← Назад
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
-
-            {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-50">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
-            onClick={toggleMobileMenu}
-          ></div>
-          
-          {/* Slide-out Menu */}
-          <div className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-gray-900/95 backdrop-blur-xl border-l border-gray-600/50 shadow-2xl transform transition-transform duration-300 ease-out ${
-            mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}>
-            {/* Menu Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                  T
-                </div>
-                <span className="text-white text-lg font-semibold">Travelingo</span>
-              </div>
-              <button 
-                onClick={toggleMobileMenu}
-                className="w-10 h-10 bg-gray-700/80 rounded-lg flex items-center justify-center text-white hover:bg-gray-600/80 transition-colors"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Menu Items */}
-            <nav className="p-6 space-y-2">
-              <Link 
-                href="/" 
-                className="text-gray-300 hover:text-purple-300 hover:bg-gray-800/50 px-4 py-4 rounded-xl transition-all duration-200 flex items-center gap-3 group"
-                onClick={toggleMobileMenu}
-              >
-                <span className="w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                Головна
-              </Link>
-              <Link 
-                href="/vocabulary" 
-                className="text-gray-300 hover:text-pink-300 hover:bg-gray-800/50 px-4 py-4 rounded-xl transition-all duration-200 flex items-center gap-3 group"
-                onClick={toggleMobileMenu}
-              >
-                <span className="w-2 h-2 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                Словник
-              </Link>
-              <div className="bg-purple-600/30 text-purple-300 px-4 py-4 rounded-xl font-semibold flex items-center gap-3">
-                <span className="w-2 h-2 bg-cyan-400 rounded-full"></span>
-                Практика
-              </div>
-            </nav>
-
-            {/* Menu Footer */}
-            <div className="absolute bottom-6 left-6 right-6">
-              <div className="text-center text-gray-500 text-sm">
-                Вивчайте англійську для подорожей
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Main Content */}
       <div className="relative z-10 pt-4 pb-20">
         {!selectedTopic ? (
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <div className="text-center mb-8 md:mb-12">
+              <h1 className="text-3xl md:text-6xl font-bold mb-4 md:mb-6">
                 <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
                   AI Практика 🤖
                 </span>
               </h1>
-              <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              <p className="text-base md:text-xl text-white/80 max-w-3xl mx-auto px-2">
                 Оберіть тему для розмови з ШІ та практикуйте англійську мову в реальних туристичних ситуаціях
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {topics.map((topic) => (
                 <div
                   key={topic.id}
                   onClick={() => startConversation(topic)}
-                  className="group cursor-pointer bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-purple-400/50 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20"
+                  className="group cursor-pointer bg-white/5 backdrop-blur-md rounded-2xl p-4 md:p-6 border border-white/10 hover:border-purple-400/50 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20"
                 >
                   <div className="text-center">
-                    <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <div className="text-3xl md:text-4xl mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
                       {topic.emoji}
                     </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">
+                    <h3 className="text-base md:text-lg font-semibold text-white mb-2">
                       {topic.title}
                     </h3>
-                    <p className="text-sm text-white/70 mb-4">
+                    <p className="text-xs md:text-sm text-white/70 mb-3 md:mb-4">
                       {topic.description}
                     </p>
-                    <div className="space-y-1">
+                    <div className="space-y-1 hidden md:block">
                       <p className="text-xs text-white/50 font-medium">Приклади фраз:</p>
                       {topic.examples.slice(0, 2).map((example, index) => (
                         <p key={index} className="text-xs text-purple-300/80 italic">
@@ -368,7 +301,7 @@ export default function PracticePage() {
                       ))}
                     </div>
                   </div>
-                  <div className="mt-4 flex justify-center">
+                  <div className="mt-3 md:mt-4 flex justify-center">
                     <span className="text-xs bg-purple-600/30 text-purple-300 px-3 py-1 rounded-full">
                       Почати розмову
                     </span>
@@ -378,18 +311,20 @@ export default function PracticePage() {
             </div>
           </div>
         ) : (
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+          <div className="max-w-4xl mx-auto px-2 md:px-4 sm:px-6 lg:px-8 h-full">
             {/* Chat Header */}
-            <div className="bg-white/5 backdrop-blur-md rounded-t-2xl p-4 border border-white/10 border-b-0">
+            <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-md rounded-t-2xl p-3 md:p-4 border border-white/10 border-b-0 shadow-lg">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <span className="text-2xl">{selectedTopic.emoji}</span>
+                <div className="flex items-center space-x-2 md:space-x-3">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg">
+                    <span className="text-xl md:text-2xl">{selectedTopic.emoji}</span>
+                  </div>
                   <div>
-                    <h2 className="text-lg font-semibold text-white">
+                    <h2 className="text-base md:text-lg font-semibold text-white">
                       {selectedTopic.title}
                     </h2>
-                    <p className="text-sm text-white/60">
-                      Практика з ШІ
+                    <p className="text-xs md:text-sm text-white/60">
+                      🤖 Практика з ШІ
                     </p>
                   </div>
                 </div>
@@ -397,7 +332,7 @@ export default function PracticePage() {
                   onClick={resetConversation}
                   className="text-white/60 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
@@ -405,21 +340,21 @@ export default function PracticePage() {
             </div>
 
             {/* Chat Messages */}
-            <div className="bg-white/5 backdrop-blur-md border-x border-white/10 h-96 overflow-y-auto p-4 space-y-4">
+            <div className="bg-black/20 backdrop-blur-md border-x border-white/10 h-[60vh] md:h-96 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4">
               {messages.map((message, index) => (
                 <div
                   key={index}
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
+                    className={`max-w-[85%] md:max-w-xs lg:max-w-md px-3 md:px-4 py-2 md:py-3 rounded-2xl shadow-lg ${
                       message.role === 'user'
-                        ? 'bg-purple-600 text-white'
-                        : 'bg-white/10 text-white border border-white/20'
+                        ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white'
+                        : 'bg-white/10 text-white border border-white/20 backdrop-blur-sm'
                     }`}
                   >
                     {message.role === 'assistant' ? (
-                      <div className="text-sm prose prose-invert prose-sm max-w-none">
+                      <div className="text-xs md:text-sm prose prose-invert prose-sm max-w-none">
                         <ReactMarkdown
                           components={{
                             // Кастомізація компонентів Markdown
@@ -429,10 +364,10 @@ export default function PracticePage() {
                             code: ({ children }) => <code className="bg-gray-800/80 px-1.5 py-0.5 rounded text-green-300 text-xs">{children}</code>,
                             ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
                             ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
-                            li: ({ children }) => <li className="text-sm">{children}</li>,
-                            h1: ({ children }) => <h1 className="text-lg font-bold mb-2 text-purple-300">{children}</h1>,
-                            h2: ({ children }) => <h2 className="text-base font-bold mb-2 text-purple-300">{children}</h2>,
-                            h3: ({ children }) => <h3 className="text-sm font-bold mb-1 text-purple-300">{children}</h3>,
+                            li: ({ children }) => <li className="text-xs md:text-sm">{children}</li>,
+                            h1: ({ children }) => <h1 className="text-sm md:text-lg font-bold mb-2 text-purple-300">{children}</h1>,
+                            h2: ({ children }) => <h2 className="text-sm md:text-base font-bold mb-2 text-purple-300">{children}</h2>,
+                            h3: ({ children }) => <h3 className="text-xs md:text-sm font-bold mb-1 text-purple-300">{children}</h3>,
                             blockquote: ({ children }) => <blockquote className="border-l-2 border-purple-400 pl-3 italic text-purple-200 my-2">{children}</blockquote>,
                             hr: () => <hr className="border-gray-600 my-2" />
                           }}
@@ -441,9 +376,9 @@ export default function PracticePage() {
                         </ReactMarkdown>
                       </div>
                     ) : (
-                      <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                      <p className="text-xs md:text-sm whitespace-pre-wrap">{message.content}</p>
                     )}
-                    <p className="text-xs opacity-60 mt-1">
+                    <p className="text-xs opacity-60 mt-1 text-right">
                       {message.timestamp.toLocaleTimeString('uk-UA', { 
                         hour: '2-digit', 
                         minute: '2-digit' 
@@ -454,11 +389,11 @@ export default function PracticePage() {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-white/10 text-white border border-white/20 px-4 py-2 rounded-2xl">
+                  <div className="bg-white/10 text-white border border-white/20 px-4 py-3 rounded-2xl backdrop-blur-sm">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -467,33 +402,33 @@ export default function PracticePage() {
             </div>
 
             {/* Chat Input */}
-            <div className="bg-white/5 backdrop-blur-md rounded-b-2xl p-4 border border-white/10 border-t-0">
-              <div className="flex space-x-3">
+            <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-md rounded-b-2xl p-3 md:p-4 border border-white/10 border-t-0 shadow-lg">
+              <div className="flex space-x-2 md:space-x-3">
                 <textarea
                   ref={textareaRef}
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Напишіть повідомлення англійською..."
-                  className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-purple-400 resize-none min-h-[40px] max-h-32"
+                  className="flex-1 bg-white/10 border border-white/20 rounded-xl px-3 md:px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 resize-none min-h-[40px] max-h-32 text-sm md:text-base backdrop-blur-sm"
                   rows={1}
                   disabled={isLoading}
                 />
                 <button
                   onClick={sendMessage}
                   disabled={!inputMessage.trim() || isLoading}
-                  className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-6 py-2 rounded-xl transition-colors font-medium"
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-gray-600 disabled:to-gray-600 disabled:cursor-not-allowed text-white px-4 md:px-6 py-2 rounded-xl transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none"
                 >
                   {isLoading ? (
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                   ) : (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                     </svg>
                   )}
                 </button>
               </div>
-              <p className="text-xs text-white/50 mt-2">
+              <p className="text-xs text-white/50 mt-2 hidden md:block">
                 Натисніть Enter для відправки, Shift+Enter для нового рядка
               </p>
             </div>

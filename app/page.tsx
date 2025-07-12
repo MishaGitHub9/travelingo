@@ -327,59 +327,125 @@ export default function Home() {
       {/* Mobile Landing Pages - Only visible on mobile */}
       <div className="md:hidden relative z-10">
         {/* Vocabulary Section */}
-        <div className="min-h-screen bg-gradient-to-br from-pink-900/50 via-purple-900/50 to-gray-900 flex items-center justify-center px-4 py-8">
-          <div className="max-w-lg text-center">
-            <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-2xl shadow-pink-500/50">
-              📚
+        <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/70 to-pink-900/50 relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-r from-pink-500/40 to-purple-500/40 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-r from-purple-500/40 to-pink-500/40 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+          </div>
+          
+          <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
+            <div className="max-w-sm text-center">
+              <div className="relative mb-8">
+                <div className="w-24 h-24 bg-gradient-to-r from-pink-500 to-purple-500 rounded-3xl flex items-center justify-center text-white text-4xl font-bold mx-auto shadow-2xl shadow-pink-500/50 animate-pulse">
+                  📚
+                </div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-bounce"></div>
+              </div>
+              
+              <h2 className="text-4xl font-bold text-white mb-4 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+                Словник
+              </h2>
+              <p className="text-gray-300 text-sm leading-relaxed mb-8 px-2">
+                Вивчайте найважливіші слова та фрази для подорожей. Від замовлення їжі до бронювання готелю.
+              </p>
+              
+              <div className="space-y-3 mb-8">
+                <div className="bg-gradient-to-r from-pink-600/20 to-purple-600/20 backdrop-blur-sm border border-pink-500/30 rounded-xl p-3 text-left">
+                  <div className="text-pink-300 text-xs font-semibold mb-1">ПРИКЛАД</div>
+                  <div className="text-white text-sm">"How much does it cost?" - Скільки це коштує?</div>
+                </div>
+              </div>
+              
+              <a 
+                href="/vocabulary" 
+                className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold hover:from-pink-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-pink-500/30 inline-block"
+              >
+                Почати вивчати →
+              </a>
             </div>
-            <h2 className="text-3xl font-bold text-white mb-4">Словник</h2>
-            <p className="text-gray-300 text-sm leading-relaxed mb-8">
-              Вивчайте найважливіші слова та фрази для подорожей. Від замовлення їжі до бронювання готелю.
-            </p>
-            <a 
-              href="/vocabulary" 
-              className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-pink-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-pink-500/30 inline-block"
-            >
-              Почати вивчати
-            </a>
           </div>
         </div>
 
         {/* Practice Section */}
-        <div className="min-h-screen bg-gradient-to-br from-cyan-900/50 via-blue-900/50 to-gray-900 flex items-center justify-center px-4 py-8">
-          <div className="max-w-lg text-center">
-            <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-2xl shadow-cyan-500/50">
-              💬
+        <div className="min-h-screen bg-gradient-to-br from-black via-cyan-900/70 to-blue-900/50 relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-32 right-8 w-36 h-36 bg-gradient-to-r from-cyan-500/40 to-blue-500/40 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-32 left-8 w-44 h-44 bg-gradient-to-r from-blue-500/40 to-cyan-500/40 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '3s' }}></div>
+          </div>
+          
+          <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
+            <div className="max-w-sm text-center">
+              <div className="relative mb-8">
+                <div className="w-24 h-24 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl flex items-center justify-center text-white text-4xl font-bold mx-auto shadow-2xl shadow-cyan-500/50 animate-pulse">
+                  💬
+                </div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }}></div>
+              </div>
+              
+              <h2 className="text-4xl font-bold text-white mb-4 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                Практика
+              </h2>
+              <p className="text-gray-300 text-sm leading-relaxed mb-8 px-2">
+                Практикуйте розмовну англійську з ШІ. Реальні ситуації з подорожей у безпечному середовищі.
+              </p>
+              
+              <div className="space-y-3 mb-8">
+                <div className="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 backdrop-blur-sm border border-cyan-500/30 rounded-xl p-3 text-left">
+                  <div className="text-cyan-300 text-xs font-semibold mb-1">ШІ ДОПОМАГАЄ</div>
+                  <div className="text-white text-sm">Розмовляйте про готелі, ресторани, транспорт</div>
+                </div>
+              </div>
+              
+              <a 
+                href="/practice" 
+                className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-8 py-4 rounded-2xl font-semibold hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-cyan-500/30 inline-block"
+              >
+                Почати практику →
+              </a>
             </div>
-            <h2 className="text-3xl font-bold text-white mb-4">Практика</h2>
-            <p className="text-gray-300 text-sm leading-relaxed mb-8">
-              Практикуйте розмовну англійську з ШІ. Реальні ситуації з подорожей у безпечному середовищі.
-            </p>
-            <a 
-              href="/practice" 
-              className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-cyan-500/30 inline-block"
-            >
-              Почати практику
-            </a>
           </div>
         </div>
 
         {/* Tenses Section */}
-        <div className="min-h-screen bg-gradient-to-br from-indigo-900/50 via-purple-900/50 to-gray-900 flex items-center justify-center px-4 py-8">
-          <div className="max-w-lg text-center">
-            <div className="w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-2xl shadow-indigo-500/50">
-              ⏰
+        <div className="min-h-screen bg-gradient-to-br from-black via-indigo-900/70 to-purple-900/50 relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-24 left-12 w-38 h-38 bg-gradient-to-r from-indigo-500/40 to-purple-500/40 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-24 right-12 w-40 h-40 bg-gradient-to-r from-purple-500/40 to-indigo-500/40 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+          </div>
+          
+          <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
+            <div className="max-w-sm text-center">
+              <div className="relative mb-8">
+                <div className="w-24 h-24 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl flex items-center justify-center text-white text-4xl font-bold mx-auto shadow-2xl shadow-indigo-500/50 animate-pulse">
+                  ⏰
+                </div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '1s' }}></div>
+              </div>
+              
+              <h2 className="text-4xl font-bold text-white mb-4 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                Часи
+              </h2>
+              <p className="text-gray-300 text-sm leading-relaxed mb-8 px-2">
+                Опануйте англійські часи через практичні приклади з туристичних ситуацій.
+              </p>
+              
+              <div className="space-y-3 mb-8">
+                <div className="bg-gradient-to-r from-indigo-600/20 to-purple-600/20 backdrop-blur-sm border border-indigo-500/30 rounded-xl p-3 text-left">
+                  <div className="text-indigo-300 text-xs font-semibold mb-1">ГРАМАТИКА</div>
+                  <div className="text-white text-sm">Present, Past, Future у туристичних фразах</div>
+                </div>
+              </div>
+              
+              <a 
+                href="/tenses" 
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-indigo-500/30 inline-block"
+              >
+                Вивчити часи →
+              </a>
             </div>
-            <h2 className="text-3xl font-bold text-white mb-4">Часи</h2>
-            <p className="text-gray-300 text-sm leading-relaxed mb-8">
-              Опануйте англійські часи через практичні приклади з туристичних ситуацій.
-            </p>
-            <a 
-              href="/tenses" 
-              className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-indigo-500/30 inline-block"
-            >
-              Вивчити часи
-            </a>
           </div>
         </div>
       </div>
