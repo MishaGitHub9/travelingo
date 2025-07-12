@@ -63,7 +63,6 @@ export default function Home() {
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0)
   const [showResult, setShowResult] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
@@ -112,10 +111,6 @@ export default function Home() {
   }, []) // Only run once on mount
 
   const currentQuiz = quizzes[currentQuizIndex]
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen)
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-indigo-950 relative overflow-hidden">
@@ -227,80 +222,7 @@ export default function Home() {
           <a href="/practice" className="hover:text-white transition-all duration-200 hover:scale-110 hover:text-cyan-300">Практика</a>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button 
-          onClick={toggleMobileMenu}
-          className="md:hidden w-10 h-10 bg-gray-800/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-white hover:bg-gray-700/80 transition-colors duration-200"
-        >
-          <div className="flex flex-col gap-1">
-            <div className={`w-5 h-0.5 bg-current transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
-            <div className={`w-5 h-0.5 bg-current transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></div>
-            <div className={`w-5 h-0.5 bg-current transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
-          </div>
-        </button>
 
-        {/* Mobile Menu Overlay */}
-        {mobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-50">
-            {/* Backdrop */}
-            <div 
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
-              onClick={toggleMobileMenu}
-            ></div>
-            
-            {/* Slide-out Menu */}
-            <div className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-gray-900/95 backdrop-blur-xl border-l border-gray-600/50 shadow-2xl transform transition-transform duration-300 ease-out ${
-              mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}>
-              {/* Menu Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                    T
-                  </div>
-                  <span className="text-white text-lg font-semibold">Travelingo</span>
-                </div>
-                <button 
-                  onClick={toggleMobileMenu}
-                  className="w-10 h-10 bg-gray-700/80 rounded-lg flex items-center justify-center text-white hover:bg-gray-600/80 transition-colors"
-                >
-                  ✕
-                </button>
-              </div>
-
-              {/* Menu Items */}
-              <nav className="p-6 space-y-2">
-                <div className="bg-purple-600/30 text-purple-300 px-4 py-4 rounded-xl font-semibold flex items-center gap-3">
-                  <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
-                  Головна
-                </div>
-                <a 
-                  href="/vocabulary" 
-                  className="text-gray-300 hover:text-pink-300 hover:bg-gray-800/50 px-4 py-4 rounded-xl transition-all duration-200 flex items-center gap-3 group"
-                  onClick={toggleMobileMenu}
-                >
-                  <span className="w-2 h-2 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  Словник
-                </a>
-                <a 
-                  href="/practice" 
-                  className="text-gray-300 hover:text-cyan-300 hover:bg-gray-800/50 px-4 py-4 rounded-xl transition-all duration-200 flex items-center gap-3 group"
-                  onClick={toggleMobileMenu}
-                >
-                  <span className="w-2 h-2 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  Практика
-                </a>
-              </nav>
-
-              {/* Menu Footer */}
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="text-center text-gray-500 text-sm">
-                  Вивчайте англійську для подорожей
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </nav>
 
       {/* Main Content */}
@@ -398,6 +320,66 @@ export default function Home() {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Landing Pages - Only visible on mobile */}
+      <div className="md:hidden relative z-10">
+        {/* Vocabulary Section */}
+        <div className="min-h-screen bg-gradient-to-br from-pink-900/50 via-purple-900/50 to-gray-900 flex items-center justify-center px-4 py-8">
+          <div className="max-w-lg text-center">
+            <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-2xl shadow-pink-500/50">
+              📚
+            </div>
+            <h2 className="text-3xl font-bold text-white mb-4">Словник</h2>
+            <p className="text-gray-300 text-sm leading-relaxed mb-8">
+              Вивчайте найважливіші слова та фрази для подорожей. Від замовлення їжі до бронювання готелю.
+            </p>
+            <a 
+              href="/vocabulary" 
+              className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-pink-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-pink-500/30 inline-block"
+            >
+              Почати вивчати
+            </a>
+          </div>
+        </div>
+
+        {/* Practice Section */}
+        <div className="min-h-screen bg-gradient-to-br from-cyan-900/50 via-blue-900/50 to-gray-900 flex items-center justify-center px-4 py-8">
+          <div className="max-w-lg text-center">
+            <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-2xl shadow-cyan-500/50">
+              💬
+            </div>
+            <h2 className="text-3xl font-bold text-white mb-4">Практика</h2>
+            <p className="text-gray-300 text-sm leading-relaxed mb-8">
+              Практикуйте розмовну англійську з ШІ. Реальні ситуації з подорожей у безпечному середовищі.
+            </p>
+            <a 
+              href="/practice" 
+              className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-cyan-500/30 inline-block"
+            >
+              Почати практику
+            </a>
+          </div>
+        </div>
+
+        {/* Tenses Section */}
+        <div className="min-h-screen bg-gradient-to-br from-indigo-900/50 via-purple-900/50 to-gray-900 flex items-center justify-center px-4 py-8">
+          <div className="max-w-lg text-center">
+            <div className="w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-2xl shadow-indigo-500/50">
+              ⏰
+            </div>
+            <h2 className="text-3xl font-bold text-white mb-4">Часи</h2>
+            <p className="text-gray-300 text-sm leading-relaxed mb-8">
+              Опануйте англійські часи через практичні приклади з туристичних ситуацій.
+            </p>
+            <a 
+              href="/tenses" 
+              className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-indigo-500/30 inline-block"
+            >
+              Вивчити часи
+            </a>
           </div>
         </div>
       </div>
